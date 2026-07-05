@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr.Jena（ドクタージェーナ）｜30年の美意識で、ブランドを育てる。美容 × クリエイティブ／マーケティング</title>
+<meta name="description" content="原宿で30年以上、美しさを追求してきたDr.Jena。ブランドを育て続けてきた審美眼と伝える力を、HP制作・WEBコンサルティング・AIマーケティング・WEB3.0・マーケットデザインへ。本物の美しさは、正しく伝わってこそ価値になる。">
+<meta property="og:title" content="Dr.Jena｜30年の美意識で、ブランドを育てる。">
+<meta property="og:description" content="美容 × クリエイティブ／マーケティング。原宿の美容ブランドDr.Jenaが、30年で培った「魅せる力・伝える力・育てる力」を企業とブランドの成長に注ぎます。">
+<meta property="og:type" content="website">
+
+<!-- Google Fonts：欧文セリフ（Cormorant Garamond）× 和文（Noto Sans JP / Noto Serif JP） -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Dr.Jena Corporate — Design System
+   世界観：ミニマル × ハイエンド。「静かな説得力」。
+   配色：オフホワイト × ディープチャコール × ゴールド
+============================================================ */
+:root{
+  --paper:#faf8f4;          /* オフホワイト（基調） */
+  --paper-deep:#f3efe7;     /* わずかに深い紙色 */
+  --ink:#16150f;            /* ディープブラック（墨） */
+  --char:#242119;           /* チャコール */
+  --gold:#b3924f;           /* ゴールド（格の象徴） */
+  --gold-bright:#d4b878;    /* 明るいゴールド（ダーク背景用） */
+  --gold-line:rgba(179,146,79,.35);
+  --gray:#6d675c;           /* 本文グレー */
+  --gray-light:#a49d90;
+  --white:#ffffff;
+  --serif-en:'Cormorant Garamond', serif;
+  --serif-jp:'Noto Serif JP', serif;
+  --sans:'Noto Sans JP', sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1); /* 上品な減速イージング */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  font-weight:400;
+  line-height:2;
+  letter-spacing:.04em;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+section{scroll-margin-top:72px}
+
+/* ---------- 汎用 ---------- */
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.section{padding:130px 0}
+.eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--serif-en);font-size:13px;letter-spacing:.42em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:26px;
+}
+.eyebrow::before{content:"";width:44px;height:1px;background:var(--gold)}
+.sec-title{
+  font-family:var(--serif-jp);font-weight:500;
+  font-size:clamp(28px,4vw,42px);line-height:1.6;letter-spacing:.08em;
+}
+.sec-lead{margin-top:26px;color:var(--gray);font-size:15px;max-width:640px}
+.dark .sec-lead{color:rgba(250,248,244,.62)}
+.dark{background:var(--ink);color:var(--paper)}
+.en-ghost{
+  font-family:var(--serif-en);font-style:italic;font-weight:400;
+  color:var(--gold);letter-spacing:.08em;
+}
+
+/* ---------- スクロール連動フェード（IntersectionObserverで .is-in を付与） ---------- */
+.rv{opacity:0;transform:translateY(34px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
+.rv.is-in{opacity:1;transform:none}
+.rv-d1{transition-delay:.12s}.rv-d2{transition-delay:.24s}.rv-d3{transition-delay:.36s}.rv-d4{transition-delay:.48s}
+
+/* ============================================================
+   Loader：最小限のブランドイントロ
+============================================================ */
+#loader{
+  position:fixed;inset:0;z-index:999;background:var(--ink);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;
+  transition:opacity .9s var(--ease),visibility .9s;
+}
+#loader.done{opacity:0;visibility:hidden}
+#loader .l-logo{
+  font-family:var(--serif-en);font-size:34px;letter-spacing:.3em;color:var(--paper);
+  opacity:0;animation:loaderIn 1.2s var(--ease) .1s forwards;
+}
+#loader .l-line{width:0;height:1px;background:var(--gold);animation:loaderLine 1.1s var(--ease) .4s forwards}
+@keyframes loaderIn{to{opacity:1}}
+@keyframes loaderLine{to{width:120px}}
+
+/* ============================================================
+   Header
+============================================================ */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:22px 0;transition:all .5s var(--ease);
+}
+header.scrolled{
+  background:rgba(250,248,244,.92);backdrop-filter:blur(14px);
+  padding:12px 0;border-bottom:1px solid rgba(22,21,15,.07);
+}
+.h-inner{max-width:1240px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;flex-direction:column;line-height:1.2}
+.logo .en{font-family:var(--serif-en);font-size:24px;letter-spacing:.14em;color:var(--paper);transition:color .5s}
+.logo .jp{font-size:9px;letter-spacing:.42em;color:var(--gold-bright);margin-top:3px;transition:color .5s}
+header.scrolled .logo .en{color:var(--ink)}
+header.scrolled .logo .jp{color:var(--gold)}
+nav.pc{display:flex;align-items:center;gap:34px}
+nav.pc a{
+  font-size:12px;letter-spacing:.18em;color:rgba(250,248,244,.85);
+  position:relative;padding:4px 0;transition:color .5s;
+}
+nav.pc a::after{
+  content:"";position:absolute;left:0;bottom:0;width:0;height:1px;
+  background:var(--gold);transition:width .4s var(--ease);
+}
+nav.pc a:hover::after{width:100%}
+header.scrolled nav.pc a{color:var(--char)}
+.h-cta{
+  font-size:12px;letter-spacing:.18em;padding:11px 26px;
+  border:1px solid var(--gold);color:var(--gold-bright)!important;
+  transition:all .4s var(--ease);
+}
+.h-cta:hover{background:var(--gold);color:var(--ink)!important}
+.h-cta::after{display:none}
+header.scrolled .h-cta{color:var(--gold)!important}
+header.scrolled .h-cta:hover{color:var(--white)!important}
+
+/* ハンバーガー（モバイル） */
+#menuBtn{
+  display:none;width:44px;height:44px;background:none;border:none;cursor:pointer;
+  position:relative;z-index:120;
+}
+#menuBtn span{
+  position:absolute;left:10px;width:24px;height:1px;background:var(--paper);
+  transition:all .45s var(--ease);
+}
+header.scrolled #menuBtn span{background:var(--ink)}
+#menuBtn span:nth-child(1){top:18px}
+#menuBtn span:nth-child(2){top:26px}
+body.menu-open #menuBtn span{background:var(--paper)!important}
+body.menu-open #menuBtn span:nth-child(1){top:22px;transform:rotate(45deg)}
+body.menu-open #menuBtn span:nth-child(2){top:22px;transform:rotate(-45deg)}
+#mobileNav{
+  position:fixed;inset:0;z-index:110;background:rgba(22,21,15,.97);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transition:all .6s var(--ease);
+}
+body.menu-open #mobileNav{opacity:1;visibility:visible}
+#mobileNav ul{text-align:center}
+#mobileNav a{
+  display:block;padding:15px;font-family:var(--serif-jp);
+  font-size:19px;letter-spacing:.24em;color:var(--paper);
+  opacity:0;transform:translateY(16px);transition:all .5s var(--ease);
+}
+body.menu-open #mobileNav a{opacity:1;transform:none}
+#mobileNav li:nth-child(1) a{transition-delay:.1s}
+#mobileNav li:nth-child(2) a{transition-delay:.16s}
+#mobileNav li:nth-child(3) a{transition-delay:.22s}
+#mobileNav li:nth-child(4) a{transition-delay:.28s}
+#mobileNav li:nth-child(5) a{transition-delay:.34s}
+#mobileNav li:nth-child(6) a{transition-delay:.4s}
+#mobileNav li:nth-child(7) a{transition-delay:.46s}
+#mobileNav .m-cta{color:var(--gold-bright)}
+
+/* ============================================================
+   1. Hero：没入型FV（ダーク × ゴールドの光 × 控えめモーション）
+============================================================ */
+.hero{
+  position:relative;min-height:100svh;display:flex;align-items:center;
+  background:var(--ink);color:var(--paper);overflow:hidden;
+}
+/* 背景：ゴールドの光彩（パララックス対象） */
+.orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;will-change:transform}
+.orb1{width:640px;height:640px;right:-160px;top:-120px;background:radial-gradient(circle,rgba(179,146,79,.28),transparent 65%)}
+.orb2{width:520px;height:520px;left:-180px;bottom:-140px;background:radial-gradient(circle,rgba(179,146,79,.14),transparent 65%)}
+/* 背景：極細の縦罫線（骨格で語る） */
+.hero-grid{position:absolute;inset:0;display:flex;justify-content:space-evenly;pointer-events:none}
+.hero-grid i{width:1px;background:linear-gradient(to bottom,transparent,rgba(250,248,244,.06) 30%,rgba(250,248,244,.06) 70%,transparent)}
+/* 背景：大きな透かし英字 */
+.hero-ghost{
+  position:absolute;right:-1%;bottom:6%;
+  font-family:var(--serif-en);font-style:italic;font-size:clamp(90px,17vw,250px);
+  color:transparent;-webkit-text-stroke:1px rgba(212,184,120,.10);
+  letter-spacing:.02em;white-space:nowrap;pointer-events:none;user-select:none;
+}
+.hero-inner{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:150px 24px 110px;width:100%}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:16px;margin-bottom:34px;
+  font-family:var(--serif-en);font-size:12px;letter-spacing:.5em;color:var(--gold-bright);
+  opacity:0;animation:heroFade 1.4s var(--ease) .9s forwards;
+}
+.hero-eyebrow::before{content:"";width:56px;height:1px;background:var(--gold)}
+.hero h1{
+  font-family:var(--serif-jp);font-weight:500;
+  font-size:clamp(34px,6.4vw,72px);line-height:1.55;letter-spacing:.06em;
+}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:inline-block;transform:translateY(110%);animation:heroRise 1.3s var(--ease) forwards}
+.hero h1 .line:nth-child(1) span{animation-delay:1.05s}
+.hero h1 .line:nth-child(2) span{animation-delay:1.22s}
+@keyframes heroRise{to{transform:none}}
+@keyframes heroFade{to{opacity:1}}
+.hero-sub{
+  margin-top:36px;max-width:560px;font-size:15px;font-weight:300;
+  color:rgba(250,248,244,.72);line-height:2.3;
+  opacity:0;animation:heroFade 1.5s var(--ease) 1.7s forwards;
+}
+.hero-cta{display:flex;gap:18px;margin-top:52px;flex-wrap:wrap;opacity:0;animation:heroFade 1.5s var(--ease) 2s forwards}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  min-width:250px;padding:19px 34px;font-size:13px;letter-spacing:.22em;
+  position:relative;overflow:hidden;transition:all .5s var(--ease);
+}
+.btn .ar{font-family:var(--serif-en);transition:transform .5s var(--ease)}
+.btn:hover .ar{transform:translateX(6px)}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:var(--gold-bright)}
+.btn-ghost{border:1px solid rgba(250,248,244,.4);color:var(--paper)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright)}
+.btn-dark{background:var(--ink);color:var(--paper)}
+.btn-dark:hover{background:var(--char);color:var(--gold-bright)}
+.btn-outline{border:1px solid var(--gold);color:var(--gold)}
+.btn-outline:hover{background:var(--gold);color:var(--white)}
+/* スクロールインジケータ */
+.scroll-cue{
+  position:absolute;bottom:0;left:50%;z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-family:var(--serif-en);font-size:10px;letter-spacing:.4em;color:rgba(250,248,244,.5);
+  opacity:0;animation:heroFade 1.5s var(--ease) 2.4s forwards;
+}
+.scroll-cue i{width:1px;height:64px;background:rgba(250,248,244,.25);position:relative;overflow:hidden}
+.scroll-cue i::after{
+  content:"";position:absolute;top:-40%;left:0;width:1px;height:40%;
+  background:var(--gold-bright);animation:cueDrop 2.2s var(--ease) infinite;
+}
+@keyframes cueDrop{0%{top:-40%}60%,100%{top:110%}}
+
+/* ============================================================
+   2. Statement / Philosophy
+============================================================ */
+.statement{position:relative;overflow:hidden}
+.statement .quote{
+  font-family:var(--serif-jp);font-weight:500;
+  font-size:clamp(25px,3.6vw,40px);line-height:2;letter-spacing:.1em;
+  margin:0 0 44px;
+}
+.statement .quote .gold{color:var(--gold)}
+.statement .body{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.statement .body p{color:var(--gray);font-size:15px;margin-bottom:1.6em}
+.statement .body strong{color:var(--ink);font-weight:500}
+/* 数字で語る実績 */
+.stats{
+  margin-top:90px;display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--gold-line);border-bottom:1px solid var(--gold-line);
+}
+.stat{padding:44px 20px;text-align:center;position:relative}
+.stat + .stat::before{content:"";position:absolute;left:0;top:26%;height:48%;width:1px;background:var(--gold-line)}
+.stat .num{
+  font-family:var(--serif-en);font-size:clamp(44px,5.5vw,64px);font-weight:500;
+  color:var(--ink);line-height:1.1;
+}
+.stat .num small{font-size:.45em;color:var(--gold);margin-left:4px}
+.stat .label{font-size:12px;letter-spacing:.2em;color:var(--gray);margin-top:10px}
+
+/* ============================================================
+   3. Services（新事業）
+============================================================ */
+.services{position:relative}
+.services::before{ /* 背景の透かし */
+  content:"Services";position:absolute;top:60px;right:-10px;
+  font-family:var(--serif-en);font-style:italic;font-size:clamp(80px,14vw,190px);
+  color:transparent;-webkit-text-stroke:1px rgba(212,184,120,.09);pointer-events:none;
+}
+/* フラッグシップ：マーケットデザイン */
+.flagship{
+  margin-top:70px;border:1px solid var(--gold-line);position:relative;
+  padding:64px 60px;background:linear-gradient(135deg,rgba(179,146,79,.10),rgba(179,146,79,.02) 55%);
+}
+.flagship .fs-tag{
+  position:absolute;top:-13px;left:56px;background:var(--gold);color:var(--ink);
+  font-size:10px;letter-spacing:.34em;padding:6px 18px;font-weight:500;
+}
+.flagship .fs-no{font-family:var(--serif-en);font-size:15px;letter-spacing:.3em;color:var(--gold-bright)}
+.flagship h3{
+  font-family:var(--serif-jp);font-size:clamp(24px,3vw,34px);font-weight:500;
+  letter-spacing:.1em;margin:14px 0 6px;
+}
+.flagship .fs-en{font-family:var(--serif-en);font-style:italic;font-size:15px;color:var(--gold-bright);letter-spacing:.12em}
+.flagship .fs-body{margin-top:28px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px}
+.flagship .fs-body p{color:rgba(250,248,244,.7);font-size:14.5px}
+.svc-flow{border-left:1px solid var(--gold-line);padding-left:32px;display:flex;flex-direction:column;gap:18px}
+.svc-flow .row{font-size:13.5px;line-height:1.9}
+.svc-flow .k{
+  display:inline-block;font-size:10px;letter-spacing:.28em;color:var(--gold-bright);
+  border:1px solid var(--gold-line);padding:3px 12px;margin-bottom:8px;
+}
+.svc-flow .row div{color:rgba(250,248,244,.8)}
+/* サービスカード（4件） */
+.svc-grid{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.svc-card{
+  border:1px solid rgba(250,248,244,.12);padding:46px 44px;position:relative;
+  transition:border-color .6s var(--ease),background .6s var(--ease);
+  display:flex;flex-direction:column;
+}
+.svc-card:hover{border-color:var(--gold-line);background:rgba(179,146,79,.05)}
+.svc-card .no{font-family:var(--serif-en);font-size:14px;letter-spacing:.3em;color:var(--gold-bright)}
+.svc-card h3{font-family:var(--serif-jp);font-size:22px;font-weight:500;letter-spacing:.1em;margin:12px 0 2px}
+.svc-card .en{font-family:var(--serif-en);font-style:italic;font-size:13px;color:var(--gold-bright);letter-spacing:.1em}
+.svc-card .pkg{
+  position:absolute;top:24px;right:24px;font-size:9px;letter-spacing:.26em;
+  color:var(--ink);background:var(--gold-bright);padding:5px 12px;font-weight:500;
+}
+.svc-card dl{margin-top:24px;font-size:13.5px}
+.svc-card dt{
+  font-size:10px;letter-spacing:.3em;color:var(--gold-bright);margin:16px 0 4px;
+  display:flex;align-items:center;gap:10px;
+}
+.svc-card dt::before{content:"";width:16px;height:1px;background:var(--gold-line)}
+.svc-card dd{color:rgba(250,248,244,.72);line-height:1.95}
+.svc-card .more{
+  margin-top:auto;padding-top:26px;font-family:var(--serif-en);font-size:11px;
+  letter-spacing:.3em;color:var(--gold-bright);
+}
+
+/* ============================================================
+   4. AIマーケティング プラン表（松竹梅）
+============================================================ */
+.plans-note{font-size:12px;color:var(--gray-light);margin-top:18px}
+.plan-grid{margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;align-items:stretch}
+.plan{
+  background:var(--white);border:1px solid rgba(22,21,15,.1);padding:52px 38px 44px;
+  display:flex;flex-direction:column;position:relative;
+}
+.plan + .plan{border-left:none}
+.plan.reco{
+  background:var(--ink);color:var(--paper);border-color:var(--ink);
+  transform:translateY(-22px);padding-bottom:66px;z-index:2;
+}
+.plan .p-tag{
+  position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  background:var(--gold);color:var(--ink);font-size:10px;letter-spacing:.3em;
+  padding:6px 20px;white-space:nowrap;font-weight:500;
+}
+.plan .p-rank{font-family:var(--serif-en);font-style:italic;font-size:13px;letter-spacing:.2em;color:var(--gold)}
+.plan.reco .p-rank{color:var(--gold-bright)}
+.plan h3{font-family:var(--serif-jp);font-size:23px;font-weight:500;letter-spacing:.12em;margin:10px 0 4px}
+.plan .p-for{font-size:12px;color:var(--gray);min-height:3.4em;line-height:1.8}
+.plan.reco .p-for{color:rgba(250,248,244,.6)}
+.plan .p-price{
+  margin:26px 0;padding:22px 0;border-top:1px solid rgba(22,21,15,.1);border-bottom:1px solid rgba(22,21,15,.1);
+  text-align:center;
+}
+.plan.reco .p-price{border-color:rgba(250,248,244,.15)}
+.plan .p-price .v{font-family:var(--serif-en);font-size:30px;font-weight:500}
+.plan .p-price .u{font-size:11px;color:var(--gray-light);display:block;margin-top:4px;letter-spacing:.14em}
+.plan ul{font-size:13px;display:flex;flex-direction:column;gap:13px;margin-bottom:34px}
+.plan li{padding-left:24px;position:relative;line-height:1.8;color:var(--char)}
+.plan.reco li{color:rgba(250,248,244,.82)}
+.plan li::before{content:"";position:absolute;left:2px;top:.85em;width:10px;height:1px;background:var(--gold)}
+.plan li.dis{color:var(--gray-light);text-decoration:line-through;text-decoration-color:rgba(109,103,92,.4)}
+.plan li.dis::before{background:rgba(109,103,92,.35)}
+.plan .p-btn{
+  margin-top:auto;text-align:center;padding:16px;font-size:12px;letter-spacing:.22em;
+  border:1px solid var(--gold);color:var(--gold);transition:all .4s var(--ease);
+}
+.plan .p-btn:hover{background:var(--gold);color:var(--white)}
+.plan.reco .p-btn{background:var(--gold);color:var(--ink)}
+.plan.reco .p-btn:hover{background:var(--gold-bright)}
+
+/* ============================================================
+   5. Approach / Process
+============================================================ */
+.proc-list{margin-top:76px;display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.proc-list::before{ /* 連結ライン */
+  content:"";position:absolute;top:33px;left:10%;right:10%;height:1px;background:var(--gold-line);
+}
+.proc{padding:0 18px;text-align:center;position:relative}
+.proc .p-no{
+  width:66px;height:66px;margin:0 auto;border-radius:50%;
+  border:1px solid var(--gold);background:var(--ink);position:relative;z-index:2;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif-en);font-size:19px;color:var(--gold-bright);
+}
+.proc h3{font-family:var(--serif-jp);font-size:17px;font-weight:500;letter-spacing:.14em;margin:24px 0 10px}
+.proc p{font-size:12px;line-height:1.95;color:rgba(250,248,244,.6)}
+
+/* ============================================================
+   6. Why Dr.Jena（3本柱）
+============================================================ */
+.why-grid{margin-top:70px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.why{
+  background:var(--white);border:1px solid rgba(22,21,15,.08);padding:54px 40px;
+  position:relative;transition:transform .6s var(--ease),box-shadow .6s var(--ease);
+}
+.why:hover{transform:translateY(-8px);box-shadow:0 30px 60px -30px rgba(22,21,15,.18)}
+.why::before{content:"";position:absolute;top:0;left:40px;width:52px;height:2px;background:var(--gold)}
+.why .w-no{font-family:var(--serif-en);font-style:italic;font-size:15px;color:var(--gold);letter-spacing:.16em}
+.why h3{font-family:var(--serif-jp);font-size:21px;font-weight:500;letter-spacing:.1em;margin:16px 0 4px;line-height:1.7}
+.why .w-en{font-family:var(--serif-en);font-style:italic;font-size:12px;color:var(--gold);letter-spacing:.14em}
+.why p{margin-top:22px;font-size:13.5px;color:var(--gray)}
+
+/* ============================================================
+   7. Beauty（美容事業）
+============================================================ */
+.beauty{background:var(--paper-deep);position:relative;overflow:hidden}
+.beauty::before{
+  content:"Beauty";position:absolute;top:44px;left:-10px;
+  font-family:var(--serif-en);font-style:italic;font-size:clamp(80px,14vw,190px);
+  color:transparent;-webkit-text-stroke:1px rgba(179,146,79,.13);pointer-events:none;
+}
+.beauty-grid{margin-top:70px;display:grid;grid-template-columns:1fr 1fr;gap:34px}
+.b-card{background:var(--white);border:1px solid rgba(179,146,79,.25);padding:56px 48px;position:relative}
+.b-card::after{ /* 内側のゴールド細枠：品格の演出 */
+  content:"";position:absolute;inset:10px;border:1px solid rgba(179,146,79,.14);pointer-events:none;
+}
+.b-card .b-en{font-family:var(--serif-en);font-style:italic;font-size:14px;color:var(--gold);letter-spacing:.18em}
+.b-card h3{font-family:var(--serif-jp);font-size:24px;font-weight:500;letter-spacing:.12em;margin:12px 0 22px}
+.b-card p{font-size:13.5px;color:var(--gray)}
+.b-info{margin-top:26px;border-top:1px solid rgba(179,146,79,.2);padding-top:22px;font-size:12.5px}
+.b-info li{display:flex;gap:16px;padding:5px 0;color:var(--char)}
+.b-info .k{flex:0 0 74px;color:var(--gold);letter-spacing:.14em;font-size:11px;padding-top:2px}
+.patent{
+  display:inline-flex;align-items:center;gap:10px;margin:4px 0 20px;
+  border:1px solid var(--gold-line);padding:7px 16px;font-size:11px;letter-spacing:.16em;color:var(--gold);
+}
+.patent::before{content:"";width:7px;height:7px;border:1px solid var(--gold);transform:rotate(45deg)}
+.func-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.func{border:1px solid rgba(179,146,79,.2);padding:16px 18px}
+.func b{display:block;font-size:12.5px;font-weight:500;letter-spacing:.1em;color:var(--ink)}
+.func span{font-size:11px;color:var(--gray-light);letter-spacing:.05em}
+.b-cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;position:relative;z-index:2}
+.b-cta .btn{min-width:0;flex:1;padding:16px 20px;font-size:12px}
+.b-note{margin-top:44px;font-size:11px;color:var(--gray-light);line-height:1.9}
+
+/* ============================================================
+   8. Works / 実績
+============================================================ */
+.works-grid{margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.work{
+  border:1px solid rgba(250,248,244,.14);aspect-ratio:4/3.4;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:30px;position:relative;
+  background:
+    linear-gradient(160deg,rgba(179,146,79,.12),transparent 55%),
+    repeating-linear-gradient(45deg,transparent,transparent 11px,rgba(250,248,244,.025) 11px,rgba(250,248,244,.025) 12px);
+  transition:border-color .5s var(--ease);
+}
+.work:hover{border-color:var(--gold-line)}
+.work .w-case{font-family:var(--serif-en);font-size:12px;letter-spacing:.34em;color:var(--gold-bright)}
+.work .w-soon{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:var(--serif-en);font-style:italic;font-size:21px;letter-spacing:.2em;
+  color:rgba(250,248,244,.35);white-space:nowrap;
+}
+.work p{font-size:12px;color:rgba(250,248,244,.5);margin-top:8px;line-height:1.8}
+.works-note{margin-top:30px;font-size:12px;color:rgba(250,248,244,.4)}
+
+/* ============================================================
+   9. CTA（2導線）
+============================================================ */
+.cta-sec{background:var(--ink);position:relative;overflow:hidden;padding:150px 0}
+.cta-sec .orb3{
+  position:absolute;width:760px;height:760px;left:50%;top:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(179,146,79,.16),transparent 62%);
+  border-radius:50%;filter:blur(80px);pointer-events:none;
+}
+.cta-head{text-align:center;position:relative;z-index:2}
+.cta-head .en-ghost{font-size:15px;letter-spacing:.3em}
+.cta-head h2{
+  font-family:var(--serif-jp);font-size:clamp(26px,4vw,40px);font-weight:500;
+  letter-spacing:.1em;line-height:1.8;margin-top:18px;color:var(--paper);
+}
+.cta-grid{margin-top:70px;display:grid;grid-template-columns:1fr 1fr;gap:30px;position:relative;z-index:2}
+.cta-box{border:1px solid rgba(250,248,244,.16);padding:56px 48px;text-align:center;transition:border-color .5s var(--ease)}
+.cta-box:hover{border-color:var(--gold-line)}
+.cta-box .c-en{font-family:var(--serif-en);font-style:italic;font-size:13px;color:var(--gold-bright);letter-spacing:.2em}
+.cta-box h3{font-family:var(--serif-jp);font-size:22px;font-weight:500;letter-spacing:.14em;margin:12px 0 16px;color:var(--paper)}
+.cta-box p{font-size:13px;color:rgba(250,248,244,.6);margin-bottom:32px;min-height:4em}
+.cta-box .btn{width:100%;min-width:0}
+.cta-tel{margin-top:22px;font-size:12px;color:rgba(250,248,244,.55);letter-spacing:.1em}
+.cta-tel a{font-family:var(--serif-en);font-size:21px;color:var(--gold-bright);letter-spacing:.12em;display:inline-block;margin-top:4px}
+
+/* ============================================================
+   10. Footer
+============================================================ */
+footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
+.f-top{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:56px;padding-bottom:70px;border-bottom:1px solid rgba(250,248,244,.09)}
+.f-logo .en{font-family:var(--serif-en);font-size:30px;letter-spacing:.16em;color:var(--paper)}
+.f-logo .jp{font-size:10px;letter-spacing:.4em;color:var(--gold-bright);margin-top:6px}
+.f-logo p{margin-top:26px;font-size:12px;line-height:2.1;color:rgba(250,248,244,.5)}
+.f-h{font-family:var(--serif-en);font-size:12px;letter-spacing:.34em;color:var(--gold-bright);margin-bottom:24px}
+.f-list li{display:flex;gap:14px;font-size:12.5px;padding:5px 0;line-height:1.9}
+.f-list .k{flex:0 0 66px;color:rgba(250,248,244,.4);font-size:11px;letter-spacing:.1em;padding-top:2px}
+.f-list a{border-bottom:1px solid transparent;transition:all .4s}
+.f-list a:hover{color:var(--gold-bright);border-color:var(--gold-line)}
+.f-nav a{display:block;padding:6px 0;font-size:12.5px;letter-spacing:.14em;transition:color .4s}
+.f-nav a:hover{color:var(--gold-bright)}
+.f-sns{margin-top:28px}
+.f-sns a{
+  display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;
+  border:1px solid rgba(250,248,244,.2);padding:10px 20px;transition:all .4s;
+}
+.f-sns a:hover{border-color:var(--gold);color:var(--gold-bright)}
+.f-btm{display:flex;justify-content:space-between;align-items:center;padding-top:36px;flex-wrap:wrap;gap:12px}
+.f-btm small{font-size:10.5px;letter-spacing:.16em;color:rgba(250,248,244,.35)}
+.f-btm .top-link{font-family:var(--serif-en);font-size:11px;letter-spacing:.3em;color:rgba(250,248,244,.5);transition:color .4s}
+.f-btm .top-link:hover{color:var(--gold-bright)}
+
+/* ============================================================
+   Responsive
+============================================================ */
+@media(max-width:1000px){
+  .proc-list{grid-template-columns:repeat(3,1fr);row-gap:52px}
+  .proc-list::before{display:none}
+  .why-grid{grid-template-columns:1fr;gap:20px}
+  .works-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:860px){
+  .section{padding:96px 0}
+  nav.pc{display:none}
+  #menuBtn{display:block}
+  .statement .body{grid-template-columns:1fr;gap:8px}
+  .flagship{padding:48px 28px}
+  .flagship .fs-tag{left:28px}
+  .flagship .fs-body{grid-template-columns:1fr;gap:32px}
+  .svc-grid{grid-template-columns:1fr}
+  .svc-card{padding:40px 28px}
+  .plan-grid{grid-template-columns:1fr;gap:34px}
+  .plan.reco{transform:none;padding-bottom:52px}
+  .plan + .plan{border-left:1px solid rgba(22,21,15,.1)}
+  .plan.reco{border:1px solid var(--ink)}
+  .beauty-grid{grid-template-columns:1fr}
+  .b-card{padding:44px 28px}
+  .cta-grid{grid-template-columns:1fr}
+  .cta-box p{min-height:0}
+  .f-top{grid-template-columns:1fr;gap:44px}
+  .stats{grid-template-columns:1fr}
+  .stat + .stat::before{display:none}
+  .stat{border-top:1px solid var(--gold-line)}
+  .stat:first-child{border-top:none}
+  .hero-inner{padding:130px 24px 120px}
+}
+@media(max-width:640px){
+  .proc-list{grid-template-columns:1fr;row-gap:44px}
+  .works-grid{grid-template-columns:1fr}
+  .hero-cta .btn{width:100%}
+  .b-cta{flex-direction:column}
+}
+/* モーション低減設定への配慮 */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ローディング（ブランドイントロ） -->
+<div id="loader" aria-hidden="true">
+  <div class="l-logo">Dr.Jena</div>
+  <div class="l-line"></div>
+</div>
+
+<!-- ============ Header ============ -->
+<header id="header">
+  <div class="h-inner">
+    <a href="#" class="logo" aria-label="Dr.Jena トップへ">
+      <span class="en">Dr.Jena</span>
+      <span class="jp">ドクタージェーナ</span>
+    </a>
+    <nav class="pc" aria-label="メインナビゲーション">
+      <a href="#philosophy">Philosophy</a>
+      <a href="#services">Services</a>
+      <a href="#plans">AI Plans</a>
+      <a href="#process">Process</a>
+      <a href="#beauty">Beauty</a>
+      <a href="#company">Company</a>
+      <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="h-cta">無料相談</a>
+    </nav>
+    <button id="menuBtn" aria-label="メニュー"><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- モバイルナビ -->
+<div id="mobileNav">
+  <ul>
+    <li><a href="#philosophy">Philosophy</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#plans">AI Plans</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#beauty">Beauty</a></li>
+    <li><a href="#company">Company</a></li>
+    <li><a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="m-cta">無料相談・無料体験</a></li>
+  </ul>
+</div>
+
+<!-- ============ 1. Hero ============ -->
+<section class="hero">
+  <div class="orb orb1" data-para="0.22"></div>
+  <div class="orb orb2" data-para="-0.14"></div>
+  <div class="hero-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="hero-ghost" aria-hidden="true">Beauty × Marketing</div>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Harajuku, Tokyo — 30+ Years of Excellence</div>
+    <h1>
+      <span class="line"><span>30年の美意識で、</span></span>
+      <span class="line"><span>ブランドを育てる。</span></span>
+    </h1>
+    <p class="hero-sub">
+      原宿で30年以上、"美しさ"と向き合い、ブランドを育て、信頼を積み上げてきたDr.Jena。<br>
+      その「魅せる力・伝える力・育てる力」を、今度はあなたのビジネスに。<br>
+      美容 × クリエイティブ／マーケティングの新しいかたちが、ここから始まります。
+    </p>
+    <div class="hero-cta">
+      <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-gold">事業の無料相談をする <span class="ar">→</span></a>
+      <a href="#beauty" class="btn btn-ghost">美容事業を見る <span class="ar">→</span></a>
+    </div>
+  </div>
+
+  <div class="scroll-cue">Scroll<i></i></div>
+</section>
+
+<!-- ============ 2. Statement / Philosophy ============ -->
+<section class="section statement" id="philosophy">
+  <div class="wrap">
+    <div class="eyebrow rv">Philosophy</div>
+    <h2 class="statement quote rv rv-d1">
+      本物の美しさは、<br>
+      <span class="gold">正しく伝わってこそ</span>価値になる。
+    </h2>
+    <div class="body">
+      <p class="rv">
+        Dr.Jenaは、原宿の地で30年以上、"美しさ"を追求してきた美容ブランドです。
+        一人ひとりの肌と向き合い、技術を磨き、ブランドを育て、
+        ファンと信頼を静かに積み上げてきました。<strong>美しさをつくること</strong>と、
+        <strong>その価値を正しく伝え、育て続けること</strong>。この両輪こそが、私たちの30年でした。
+      </p>
+      <p class="rv rv-d1">
+        その「魅せる力・伝える力・継続して育てる力」を、今度は企業やブランドの成長そのものに注ぎます。
+        Web制作からAIマーケティング、WEB3.0、そして市場の仕組みづくりまで——
+        美容のプロフェッショナルだからこそできる、<strong>本質的で美しいブランディングとマーケティング</strong>を。
+        あなたのブランドが持つ本物の価値を、正しく届けるために。
+      </p>
+    </div>
+
+    <!-- 実績を数字で -->
+    <div class="stats rv rv-d1">
+      <div class="stat">
+        <div class="num"><span data-count="30">0</span><small>+ Years</small></div>
+        <div class="label">美容ブランドとしての歴史</div>
+      </div>
+      <div class="stat">
+        <div class="num"><span data-count="1">0</span><small>Patent</small></div>
+        <div class="label">特許取得技術「I.W波」（特許第4759694号）</div>
+      </div>
+      <div class="stat">
+        <div class="num"><span data-count="2">0</span><small>Fields</small></div>
+        <div class="label">美容 × クリエイティブ／マーケティング</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. Creative / Marketing Services ============ -->
+<section class="section dark services" id="services">
+  <div class="wrap">
+    <div class="eyebrow rv">Creative / Marketing</div>
+    <h2 class="sec-title rv rv-d1">ブランドを育ててきた会社が、<br>ブランドの成長を設計する。</h2>
+    <p class="sec-lead rv rv-d2">
+      作って終わりの制作会社でも、数字だけのコンサルでもありません。
+      30年ブランドを育て続けてきた当事者として、戦略から表現、運用までを一気通貫でお引き受けします。
+    </p>
+
+    <!-- フラッグシップ：マーケットデザイン（最上位配置） -->
+    <div class="flagship rv">
+      <div class="fs-tag">FLAGSHIP SERVICE</div>
+      <div class="fs-no">01</div>
+      <h3>マーケットデザイン</h3>
+      <div class="fs-en">Market Design Consulting</div>
+      <div class="fs-body">
+        <p>
+          個別の施策の前に、「誰と誰が、どんなインセンティブで出会う市場なのか」という構造そのものを設計する上流コンサルティングです。
+          マッチングの仕組み、価格設計、エコシステム構築——
+          市場のルールから描き直すことで、広告費に頼らない持続的な成長基盤をつくります。
+          Dr.Jenaの知的資本を象徴する、最上位のサービスです。
+        </p>
+        <div class="svc-flow">
+          <div class="row"><span class="k">課題</span><div>施策を打っても単発で終わる。競合と同じ土俵で消耗している。</div></div>
+          <div class="row"><span class="k">提供価値</span><div>市場・インセンティブ・仕組みそのものの設計。戦い方ではなく「戦う場所」から描く。</div></div>
+          <div class="row"><span class="k">成果イメージ</span><div>価格競争から脱し、自社が主導権を持つエコシステムでの継続成長。</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- サービスカード×4 -->
+    <div class="svc-grid">
+      <div class="svc-card rv">
+        <div class="no">02</div>
+        <h3>HP制作 / Web制作</h3>
+        <div class="en">Web Design &amp; Development</div>
+        <dl>
+          <dt>課題</dt>
+          <dd>サイトはあるのに問い合わせに繋がらない。ブランドの世界観が伝わらない。</dd>
+          <dt>提供価値</dt>
+          <dd>ブランディングを起点にした「伝わる・売れる」サイトを、デザインから実装まで一気通貫。30年ブランドを育てた審美眼をそのまま形にします。</dd>
+          <dt>成果イメージ</dt>
+          <dd>初訪問の3秒で「信頼できる」と感じさせ、問い合わせまで迷わせない導線。</dd>
+        </dl>
+        <div class="more">View Detail →</div>
+      </div>
+
+      <div class="svc-card rv rv-d1">
+        <div class="no">03</div>
+        <h3>WEBコンサルティング</h3>
+        <div class="en">Web Consulting</div>
+        <dl>
+          <dt>課題</dt>
+          <dd>作ったサイトが放置され、何を改善すべきか分からないまま時間だけが過ぎている。</dd>
+          <dt>提供価値</dt>
+          <dd>サイト診断・SEO・CVR改善・運用伴走。作って終わりにせず、データに基づいて育て続けます。</dd>
+          <dt>成果イメージ</dt>
+          <dd>毎月の改善サイクルが回り、サイトが「コスト」から「資産」に変わる状態。</dd>
+        </dl>
+        <div class="more">View Detail →</div>
+      </div>
+
+      <div class="svc-card rv">
+        <div class="no">04</div>
+        <div class="pkg">PACKAGE</div>
+        <h3>AIマーケティング</h3>
+        <div class="en">AI Marketing Package</div>
+        <dl>
+          <dt>課題</dt>
+          <dd>「AIを使うべき」とは分かっているが、何から始めれば工数と成果が変わるのか見えない。</dd>
+          <dt>提供価値</dt>
+          <dd>生成AIによるコンテンツ制作・広告運用・分析の自動化を、明確な3プランのパッケージ商品として提供。「何ができるか」ではなく「何がどう変わるか」で設計します。</dd>
+          <dt>成果イメージ</dt>
+          <dd>コンテンツ制作の工数を抑えながら発信量を増やし、データが自動で溜まる体制へ。</dd>
+        </dl>
+        <a href="#plans" class="more">View Plans →</a>
+      </div>
+
+      <div class="svc-card rv rv-d1">
+        <div class="no">05</div>
+        <h3>WEB3.0</h3>
+        <div class="en">Web3 / Blockchain Strategy</div>
+        <dl>
+          <dt>課題</dt>
+          <dd>NFTやトークンに興味はあるが、自社ビジネスにどう繋がるのか誰も翻訳してくれない。</dd>
+          <dt>提供価値</dt>
+          <dd>ブロックチェーン・トークン・会員権NFT・分散型の思想を、ビジネス実装レベルに翻訳。難解な流行語ではなく「次の10年のブランド資産づくり」として設計します。</dd>
+          <dt>成果イメージ</dt>
+          <dd>ファンコミュニティが資産として機能し、顧客が「保有者」に変わる関係性。</dd>
+        </dl>
+        <div class="more">View Detail →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. AIマーケティング パッケージ（プラン表） ============ -->
+<section class="section" id="plans">
+  <div class="wrap">
+    <div class="eyebrow rv">AI Marketing Package</div>
+    <h2 class="sec-title rv rv-d1">AIで、工数と成果は<br>ここまで変わる。</h2>
+    <p class="sec-lead rv rv-d2">
+      「AIで何ができるか」の話はもう十分。Dr.JenaのAIマーケティングは、
+      御社の工数と成果がどう変わるかから逆算した、明確な3つのプランです。
+    </p>
+    <p class="plans-note rv rv-d2">※ 価格・仕様の詳細はお問い合わせください（現在最終調整中です）。<!-- 要確認：確定価格が出たら差し替え --></p>
+
+    <div class="plan-grid">
+      <!-- 梅 -->
+      <div class="plan rv">
+        <div class="p-rank">Essential</div>
+        <h3>AIスタート</h3>
+        <p class="p-for">まずAI活用の一歩目を踏み出したい。コンテンツ発信の工数をとにかく減らしたい方に。</p>
+        <div class="p-price">
+          <span class="v">¥---,---</span>
+          <span class="u">月額（税込）／要お見積り<!-- 要確認 --></span>
+        </div>
+        <ul>
+          <li>生成AIによる記事・SNSコンテンツ制作（月間本数は要相談）</li>
+          <li>月次レポート（基本指標）</li>
+          <li>チャットでのご相談窓口</li>
+          <li class="dis">広告運用の自動化・改善</li>
+          <li class="dis">戦略設計ミーティング</li>
+        </ul>
+        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="p-btn">このプランを相談する</a>
+      </div>
+
+      <!-- 竹（推奨） -->
+      <div class="plan reco rv rv-d1">
+        <div class="p-tag">RECOMMENDED</div>
+        <div class="p-rank">Growth</div>
+        <h3>AIグロース</h3>
+        <p class="p-for">発信だけでなく、集客と売上まで一気に伸ばしたい。もっとも選ばれている標準プランです。</p>
+        <div class="p-price">
+          <span class="v">¥---,---</span>
+          <span class="u">月額（税込）／要お見積り<!-- 要確認 --></span>
+        </div>
+        <ul>
+          <li>生成AIによるコンテンツ制作（記事・SNS・LP原稿）</li>
+          <li>AIを活用した広告運用・クリエイティブ改善</li>
+          <li>分析ダッシュボードの自動化</li>
+          <li>月次の戦略ミーティング</li>
+          <li class="dis">マーケットデザイン級の上流設計</li>
+        </ul>
+        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="p-btn">このプランを相談する</a>
+      </div>
+
+      <!-- 松 -->
+      <div class="plan rv rv-d2">
+        <div class="p-rank">Signature</div>
+        <h3>AIパートナー</h3>
+        <p class="p-for">マーケティング部門を丸ごと任せたい。経営に伴走する最上位プランです。</p>
+        <div class="p-price">
+          <span class="v">¥---,---</span>
+          <span class="u">月額（税込）／要お見積り<!-- 要確認 --></span>
+        </div>
+        <ul>
+          <li>AIグロースの全内容</li>
+          <li>ブランド戦略・上流設計への伴走（マーケットデザイン視点）</li>
+          <li>WEB3.0施策のご提案・検証</li>
+          <li>経営レイヤーへの月次報告・随時相談</li>
+          <li>優先サポート</li>
+        </ul>
+        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="p-btn">このプランを相談する</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. Approach / Process ============ -->
+<section class="section dark" id="process">
+  <div class="wrap">
+    <div class="eyebrow rv">Approach</div>
+    <h2 class="sec-title rv rv-d1">伴走のプロセス</h2>
+    <p class="sec-lead rv rv-d2">
+      納品して終わり、ではありません。ブランドを30年育ててきた私たちのプロセスは、
+      公開後の「育てるフェーズ」までを最初から設計に含みます。
+    </p>
+
+    <div class="proc-list">
+      <div class="proc rv">
+        <div class="p-no">01</div>
+        <h3>ヒアリング</h3>
+        <p>事業の現在地と理想、ブランドの本当の価値を深く伺います。</p>
+      </div>
+      <div class="proc rv rv-d1">
+        <div class="p-no">02</div>
+        <h3>戦略設計</h3>
+        <p>市場・競合・顧客を分析し、勝ち筋と物語を設計します。</p>
+      </div>
+      <div class="proc rv rv-d2">
+        <div class="p-no">03</div>
+        <h3>デザイン・制作</h3>
+        <p>審美眼と機能性を両立した表現へ。細部まで磨き上げます。</p>
+      </div>
+      <div class="proc rv rv-d3">
+        <div class="p-no">04</div>
+        <h3>公開・実装</h3>
+        <p>計測環境まで整えてローンチ。ここからが本番です。</p>
+      </div>
+      <div class="proc rv rv-d4">
+        <div class="p-no">05</div>
+        <h3>運用・改善</h3>
+        <p>データとAIを使い、育て続ける。成果に伴走します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. Why Dr.Jena ============ -->
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="eyebrow rv">Why Dr.Jena</div>
+    <h2 class="sec-title rv rv-d1">選ばれる3つの理由</h2>
+
+    <div class="why-grid">
+      <div class="why rv">
+        <div class="w-no">Reason 01</div>
+        <h3>30年、ブランドを<br>育ててきた当事者</h3>
+        <div class="w-en">30 Years of Brand Building</div>
+        <p>
+          机上の理論ではありません。原宿で30年以上、自らのブランドを育て、ファンと信頼を積み上げてきた「当事者」としての経験が、すべての提案の土台にあります。
+        </p>
+      </div>
+      <div class="why rv rv-d1">
+        <div class="w-no">Reason 02</div>
+        <h3>美容ブランドで磨いた<br>デザイン力と審美眼</h3>
+        <div class="w-en">Refined Design &amp; Aesthetics</div>
+        <p>
+          「美しさ」を商品として扱ってきたからこそ、妥協のない表現水準を知っています。特に美容・サロン・D2C・化粧品など、魅せ方が勝負を分ける業界で力を発揮します。
+        </p>
+      </div>
+      <div class="why rv rv-d2">
+        <div class="w-no">Reason 03</div>
+        <h3>AI・WEB3を実装する<br>先進性</h3>
+        <div class="w-en">AI &amp; Web3 Readiness</div>
+        <p>
+          伝統だけでは終わりません。生成AIによるマーケティング自動化から、WEB3.0時代のブランド資産づくりまで。次の10年を見据えた技術を、ビジネスの言葉に翻訳して実装します。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. Beauty（美容事業） ============ -->
+<section class="section beauty" id="beauty">
+  <div class="wrap">
+    <div class="eyebrow rv">Beauty — Our Origin</div>
+    <h2 class="sec-title rv rv-d1">すべての原点は、<br>原宿の美容ブランドとして。</h2>
+    <p class="sec-lead rv rv-d2">
+      私たちの提案に説得力があるのは、自らが30年以上、美の現場でお客様と向き合い続けてきたから。
+      Dr.Jenaの美容事業は、いまもこれからも、ブランドの原点であり信頼の証です。
+    </p>
+
+    <div class="beauty-grid">
+      <!-- サロン -->
+      <div class="b-card rv">
+        <div class="b-en">Beauty Salon</div>
+        <h3>ビューティーサロン</h3>
+        <p>
+          明治神宮前〈原宿〉駅から徒歩5分。原宿の美容パワースポットとして、
+          プロの手技とホームエステを組み合わせたコラボレーションケアをご提供しています。
+          日々のケアとサロンでの集中ケア、その両輪で美しさに寄り添います。
+        </p>
+        <ul class="b-info">
+          <li><span class="k">営業時間</span><span>11:00〜20:00</span></li>
+          <li><span class="k">定休日</span><span>火曜日（月末の火曜日は営業）</span></li>
+          <li><span class="k">アクセス</span><span>東京メトロ千代田線・副都心線<br>明治神宮前〈原宿〉駅 徒歩5分</span></li>
+          <li><span class="k">TEL</span><span><a href="tel:0364273037">03-6427-3037</a></span></li>
+        </ul>
+        <div class="b-cta">
+          <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-dark">無料体験を予約する <span class="ar">→</span></a>
+          <a href="tel:0364273037" class="btn btn-outline">電話で問い合わせる</a>
+        </div>
+      </div>
+
+      <!-- ジェーナプロ -->
+      <div class="b-card rv rv-d1">
+        <div class="b-en">Home Esthetic Machine</div>
+        <h3>ホームエステマシン「ジェーナプロ」</h3>
+        <div class="patent">特許取得波形「I.W波」搭載｜特許第4759694号</div>
+        <p>
+          サロン品質のケアをご自宅でも。特許を取得した独自波形「I.W波」を搭載し、
+          4つの機能でお肌とボディのコンディションを整えるケアをサポートします。
+          サロンでのケアと組み合わせることで、より充実したホームケア習慣が期待できます。
+        </p>
+        <div class="func-grid">
+          <div class="func"><b>セルソニック</b><span>音波によるトリートメントケア</span></div>
+          <div class="func"><b>セルキュアプロ</b><span>肌を整えるコンディショニング</span></div>
+          <div class="func"><b>ディーポレーション</b><span>うるおいを届けるケアをサポート</span></div>
+          <div class="func"><b>セルソイオン</b><span>すこやかな肌へ導くイオンケア</span></div>
+        </div>
+        <div class="b-cta">
+          <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-dark">無料体験で試してみる <span class="ar">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <p class="b-note rv">
+      ※ 効果・効能には個人差があります。本ページの記載は特定の効果を保証するものではありません。
+    </p>
+  </div>
+</section>
+
+<!-- ============ 8. Works / 実績 ============ -->
+<section class="section dark" id="works">
+  <div class="wrap">
+    <div class="eyebrow rv">Works</div>
+    <h2 class="sec-title rv rv-d1">実績・ケーススタディ</h2>
+    <p class="sec-lead rv rv-d2">
+      新事業のケーススタディは現在準備中です。まずは30年のブランド運営そのものを、私たちの最初の実績としてご覧ください。
+    </p>
+
+    <!-- 要確認：実績が確定したらカードを差し替え -->
+    <div class="works-grid">
+      <div class="work rv">
+        <div class="w-soon">Coming Soon</div>
+        <div class="w-case">CASE 01</div>
+        <p>ブランドサイト リニューアル（準備中）</p>
+      </div>
+      <div class="work rv rv-d1">
+        <div class="w-soon">Coming Soon</div>
+        <div class="w-case">CASE 02</div>
+        <p>AIマーケティング導入支援（準備中）</p>
+      </div>
+      <div class="work rv rv-d2">
+        <div class="w-soon">Coming Soon</div>
+        <div class="w-case">CASE 03</div>
+        <p>マーケットデザイン コンサルティング（準備中）</p>
+      </div>
+    </div>
+    <p class="works-note rv">※ ケーススタディは順次公開予定です。個別の事例はお問い合わせの際にご紹介できる場合があります。</p>
+  </div>
+</section>
+
+<!-- ============ 9. CTA（2導線） ============ -->
+<section class="cta-sec" id="contact">
+  <div class="orb3"></div>
+  <div class="wrap">
+    <div class="cta-head rv">
+      <div class="en-ghost">Contact</div>
+      <h2>あなたのブランドの価値を、<br>正しく届けるために。</h2>
+    </div>
+
+    <div class="cta-grid">
+      <!-- 新事業：無料相談 -->
+      <div class="cta-box rv">
+        <div class="c-en">For Business</div>
+        <h3>事業成長のご相談</h3>
+        <p>
+          Web制作・AIマーケティング・WEB3.0・マーケットデザインのご相談はこちら。
+          現状を伺い、最適な打ち手を一緒に描きます。相談は無料です。
+        </p>
+        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-gold">無料相談を申し込む <span class="ar">→</span></a>
+        <div class="cta-tel">メールでのご相談<br><a href="mailto:info@dr-jena.com" style="font-size:15px">info@dr-jena.com</a></div>
+      </div>
+
+      <!-- 美容：無料体験 -->
+      <div class="cta-box rv rv-d1">
+        <div class="c-en">For Beauty</div>
+        <h3>サロン無料体験</h3>
+        <p>
+          原宿のサロンで、プロの手技とジェーナプロによるケアをご体験いただけます。
+          まずはお気軽にお試しください。
+        </p>
+        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-gold">無料体験を予約する <span class="ar">→</span></a>
+        <div class="cta-tel">お電話でのご予約（11:00〜20:00／火曜定休）<br><a href="tel:0364273037">03-6427-3037</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. Footer ============ -->
+<footer id="company">
+  <div class="wrap">
+    <div class="f-top">
+      <div class="f-logo">
+        <div class="en">Dr.Jena</div>
+        <div class="jp">ドクタージェーナ</div>
+        <p>
+          本物の美しさは、正しく伝わってこそ価値になる。<br>
+          原宿発、美容 × クリエイティブ／マーケティングの<br>
+          ブランドカンパニー。
+        </p>
+        <div class="f-sns">
+          <a href="https://www.instagram.com/jenasalon/" target="_blank" rel="noopener" aria-label="Instagram">
+            <!-- Instagramアイコン（インラインSVG） -->
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.2"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+            @jenasalon
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="f-h">Company</div>
+        <ul class="f-list">
+          <li><span class="k">社名</span><span>Dr.Jena（ドクタージェーナ）</span></li>
+          <li><span class="k">代表者</span><span>伊藤 紘子</span></li>
+          <li><span class="k">所在地</span><span>〒150-0001<br>東京都渋谷区神宮前6-25-8<br>神宮前コーポラス1108</span></li>
+          <li><span class="k">アクセス</span><span>東京メトロ千代田線・副都心線<br>明治神宮前〈原宿〉駅 徒歩5分</span></li>
+          <li><span class="k">TEL</span><span><a href="tel:0364273037">03-6427-3037</a></span></li>
+          <li><span class="k">MAIL</span><span><a href="mailto:info@dr-jena.com">info@dr-jena.com</a></span></li>
+          <li><span class="k">営業時間</span><span>11:00〜20:00</span></li>
+          <li><span class="k">定休日</span><span>火曜日（月末の火曜日は営業）</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="f-h">Menu</div>
+        <nav class="f-nav">
+          <a href="#philosophy">Philosophy — 私たちの哲学</a>
+          <a href="#services">Services — 事業内容</a>
+          <a href="#plans">AI Plans — AIマーケティング</a>
+          <a href="#process">Process — 伴走の流れ</a>
+          <a href="#beauty">Beauty — 美容事業</a>
+          <a href="#works">Works — 実績</a>
+          <a href="#contact">Contact — ご相談・ご予約</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="f-btm">
+      <small>© <span id="year"></span> Dr.Jena. All Rights Reserved.</small>
+      <a href="#" class="top-link">Back to Top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   JS：Intersection Observer 中心の軽量実装（外部依存なし）
+============================================================ */
+(function(){
+  'use strict';
+
+  /* ---- ローダー：読み込み後にフェードアウト ---- */
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      document.getElementById('loader').classList.add('done');
+    }, 900);
+  });
+  /* 保険：loadが遅くても2.5秒で必ず開く */
+  setTimeout(function(){
+    document.getElementById('loader').classList.add('done');
+  }, 2500);
+
+  /* ---- ヘッダー：スクロールで背景付与 ---- */
+  var header = document.getElementById('header');
+  var onScrollHeader = function(){
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  };
+  window.addEventListener('scroll', onScrollHeader, {passive:true});
+  onScrollHeader();
+
+  /* ---- モバイルメニュー ---- */
+  var menuBtn = document.getElementById('menuBtn');
+  menuBtn.addEventListener('click', function(){
+    document.body.classList.toggle('menu-open');
+  });
+  document.querySelectorAll('#mobileNav a').forEach(function(a){
+    a.addEventListener('click', function(){
+      document.body.classList.remove('menu-open');
+    });
+  });
+
+  /* ---- スクロール連動フェードイン（Intersection Observer） ---- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('is-in');
+        io.unobserve(e.target); // 一度表示したら監視解除（軽量化）
+      }
+    });
+  }, {threshold:.14, rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+  /* ---- 数字カウントアップ（実績セクション） ---- */
+  var counted = false;
+  var statsEl = document.querySelector('.stats');
+  if(statsEl){
+    var ioCount = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting && !counted){
+        counted = true;
+        document.querySelectorAll('[data-count]').forEach(function(el){
+          var target = parseInt(el.dataset.count, 10);
+          var t0 = null;
+          var dur = 1600;
+          var step = function(ts){
+            if(!t0) t0 = ts;
+            var p = Math.min((ts - t0) / dur, 1);
+            /* イーズアウトで上品に減速 */
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased);
+            if(p < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        });
+        ioCount.disconnect();
+      }
+    }, {threshold:.4});
+    ioCount.observe(statsEl);
+  }
+
+  /* ---- Hero光彩のパララックス（控えめ・rAFスロットリング） ---- */
+  var paraEls = document.querySelectorAll('[data-para]');
+  var ticking = false;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceMotion && paraEls.length){
+    window.addEventListener('scroll', function(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var y = window.scrollY;
+        paraEls.forEach(function(el){
+          el.style.transform = 'translateY(' + (y * parseFloat(el.dataset.para)) + 'px)';
+        });
+        ticking = false;
+      });
+    }, {passive:true});
+  }
+
+  /* ---- コピーライト年 ---- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
