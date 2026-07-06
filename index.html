@@ -1197,5 +1197,298 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
   document.getElementById('year').textContent = new Date().getFullYear();
 })();
 </script>
+
+<!-- ============================================================
+     Chatbot：Dr.Jenaコンシェルジュ（完全クライアントサイド／外部依存なし）
+     選択式チップ＋キーワード応答で、無料相談／無料体験の2CTAへ誘導する
+============================================================ -->
+<style>
+/* ---- 起動ボタン ---- */
+#cbBtn{
+  position:fixed;right:22px;bottom:22px;z-index:200;
+  width:60px;height:60px;border-radius:50%;cursor:pointer;
+  background:var(--ink);border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 32px -8px rgba(22,21,15,.45);
+  transition:transform .4s var(--ease),background .4s;
+}
+#cbBtn:hover{transform:translateY(-4px);background:var(--char)}
+#cbBtn svg{width:26px;height:26px;stroke:var(--gold-bright)}
+#cbBtn .cb-badge{
+  position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:50%;
+  background:var(--gold);opacity:0;transition:opacity .4s;
+}
+#cbBtn.has-badge .cb-badge{opacity:1;animation:cbPulse 2s ease infinite}
+@keyframes cbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+#cbBtn .ic-close{display:none}
+body.cb-open #cbBtn .ic-chat{display:none}
+body.cb-open #cbBtn .ic-close{display:block}
+
+/* ---- パネル ---- */
+#cbPanel{
+  position:fixed;right:22px;bottom:96px;z-index:200;
+  width:min(370px,calc(100vw - 28px));height:min(540px,calc(100dvh - 130px));
+  background:var(--paper);border:1px solid var(--gold-line);
+  box-shadow:0 30px 70px -20px rgba(22,21,15,.4);
+  display:flex;flex-direction:column;overflow:hidden;
+  opacity:0;visibility:hidden;transform:translateY(18px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease),visibility .5s;
+}
+body.cb-open #cbPanel{opacity:1;visibility:visible;transform:none}
+.cb-head{
+  background:var(--ink);padding:18px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0;
+}
+.cb-head .cb-mark{
+  width:38px;height:38px;border-radius:50%;border:1px solid var(--gold);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif-en);font-size:16px;color:var(--gold-bright);
+}
+.cb-head .t{font-size:13px;letter-spacing:.14em;color:var(--paper);font-weight:500;line-height:1.5}
+.cb-head .s{font-family:var(--serif-en);font-style:italic;font-size:10.5px;letter-spacing:.16em;color:var(--gold-bright)}
+.cb-body{flex:1;overflow-y:auto;padding:20px 16px;display:flex;flex-direction:column;gap:12px}
+.cb-msg{
+  max-width:86%;padding:12px 16px;font-size:12.5px;line-height:1.9;letter-spacing:.03em;
+  animation:cbIn .45s var(--ease);
+}
+@keyframes cbIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.cb-msg.bot{align-self:flex-start;background:var(--paper-deep);border:1px solid rgba(179,146,79,.18);color:var(--char)}
+.cb-msg.user{align-self:flex-end;background:var(--ink);color:var(--paper)}
+.cb-msg a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.cb-msg .cb-cta{
+  display:block;text-align:center;margin-top:10px;padding:11px 14px;
+  background:var(--gold);color:var(--ink);text-decoration:none;
+  font-size:12px;letter-spacing:.16em;transition:background .3s;
+}
+.cb-msg .cb-cta:hover{background:var(--gold-bright)}
+.cb-chips{display:flex;flex-wrap:wrap;gap:8px;animation:cbIn .45s var(--ease)}
+.cb-chips button{
+  font-family:var(--sans);font-size:11.5px;letter-spacing:.08em;cursor:pointer;
+  padding:9px 15px;background:none;border:1px solid var(--gold);color:var(--gold);
+  transition:all .3s;
+}
+.cb-chips button:hover{background:var(--gold);color:var(--white)}
+.cb-typing{align-self:flex-start;display:flex;gap:5px;padding:14px 18px;background:var(--paper-deep);border:1px solid rgba(179,146,79,.18)}
+.cb-typing i{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:cbDot 1.2s ease infinite}
+.cb-typing i:nth-child(2){animation-delay:.18s}
+.cb-typing i:nth-child(3){animation-delay:.36s}
+@keyframes cbDot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-4px)}}
+.cb-foot{display:flex;gap:0;border-top:1px solid var(--gold-line);flex-shrink:0;background:var(--white)}
+.cb-foot input{
+  flex:1;border:none;outline:none;padding:15px 16px;font-family:var(--sans);
+  font-size:16px;background:transparent;color:var(--ink);
+}
+.cb-foot input::placeholder{color:var(--gray-light);font-size:12.5px}
+.cb-foot button{
+  border:none;cursor:pointer;background:var(--ink);color:var(--gold-bright);
+  padding:0 22px;font-size:12px;letter-spacing:.14em;font-family:var(--sans);transition:background .3s;
+}
+.cb-foot button:hover{background:var(--char)}
+@media(max-width:640px){
+  #cbBtn{right:16px;bottom:16px;width:54px;height:54px}
+  #cbPanel{right:14px;bottom:84px}
+}
+</style>
+
+<button id="cbBtn" aria-label="チャットで相談する" aria-expanded="false">
+  <span class="cb-badge" aria-hidden="true"></span>
+  <svg class="ic-chat" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><path d="M4 5.5h16v11H9l-5 4v-15z" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke-linecap="round"/></svg>
+  <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+</button>
+
+<div id="cbPanel" role="dialog" aria-label="Dr.Jenaコンシェルジュ">
+  <div class="cb-head">
+    <div class="cb-mark">J</div>
+    <div>
+      <div class="t">Dr.Jena コンシェルジュ</div>
+      <div class="s">Concierge — How may we help?</div>
+    </div>
+  </div>
+  <div class="cb-body" id="cbBody"></div>
+  <div class="cb-foot">
+    <input id="cbInput" type="text" placeholder="ご質問をどうぞ（例：料金は？）" autocomplete="off">
+    <button id="cbSend" aria-label="送信">送信</button>
+  </div>
+</div>
+
+<script>
+/* Dr.Jenaコンシェルジュ：IIFE＋外部依存なし。回答は静的定義（薬機法配慮済みの文言のみ） */
+(function(){
+  'use strict';
+  var body = document.getElementById('cbBody');
+  var input = document.getElementById('cbInput');
+  var btn = document.getElementById('cbBtn');
+
+  var CONTACT = 'https://dr-jena.com/contact.php';
+
+  /* ---- 回答定義 ---- */
+  var A = {
+    services: {
+      html: 'Dr.Jenaのクリエイティブ／マーケティング事業は5つです。<br>'
+        + '① <a href="#services">マーケットデザイン</a>（市場・仕組みの上流設計／フラッグシップ）<br>'
+        + '② HP制作・Web制作<br>③ WEBコンサルティング<br>④ AIマーケティング（パッケージ）<br>⑤ WEB3.0<br>'
+        + '詳しくは<a href="#services">サービス一覧</a>をご覧ください。',
+      chips: ['AIマーケの料金プラン','無料相談したい','美容サロンについて']
+    },
+    plans: {
+      html: 'AIマーケティングは3つのプランをご用意しています。<br>'
+        + '・<b>AIスタート</b>：AI活用の第一歩、コンテンツ制作の工数削減に<br>'
+        + '・<b>AIグロース</b>：広告運用・分析まで含む標準プラン（おすすめ）<br>'
+        + '・<b>AIパートナー</b>：戦略まで伴走する最上位プラン<br>'
+        + '価格は現在最終調整中のため、お見積りにてご案内しています。<a href="#plans">プラン比較表を見る</a>'
+        + '<a class="cb-cta" href="' + CONTACT + '" target="_blank" rel="noopener">無料相談で見積りを聞く →</a>',
+      chips: ['サービス一覧を見たい','無料相談したい']
+    },
+    beauty: {
+      html: '原宿のサロンでは、プロの手技とホームエステマシン「ジェーナプロ」（特許取得波形「I.W波」搭載）を組み合わせたケアをご提供しています。<br>'
+        + '営業時間：11:00〜20:00（火曜定休／月末の火曜は営業）<br>'
+        + 'まずは無料体験がおすすめです。'
+        + '<a class="cb-cta" href="' + CONTACT + '" target="_blank" rel="noopener">無料体験を予約する →</a>',
+      chips: ['アクセス・営業時間','サービス一覧を見たい']
+    },
+    access: {
+      html: '<b>所在地</b>：〒150-0001 東京都渋谷区神宮前6-25-8 神宮前コーポラス1108<br>'
+        + '<b>アクセス</b>：東京メトロ千代田線・副都心線 明治神宮前〈原宿〉駅 徒歩5分<br>'
+        + '<b>営業時間</b>：11:00〜20:00（火曜定休／月末の火曜は営業）<br>'
+        + '<b>TEL</b>：<a href="tel:0364273037">03-6427-3037</a>',
+      chips: ['美容サロンについて','無料相談したい']
+    },
+    contact: {
+      html: 'ありがとうございます。ご相談は無料です。<br>'
+        + '事業のご相談（Web制作／AIマーケ／WEB3.0／マーケットデザイン）も、美容の無料体験も、こちらのフォームから承ります。'
+        + '<a class="cb-cta" href="' + CONTACT + '" target="_blank" rel="noopener">お問い合わせフォームへ →</a>'
+        + 'お急ぎの方は <a href="tel:0364273037">03-6427-3037</a>（11:00〜20:00／火曜定休）または <a href="mailto:info@dr-jena.com">info@dr-jena.com</a> へ。',
+      chips: ['アクセス・営業時間','AIマーケの料金プラン']
+    },
+    web: {
+      html: 'HP制作・Web制作は、ブランディングを起点に「伝わる・売れる」サイトをデザインから実装まで一気通貫でお作りします。30年ブランドを育てた審美眼をそのまま形にします。<br>'
+        + '公開後の運用・改善（WEBコンサルティング）まで伴走可能です。<a href="#services">詳しく見る</a>'
+        + '<a class="cb-cta" href="' + CONTACT + '" target="_blank" rel="noopener">制作の無料相談をする →</a>',
+      chips: ['AIマーケの料金プラン','サービス一覧を見たい']
+    },
+    web3: {
+      html: 'WEB3.0事業では、ブロックチェーン・トークン・会員権NFTなどを「次の10年のブランド資産づくり」としてビジネス実装レベルに翻訳してご提案します。難解な専門用語ではなく、御社の事業の言葉でご説明しますのでご安心ください。'
+        + '<a class="cb-cta" href="' + CONTACT + '" target="_blank" rel="noopener">WEB3.0の無料相談をする →</a>',
+      chips: ['サービス一覧を見たい','無料相談したい']
+    },
+    md: {
+      html: 'マーケットデザインは、個別の施策の前に「市場・インセンティブ・仕組みそのもの」を設計する、当社最上位のコンサルティングです。マッチングの仕組み、価格設計、エコシステム構築などを扱います。<a href="#services">詳しく見る</a>'
+        + '<a class="cb-cta" href="' + CONTACT + '" target="_blank" rel="noopener">無料相談で詳しく聞く →</a>',
+      chips: ['サービス一覧を見たい','AIマーケの料金プラン']
+    },
+    fallback: {
+      html: '申し訳ありません、うまくお答えできませんでした。下記からお選びいただくか、<a href="' + CONTACT + '" target="_blank" rel="noopener">お問い合わせフォーム</a>より直接ご相談ください。',
+      chips: ['サービス一覧を見たい','AIマーケの料金プラン','美容サロンについて','アクセス・営業時間','無料相談したい']
+    }
+  };
+
+  /* チップ文言 → 回答キー */
+  var CHIP_MAP = {
+    'サービス一覧を見たい':'services',
+    'AIマーケの料金プラン':'plans',
+    '美容サロンについて':'beauty',
+    'アクセス・営業時間':'access',
+    '無料相談したい':'contact'
+  };
+
+  /* ---- キーワードルーター（自由入力用） ---- */
+  function route(text){
+    var t = text.toLowerCase();
+    if(/料金|価格|費用|いくら|プラン|見積/.test(t)) return 'plans';
+    if(/ai|エーアイ|人工知能|自動化/.test(t)) return 'plans';
+    if(/web3|ウェブ3|nft|トークン|ブロックチェーン/.test(t)) return 'web3';
+    if(/マーケットデザイン|市場設計|エコシステム|マッチング/.test(t)) return 'md';
+    if(/hp|ホームページ|サイト|制作|デザイン|seo|コンサル/.test(t)) return 'web';
+    if(/美容|サロン|エステ|体験|ジェーナプロ|肌|ケア|予約/.test(t)) return 'beauty';
+    if(/アクセス|場所|住所|営業|時間|定休|行き方|駅|原宿/.test(t)) return 'access';
+    if(/相談|問い合わせ|連絡|電話|メール|依頼|お願い/.test(t)) return 'contact';
+    if(/サービス|事業|何が|できる/.test(t)) return 'services';
+    return 'fallback';
+  }
+
+  /* ---- 描画ヘルパー ---- */
+  function scrollBottom(){ body.scrollTop = body.scrollHeight; }
+
+  function addMsg(role, html){
+    var div = document.createElement('div');
+    div.className = 'cb-msg ' + role;
+    if(role === 'user'){ div.textContent = html; } else { div.innerHTML = html; }
+    body.appendChild(div);
+    scrollBottom();
+  }
+
+  function addChips(list){
+    var old = body.querySelector('.cb-chips');
+    if(old) old.remove();
+    var wrap = document.createElement('div');
+    wrap.className = 'cb-chips';
+    list.forEach(function(label){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', function(){ handle(label, CHIP_MAP[label] || route(label)); });
+      wrap.appendChild(b);
+    });
+    body.appendChild(wrap);
+    scrollBottom();
+  }
+
+  function reply(key){
+    var typing = document.createElement('div');
+    typing.className = 'cb-typing';
+    typing.innerHTML = '<i></i><i></i><i></i>';
+    body.appendChild(typing);
+    scrollBottom();
+    setTimeout(function(){
+      typing.remove();
+      var a = A[key] || A.fallback;
+      addMsg('bot', a.html);
+      addChips(a.chips);
+    }, 700);
+  }
+
+  function handle(userText, key){
+    addMsg('user', userText);
+    reply(key);
+  }
+
+  /* ---- 送信（Enter誤送信防止：IME変換中は無視） ---- */
+  function send(){
+    var v = input.value.trim();
+    if(!v) return;
+    input.value = '';
+    handle(v, route(v));
+  }
+  document.getElementById('cbSend').addEventListener('click', send);
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !e.isComposing && e.keyCode !== 229){ e.preventDefault(); send(); }
+  });
+
+  /* ---- 開閉 ---- */
+  var greeted = false;
+  btn.addEventListener('click', function(){
+    var open = document.body.classList.toggle('cb-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.classList.remove('has-badge');
+    if(open && !greeted){
+      greeted = true;
+      setTimeout(function(){
+        addMsg('bot', 'こんにちは。Dr.Jenaコンシェルジュです。<br>ご用件をお選びいただくか、ご質問を入力してください。');
+        addChips(['サービス一覧を見たい','AIマーケの料金プラン','美容サロンについて','アクセス・営業時間','無料相談したい']);
+      }, 350);
+    }
+  });
+
+  /* ページ内アンカーをボットから押したらパネルを閉じてスクロールを見せる */
+  body.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(a){ document.body.classList.remove('cb-open'); btn.setAttribute('aria-expanded','false'); }
+  });
+
+  /* 8秒後にバッジで存在をさりげなく知らせる（開いていなければ） */
+  setTimeout(function(){
+    if(!document.body.classList.contains('cb-open')) btn.classList.add('has-badge');
+  }, 8000);
+})();
+</script>
 </body>
 </html>
