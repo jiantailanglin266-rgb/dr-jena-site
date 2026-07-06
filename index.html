@@ -245,6 +245,49 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 @keyframes cueDrop{0%{top:-40%}60%,100%{top:110%}}
 
 /* ============================================================
+   1.5 Gallery Marquee（FV直下：画像帯が左へ自動で流れ続ける）
+   速度・高さ・間隔は下の3つのCSS変数だけで調整可能
+============================================================ */
+.marquee{
+  --marquee-duration:55s;   /* 1ループの時間（大きいほどゆっくり） */
+  --marquee-height:240px;   /* 画像の高さ */
+  --marquee-gap:18px;       /* 画像同士の間隔 */
+  background:var(--ink);
+  padding:60px 0;
+  overflow:hidden;
+  /* 左右端をそっとフェードさせて上品に */
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent);
+  mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent);
+}
+.marquee__viewport{display:flex;width:max-content;gap:var(--marquee-gap)}
+.marquee__track{
+  display:flex;gap:var(--marquee-gap);margin:0;padding:0;list-style:none;
+  animation:marqueeScroll var(--marquee-duration) linear infinite;
+  will-change:transform;
+}
+.marquee__item{flex-shrink:0}
+.marquee__item img{
+  height:var(--marquee-height);width:auto;object-fit:cover;display:block;
+  border:1px solid rgba(179,146,79,.25); /* 角丸なし＝既存トーンに統一 */
+}
+/* ホバーで一時停止（離すと再開） */
+.marquee:hover .marquee__track{animation-play-state:paused}
+/* トラック2セット連結を前提に、自分の幅＋gap分だけ左へ＝継ぎ目ゼロ */
+@keyframes marqueeScroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(calc(-100% - var(--marquee-gap)))}
+}
+@media(max-width:860px){
+  .marquee{--marquee-duration:36s;--marquee-height:150px;--marquee-gap:10px;padding:40px 0}
+}
+/* モーション低減環境：自動再生を止め、手動の横スクロールで閲覧可能に */
+@media(prefers-reduced-motion:reduce){
+  .marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+  .marquee__track{animation:none}
+  .marquee__track[aria-hidden="true"]{display:none}
+}
+
+/* ============================================================
    2. Statement / Philosophy
 ============================================================ */
 .statement{position:relative;overflow:hidden}
@@ -628,6 +671,27 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
   </div>
 
   <div class="scroll-cue">Scroll<i></i></div>
+</section>
+
+<!-- ============ 1.5 Gallery Marquee（FV直下） ============
+     画像の差し替え方法：下のセットA（8枚の <img>）の src を実画像のパスに
+     変えるだけでOK。セットB（複製）はJSが自動生成するので触らなくてよい。
+     実画像には width/height 属性を実寸比で入れるとレイアウトシフトを防げる。 -->
+<section class="marquee" aria-label="ギャラリー">
+  <div class="marquee__viewport">
+    <ul class="marquee__track">
+      <!-- 画像セットA（※要確認：実画像に差し替え） -->
+      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%231d1b14'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2001%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20280%20240'%3E%3Crect%20width='280'%20height='240'%20fill='%23232017'/%3E%3Crect%20x='12'%20y='12'%20width='256'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='140'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2002%3C/text%3E%3C/svg%3E" alt="" width="280" height="240" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%23191812'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2003%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%20240'%3E%3Crect%20width='240'%20height='240'%20fill='%2326221a'/%3E%3Crect%20x='12'%20y='12'%20width='216'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='120'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2004%3C/text%3E%3C/svg%3E" alt="" width="240" height="240" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%231d1b14'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2005%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20280%20240'%3E%3Crect%20width='280'%20height='240'%20fill='%23191812'/%3E%3Crect%20x='12'%20y='12'%20width='256'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='140'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2006%3C/text%3E%3C/svg%3E" alt="" width="280" height="240" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%23232017'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2007%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%20240'%3E%3Crect%20width='240'%20height='240'%20fill='%231d1b14'/%3E%3Crect%20x='12'%20y='12'%20width='216'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='120'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2008%3C/text%3E%3C/svg%3E" alt="" width="240" height="240" loading="lazy" decoding="async"></li>
+    </ul>
+    <!-- 画像セットB（Aの完全複製・継ぎ目消し用）はJSで自動生成 -->
+  </div>
 </section>
 
 <!-- ============ 2. Statement / Philosophy ============ -->
@@ -1192,6 +1256,21 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
       });
     }, {passive:true});
   }
+
+  /* ---- マーキー：トラックBを自動複製（画像差し替えはセットAだけでOK） ---- */
+  document.querySelectorAll('.marquee__viewport').forEach(function(vp){
+    var track = vp.querySelector('.marquee__track');
+    if(!track) return;
+    var clone = track.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    vp.appendChild(clone);
+    /* 複製前に始まったアニメーションは translateX(-100%) の基準幅が古いまま
+       固定されることがあるため、複製後に一度リセットして再スタートさせる */
+    var tracks = vp.querySelectorAll('.marquee__track');
+    tracks.forEach(function(t){ t.style.animation = 'none'; });
+    void track.offsetWidth; /* リフロー強制 */
+    tracks.forEach(function(t){ t.style.animation = ''; });
+  });
 
   /* ---- コピーライト年 ---- */
   document.getElementById('year').textContent = new Date().getFullYear();
