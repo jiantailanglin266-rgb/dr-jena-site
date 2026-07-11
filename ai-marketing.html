@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr.Jena（ドクタージェーナ）｜30年の美意識で、ブランドを育てる。美容 × クリエイティブ／マーケティング</title>
-<meta name="description" content="原宿で30年以上、美しさを追求してきたDr.Jena。ブランドを育て続けてきた審美眼と伝える力を、HP制作・WEBコンサルティング・AIマーケティング・WEB3.0・マーケットデザインへ。本物の美しさは、正しく伝わってこそ価値になる。">
-<meta property="og:title" content="Dr.Jena｜30年の美意識で、ブランドを育てる。">
-<meta property="og:description" content="美容 × クリエイティブ／マーケティング。原宿の美容ブランドDr.Jenaが、30年で培った「魅せる力・伝える力・育てる力」を企業とブランドの成長に注ぎます。">
+<title>AI MARKETING｜Dr.Jena — マーケットデザイン・HP制作・AIマーケティング・WEB3.0</title>
+<meta name="description" content="Dr.JenaのAI MARKETING。マーケットデザイン／HP制作／WEBコンサルティング／AIマーケティング3プラン／WEB3.0。30年ブランドを育てた当事者が、戦略から表現、運用まで一気通貫で伴走します。">
+<meta property="og:title" content="AI MARKETING｜Dr.Jena">
+<meta property="og:description" content="30年ブランドを育てた当事者による、マーケットデザイン・Web制作・AIマーケティング・WEB3.0の成長設計。">
 <meta property="og:type" content="website">
 
 <!-- Google Fonts：欧文セリフ（Cormorant Garamond）× 和文（Noto Sans JP / Noto Serif JP） -->
@@ -565,29 +565,6 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 .cta-tel a{font-family:var(--serif-en);font-size:21px;color:var(--gold-bright);letter-spacing:.12em;display:inline-block;margin-top:4px}
 
 /* ============================================================
-   3b. サービスインデックス（トップのダイジェスト → 下層ページ誘導）
-============================================================ */
-.svc-index{margin-top:64px;border-top:1px solid rgba(250,248,244,.14)}
-.svc-index > a{
-  display:flex;align-items:center;gap:34px;padding:28px 10px;
-  border-bottom:1px solid rgba(250,248,244,.14);
-  transition:background .4s var(--ease),padding .4s var(--ease);
-}
-.svc-index > a:hover{background:rgba(179,146,79,.06);padding-left:24px}
-.si-no{font-family:var(--serif-en);font-size:15px;letter-spacing:.2em;color:var(--gold-bright);flex-shrink:0}
-.si-body{flex:1;display:flex;align-items:baseline;gap:20px;flex-wrap:wrap}
-.si-t{font-family:var(--serif-jp);font-size:20px;font-weight:500;letter-spacing:.1em}
-.si-pkg{font-size:9px;letter-spacing:.24em;background:var(--gold-bright);color:var(--ink);padding:4px 10px;font-weight:500}
-.si-d{font-size:12.5px;color:rgba(250,248,244,.55);line-height:1.8}
-.si-ar{font-family:var(--serif-en);color:var(--gold-bright);transition:transform .4s var(--ease)}
-.svc-index > a:hover .si-ar{transform:translateX(6px)}
-.svc-more{margin-top:52px;text-align:center}
-@media(max-width:860px){
-  .svc-index > a{gap:18px;padding:24px 4px}
-  .si-body{flex-direction:column;gap:6px}
-}
-
-/* ============================================================
    10. Footer
 ============================================================ */
 footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
@@ -659,6 +636,23 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
   .rv{opacity:1;transform:none}
   html{scroll-behavior:auto}
 }
+
+/* ============================================================
+   下層ページ：サブヒーロー（AI MARKETING）
+============================================================ */
+.subhero{position:relative;overflow:hidden;background:var(--paper);padding:180px 0 96px}
+.subhero::before{
+  content:"AI Marketing";position:absolute;top:90px;right:-12px;
+  font-family:var(--serif-en);font-style:italic;font-size:clamp(70px,12vw,170px);
+  color:transparent;-webkit-text-stroke:1px rgba(179,146,79,.12);pointer-events:none;white-space:nowrap;
+}
+.crumb{display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.2em;color:var(--gray-light);margin-bottom:40px}
+.crumb a{transition:color .4s}
+.crumb a:hover{color:var(--gold)}
+.crumb em{font-style:normal;color:var(--gold)}
+.sub-title{font-family:var(--serif-en);font-weight:500;font-size:clamp(42px,7vw,76px);letter-spacing:.05em;line-height:1.1}
+.sub-title .sub-jp{display:block;font-family:var(--serif-jp);font-size:15px;font-weight:500;letter-spacing:.24em;color:var(--gold);margin-top:20px}
+@media(max-width:860px){.subhero{padding:140px 0 70px}}
 </style>
 </head>
 <body>
@@ -672,15 +666,17 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
 <!-- ============ Header ============ -->
 <header id="header">
   <div class="h-inner">
-    <a href="#" class="logo" aria-label="Dr.Jena トップへ">
+    <a href="./" class="logo" aria-label="Dr.Jena トップへ">
       <span class="en">Dr.Jena</span>
       <span class="jp">ドクタージェーナ</span>
     </a>
     <nav class="pc" aria-label="メインナビゲーション">
-      <a href="#philosophy">Philosophy</a>
-      <a href="ai-marketing.html">AI Marketing</a>
-      <a href="#beauty">Beauty</a>
-      <a href="#company">Company</a>
+      <a href="./">Top</a>
+      <a href="#services">Services</a>
+      <a href="#plans">AI Plans</a>
+      <a href="#process">Process</a>
+      <a href="./#beauty">Beauty</a>
+      <a href="./#company">Company</a>
       <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="h-cta">無料相談</a>
     </nav>
     <button id="menuBtn" aria-label="メニュー"><span></span><span></span></button>
@@ -690,100 +686,30 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
 <!-- モバイルナビ -->
 <div id="mobileNav">
   <ul>
-    <li><a href="#philosophy">Philosophy</a></li>
-    <li><a href="ai-marketing.html">AI Marketing</a></li>
-    <li><a href="#beauty">Beauty</a></li>
-    <li><a href="#company">Company</a></li>
+    <li><a href="./">Top</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#plans">AI Plans</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="./#beauty">Beauty</a></li>
+    <li><a href="./#company">Company</a></li>
     <li><a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="m-cta">無料相談・無料体験</a></li>
   </ul>
 </div>
 
-<!-- ============ 1. Hero（FV画像版） ============
-     画像の差し替え：images/fv.jpg を置き換えるだけ（width/height属性も実寸比に合わせる） -->
-<section class="hero-fv">
-  <div class="fv-visual">
-    <img class="fv-img" src="images/fv.png"
-         alt="Dr.Jena — 30年の美意識で、ブランドを育てる。原宿発、美容×クリエイティブ／マーケティング"
-         width="1672" height="941" fetchpriority="high" decoding="async">
-    <!-- 画像内に焼き込まれた「無料体験に申し込む」ボタンの位置に重ねた透明リンク -->
-    <a class="fv-hotspot" href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" aria-label="無料体験に申し込む"></a>
-  </div>
-  <div class="fv-under">
-    <!-- モバイルでは画像内の文字が小さくなるため、DOMテキストで補完（PCでは非表示・SEO用に保持） -->
-    <div class="fv-copy">
-      <h1>30年の美意識で、<br>ブランドを育てる。</h1>
-      <p>原宿で30年以上、"美しさ"と向き合い、ブランドを育て、信頼を積み上げてきたDr.Jena。その「魅せる力・伝える力・育てる力」を、今度はあなたのビジネスに。</p>
-    </div>
-    <div class="fv-cta">
-      <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-dark">事業の無料相談をする <span class="ar">→</span></a>
-      <a href="#beauty" class="btn btn-outline">美容事業を見る <span class="ar">→</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 1.5 Gallery Marquee（FV直下） ============
-     画像の差し替え方法：下のセットA（8枚の <img>）の src を実画像のパスに
-     変えるだけでOK。セットB（複製）はJSが自動生成するので触らなくてよい。
-     実画像には width/height 属性を実寸比で入れるとレイアウトシフトを防げる。 -->
-<section class="marquee" aria-label="ギャラリー">
-  <div class="marquee__viewport">
-    <ul class="marquee__track">
-      <!-- 画像セットA（※要確認：実画像に差し替え） -->
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%231d1b14'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2001%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20280%20240'%3E%3Crect%20width='280'%20height='240'%20fill='%23232017'/%3E%3Crect%20x='12'%20y='12'%20width='256'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='140'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2002%3C/text%3E%3C/svg%3E" alt="" width="280" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%23191812'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2003%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%20240'%3E%3Crect%20width='240'%20height='240'%20fill='%2326221a'/%3E%3Crect%20x='12'%20y='12'%20width='216'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='120'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2004%3C/text%3E%3C/svg%3E" alt="" width="240" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%231d1b14'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2005%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20280%20240'%3E%3Crect%20width='280'%20height='240'%20fill='%23191812'/%3E%3Crect%20x='12'%20y='12'%20width='256'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='140'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2006%3C/text%3E%3C/svg%3E" alt="" width="280" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%23232017'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2007%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%20240'%3E%3Crect%20width='240'%20height='240'%20fill='%231d1b14'/%3E%3Crect%20x='12'%20y='12'%20width='216'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='120'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2008%3C/text%3E%3C/svg%3E" alt="" width="240" height="240" loading="lazy" decoding="async"></li>
-    </ul>
-    <!-- 画像セットB（Aの完全複製・継ぎ目消し用）はJSで自動生成 -->
-  </div>
-</section>
-
-<!-- ============ 2. Statement / Philosophy ============ -->
-<section class="section statement" id="philosophy">
+<!-- ============ 下層ヒーロー：AI MARKETING ============ -->
+<section class="subhero">
   <div class="wrap">
-    <div class="eyebrow rv">Philosophy</div>
-    <h2 class="statement quote rv rv-d1">
-      本物の美しさは、<br>
-      <span class="gold">正しく伝わってこそ</span>価値になる。
-    </h2>
-    <div class="body">
-      <p class="rv">
-        Dr.Jenaは、原宿の地で30年以上、"美しさ"を追求してきた美容ブランドです。
-        一人ひとりの肌と向き合い、技術を磨き、ブランドを育て、
-        ファンと信頼を静かに積み上げてきました。<strong>美しさをつくること</strong>と、
-        <strong>その価値を正しく伝え、育て続けること</strong>。この両輪こそが、私たちの30年でした。
-      </p>
-      <p class="rv rv-d1">
-        その「魅せる力・伝える力・継続して育てる力」を、今度は企業やブランドの成長そのものに注ぎます。
-        Web制作からAIマーケティング、WEB3.0、そして市場の仕組みづくりまで——
-        美容のプロフェッショナルだからこそできる、<strong>本質的で美しいブランディングとマーケティング</strong>を。
-        あなたのブランドが持つ本物の価値を、正しく届けるために。
-      </p>
-    </div>
-
-    <!-- 実績を数字で -->
-    <div class="stats rv rv-d1">
-      <div class="stat">
-        <div class="num"><span data-count="30">0</span><small>+ Years</small></div>
-        <div class="label">美容ブランドとしての歴史</div>
-      </div>
-      <div class="stat">
-        <div class="num"><span data-count="1">0</span><small>Patent</small></div>
-        <div class="label">特許取得技術「I.W波」（特許第4759694号）</div>
-      </div>
-      <div class="stat">
-        <div class="num"><span data-count="2">0</span><small>Fields</small></div>
-        <div class="label">美容 × クリエイティブ／マーケティング</div>
-      </div>
-    </div>
+    <nav class="crumb" aria-label="パンくず"><a href="./">TOP</a><span>/</span><em>AI MARKETING</em></nav>
+    <div class="eyebrow">Creative / Marketing</div>
+    <h1 class="sub-title">AI MARKETING<span class="sub-jp">事業内容・プラン・伴走プロセス</span></h1>
+    <p class="sec-lead">
+      マーケットデザインからHP制作、AIマーケティング、WEB3.0まで。
+      30年ブランドを育て続けてきたDr.Jenaの、事業成長サービスのすべてをこのページにまとめました。
+    </p>
   </div>
 </section>
 
-<!-- ============ 3. Creative / Marketing（ダイジェスト → 下層 AI MARKETING ページへ） ============ -->
+<!-- ============ 3. Creative / Marketing Services ============ -->
 <section class="section dark services" id="services">
   <div class="wrap">
     <div class="eyebrow rv">Creative / Marketing</div>
@@ -793,129 +719,238 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
       30年ブランドを育て続けてきた当事者として、戦略から表現、運用までを一気通貫でお引き受けします。
     </p>
 
-    <!-- サービスインデックス：詳細は下層 AI MARKETING ページで -->
-    <div class="svc-index rv">
-      <a href="ai-marketing.html#services">
-        <span class="si-no">01</span>
-        <span class="si-body"><span class="si-t">マーケットデザイン</span><span class="si-d">市場・インセンティブ・仕組みそのものを設計する、最上位の上流コンサルティング。</span></span>
-        <span class="si-ar">→</span>
-      </a>
-      <a href="ai-marketing.html#services">
-        <span class="si-no">02</span>
-        <span class="si-body"><span class="si-t">HP制作 / Web制作</span><span class="si-d">30年の審美眼で「伝わる・売れる」サイトを、デザインから実装まで一気通貫。</span></span>
-        <span class="si-ar">→</span>
-      </a>
-      <a href="ai-marketing.html#services">
-        <span class="si-no">03</span>
-        <span class="si-body"><span class="si-t">WEBコンサルティング</span><span class="si-d">サイト診断・SEO・CVR改善・運用伴走。作って終わりにしない。</span></span>
-        <span class="si-ar">→</span>
-      </a>
-      <a href="ai-marketing.html#plans">
-        <span class="si-no">04</span>
-        <span class="si-body"><span class="si-t">AIマーケティング</span><span class="si-pkg">PACKAGE</span><span class="si-d">生成AIで工数と成果を変える、明確な3プランのパッケージ商品。</span></span>
-        <span class="si-ar">→</span>
-      </a>
-      <a href="ai-marketing.html#services">
-        <span class="si-no">05</span>
-        <span class="si-body"><span class="si-t">WEB3.0</span><span class="si-d">ブロックチェーン／NFTを「次の10年のブランド資産づくり」として実装。</span></span>
-        <span class="si-ar">→</span>
-      </a>
+    <!-- フラッグシップ：マーケットデザイン（最上位配置） -->
+    <div class="flagship rv">
+      <div class="fs-tag">FLAGSHIP SERVICE</div>
+      <div class="fs-no">01</div>
+      <h3>マーケットデザイン</h3>
+      <div class="fs-en">Market Design Consulting</div>
+      <div class="fs-body">
+        <p>
+          個別の施策の前に、「誰と誰が、どんなインセンティブで出会う市場なのか」という構造そのものを設計する上流コンサルティングです。
+          マッチングの仕組み、価格設計、エコシステム構築——
+          市場のルールから描き直すことで、広告費に頼らない持続的な成長基盤をつくります。
+          Dr.Jenaの知的資本を象徴する、最上位のサービスです。
+        </p>
+        <div class="svc-flow">
+          <div class="row"><span class="k">課題</span><div>施策を打っても単発で終わる。競合と同じ土俵で消耗している。</div></div>
+          <div class="row"><span class="k">提供価値</span><div>市場・インセンティブ・仕組みそのものの設計。戦い方ではなく「戦う場所」から描く。</div></div>
+          <div class="row"><span class="k">成果イメージ</span><div>価格競争から脱し、自社が主導権を持つエコシステムでの継続成長。</div></div>
+        </div>
+      </div>
     </div>
 
-    <div class="svc-more rv">
-      <a href="ai-marketing.html" class="btn btn-gold">AI MARKETING 詳細ページへ <span class="ar">→</span></a>
+    <!-- サービスカード×4 -->
+    <div class="svc-grid">
+      <div class="svc-card rv">
+        <div class="no">02</div>
+        <h3>HP制作 / Web制作</h3>
+        <div class="en">Web Design &amp; Development</div>
+        <dl>
+          <dt>課題</dt>
+          <dd>サイトはあるのに問い合わせに繋がらない。ブランドの世界観が伝わらない。</dd>
+          <dt>提供価値</dt>
+          <dd>ブランディングを起点にした「伝わる・売れる」サイトを、デザインから実装まで一気通貫。30年ブランドを育てた審美眼をそのまま形にします。</dd>
+          <dt>成果イメージ</dt>
+          <dd>初訪問の3秒で「信頼できる」と感じさせ、問い合わせまで迷わせない導線。</dd>
+        </dl>
+        <div class="more">View Detail →</div>
+      </div>
+
+      <div class="svc-card rv rv-d1">
+        <div class="no">03</div>
+        <h3>WEBコンサルティング</h3>
+        <div class="en">Web Consulting</div>
+        <dl>
+          <dt>課題</dt>
+          <dd>作ったサイトが放置され、何を改善すべきか分からないまま時間だけが過ぎている。</dd>
+          <dt>提供価値</dt>
+          <dd>サイト診断・SEO・CVR改善・運用伴走。作って終わりにせず、データに基づいて育て続けます。</dd>
+          <dt>成果イメージ</dt>
+          <dd>毎月の改善サイクルが回り、サイトが「コスト」から「資産」に変わる状態。</dd>
+        </dl>
+        <div class="more">View Detail →</div>
+      </div>
+
+      <div class="svc-card rv">
+        <div class="no">04</div>
+        <div class="pkg">PACKAGE</div>
+        <h3>AIマーケティング</h3>
+        <div class="en">AI Marketing Package</div>
+        <dl>
+          <dt>課題</dt>
+          <dd>「AIを使うべき」とは分かっているが、何から始めれば工数と成果が変わるのか見えない。</dd>
+          <dt>提供価値</dt>
+          <dd>生成AIによるコンテンツ制作・広告運用・分析の自動化を、明確な3プランのパッケージ商品として提供。「何ができるか」ではなく「何がどう変わるか」で設計します。</dd>
+          <dt>成果イメージ</dt>
+          <dd>コンテンツ制作の工数を抑えながら発信量を増やし、データが自動で溜まる体制へ。</dd>
+        </dl>
+        <a href="#plans" class="more">View Plans →</a>
+      </div>
+
+      <div class="svc-card rv rv-d1">
+        <div class="no">05</div>
+        <h3>WEB3.0</h3>
+        <div class="en">Web3 / Blockchain Strategy</div>
+        <dl>
+          <dt>課題</dt>
+          <dd>NFTやトークンに興味はあるが、自社ビジネスにどう繋がるのか誰も翻訳してくれない。</dd>
+          <dt>提供価値</dt>
+          <dd>ブロックチェーン・トークン・会員権NFT・分散型の思想を、ビジネス実装レベルに翻訳。難解な流行語ではなく「次の10年のブランド資産づくり」として設計します。</dd>
+          <dt>成果イメージ</dt>
+          <dd>ファンコミュニティが資産として機能し、顧客が「保有者」に変わる関係性。</dd>
+        </dl>
+        <div class="more">View Detail →</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 7. Beauty（美容事業） ============ -->
-<section class="section beauty" id="beauty">
+<!-- ============ 4. AIマーケティング パッケージ（プラン表） ============ -->
+<section class="section" id="plans">
   <div class="wrap">
-    <div class="eyebrow rv">Beauty — Our Origin</div>
-    <h2 class="sec-title rv rv-d1">すべての原点は、<br>原宿の美容ブランドとして。</h2>
+    <div class="eyebrow rv">AI Marketing Package</div>
+    <h2 class="sec-title rv rv-d1">AIで、工数と成果は<br>ここまで変わる。</h2>
     <p class="sec-lead rv rv-d2">
-      私たちの提案に説得力があるのは、自らが30年以上、美の現場でお客様と向き合い続けてきたから。
-      Dr.Jenaの美容事業は、いまもこれからも、ブランドの原点であり信頼の証です。
+      「AIで何ができるか」の話はもう十分。Dr.JenaのAIマーケティングは、
+      御社の工数と成果がどう変わるかから逆算した、明確な3つのプランです。
     </p>
+    <p class="plans-note rv rv-d2">※ 価格・仕様の詳細はお問い合わせください（現在最終調整中です）。<!-- 要確認：確定価格が出たら差し替え --></p>
 
-    <div class="beauty-grid">
-      <!-- サロン -->
-      <div class="b-card rv">
-        <div class="b-en">Beauty Salon</div>
-        <h3>ビューティーサロン</h3>
-        <p>
-          明治神宮前〈原宿〉駅から徒歩5分。原宿の美容パワースポットとして、
-          プロの手技とホームエステを組み合わせたコラボレーションケアをご提供しています。
-          日々のケアとサロンでの集中ケア、その両輪で美しさに寄り添います。
-        </p>
-        <ul class="b-info">
-          <li><span class="k">営業時間</span><span>11:00〜20:00</span></li>
-          <li><span class="k">定休日</span><span>火曜日（月末の火曜日は営業）</span></li>
-          <li><span class="k">アクセス</span><span>東京メトロ千代田線・副都心線<br>明治神宮前〈原宿〉駅 徒歩5分</span></li>
-          <li><span class="k">TEL</span><span><a href="tel:0364273037">03-6427-3037</a></span></li>
+    <div class="plan-grid">
+      <!-- 梅 -->
+      <div class="plan rv">
+        <div class="p-rank">Essential</div>
+        <h3>AIスタート</h3>
+        <p class="p-for">まずAI活用の一歩目を踏み出したい。コンテンツ発信の工数をとにかく減らしたい方に。</p>
+        <div class="p-price">
+          <span class="v">¥---,---</span>
+          <span class="u">月額（税込）／要お見積り<!-- 要確認 --></span>
+        </div>
+        <ul>
+          <li>生成AIによる記事・SNSコンテンツ制作（月間本数は要相談）</li>
+          <li>月次レポート（基本指標）</li>
+          <li>チャットでのご相談窓口</li>
+          <li class="dis">広告運用の自動化・改善</li>
+          <li class="dis">戦略設計ミーティング</li>
         </ul>
-        <div class="b-cta">
-          <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-dark">無料体験を予約する <span class="ar">→</span></a>
-          <a href="tel:0364273037" class="btn btn-outline">電話で問い合わせる</a>
-        </div>
+        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="p-btn">このプランを相談する</a>
       </div>
 
-      <!-- ジェーナプロ -->
-      <div class="b-card rv rv-d1">
-        <div class="b-en">Home Esthetic Machine</div>
-        <h3>ホームエステマシン「ジェーナプロ」</h3>
-        <div class="patent">特許取得波形「I.W波」搭載｜特許第4759694号</div>
-        <p>
-          サロン品質のケアをご自宅でも。特許を取得した独自波形「I.W波」を搭載し、
-          4つの機能でお肌とボディのコンディションを整えるケアをサポートします。
-          サロンでのケアと組み合わせることで、より充実したホームケア習慣が期待できます。
-        </p>
-        <div class="func-grid">
-          <div class="func"><b>セルソニック</b><span>音波によるトリートメントケア</span></div>
-          <div class="func"><b>セルキュアプロ</b><span>肌を整えるコンディショニング</span></div>
-          <div class="func"><b>ディーポレーション</b><span>うるおいを届けるケアをサポート</span></div>
-          <div class="func"><b>セルソイオン</b><span>すこやかな肌へ導くイオンケア</span></div>
+      <!-- 竹（推奨） -->
+      <div class="plan reco rv rv-d1">
+        <div class="p-tag">RECOMMENDED</div>
+        <div class="p-rank">Growth</div>
+        <h3>AIグロース</h3>
+        <p class="p-for">発信だけでなく、集客と売上まで一気に伸ばしたい。もっとも選ばれている標準プランです。</p>
+        <div class="p-price">
+          <span class="v">¥---,---</span>
+          <span class="u">月額（税込）／要お見積り<!-- 要確認 --></span>
         </div>
-        <div class="b-cta">
-          <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-dark">無料体験で試してみる <span class="ar">→</span></a>
+        <ul>
+          <li>生成AIによるコンテンツ制作（記事・SNS・LP原稿）</li>
+          <li>AIを活用した広告運用・クリエイティブ改善</li>
+          <li>分析ダッシュボードの自動化</li>
+          <li>月次の戦略ミーティング</li>
+          <li class="dis">マーケットデザイン級の上流設計</li>
+        </ul>
+        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="p-btn">このプランを相談する</a>
+      </div>
+
+      <!-- 松 -->
+      <div class="plan rv rv-d2">
+        <div class="p-rank">Signature</div>
+        <h3>AIパートナー</h3>
+        <p class="p-for">マーケティング部門を丸ごと任せたい。経営に伴走する最上位プランです。</p>
+        <div class="p-price">
+          <span class="v">¥---,---</span>
+          <span class="u">月額（税込）／要お見積り<!-- 要確認 --></span>
         </div>
+        <ul>
+          <li>AIグロースの全内容</li>
+          <li>ブランド戦略・上流設計への伴走（マーケットデザイン視点）</li>
+          <li>WEB3.0施策のご提案・検証</li>
+          <li>経営レイヤーへの月次報告・随時相談</li>
+          <li>優先サポート</li>
+        </ul>
+        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="p-btn">このプランを相談する</a>
       </div>
     </div>
-
-    <p class="b-note rv">
-      ※ 効果・効能には個人差があります。本ページの記載は特定の効果を保証するものではありません。
-    </p>
   </div>
 </section>
 
-<!-- ============ 8. Works / 実績 ============ -->
-<section class="section dark" id="works">
+<!-- ============ 5. Approach / Process ============ -->
+<section class="section dark" id="process">
   <div class="wrap">
-    <div class="eyebrow rv">Works</div>
-    <h2 class="sec-title rv rv-d1">実績・ケーススタディ</h2>
+    <div class="eyebrow rv">Approach</div>
+    <h2 class="sec-title rv rv-d1">伴走のプロセス</h2>
     <p class="sec-lead rv rv-d2">
-      新事業のケーススタディは現在準備中です。まずは30年のブランド運営そのものを、私たちの最初の実績としてご覧ください。
+      納品して終わり、ではありません。ブランドを30年育ててきた私たちのプロセスは、
+      公開後の「育てるフェーズ」までを最初から設計に含みます。
     </p>
 
-    <!-- 要確認：実績が確定したらカードを差し替え -->
-    <div class="works-grid">
-      <div class="work rv">
-        <div class="w-soon">Coming Soon</div>
-        <div class="w-case">CASE 01</div>
-        <p>ブランドサイト リニューアル（準備中）</p>
+    <div class="proc-list">
+      <div class="proc rv">
+        <div class="p-no">01</div>
+        <h3>ヒアリング</h3>
+        <p>事業の現在地と理想、ブランドの本当の価値を深く伺います。</p>
       </div>
-      <div class="work rv rv-d1">
-        <div class="w-soon">Coming Soon</div>
-        <div class="w-case">CASE 02</div>
-        <p>AIマーケティング導入支援（準備中）</p>
+      <div class="proc rv rv-d1">
+        <div class="p-no">02</div>
+        <h3>戦略設計</h3>
+        <p>市場・競合・顧客を分析し、勝ち筋と物語を設計します。</p>
       </div>
-      <div class="work rv rv-d2">
-        <div class="w-soon">Coming Soon</div>
-        <div class="w-case">CASE 03</div>
-        <p>マーケットデザイン コンサルティング（準備中）</p>
+      <div class="proc rv rv-d2">
+        <div class="p-no">03</div>
+        <h3>デザイン・制作</h3>
+        <p>審美眼と機能性を両立した表現へ。細部まで磨き上げます。</p>
+      </div>
+      <div class="proc rv rv-d3">
+        <div class="p-no">04</div>
+        <h3>公開・実装</h3>
+        <p>計測環境まで整えてローンチ。ここからが本番です。</p>
+      </div>
+      <div class="proc rv rv-d4">
+        <div class="p-no">05</div>
+        <h3>運用・改善</h3>
+        <p>データとAIを使い、育て続ける。成果に伴走します。</p>
       </div>
     </div>
-    <p class="works-note rv">※ ケーススタディは順次公開予定です。個別の事例はお問い合わせの際にご紹介できる場合があります。</p>
+  </div>
+</section>
+
+<!-- ============ 6. Why Dr.Jena ============ -->
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="eyebrow rv">Why Dr.Jena</div>
+    <h2 class="sec-title rv rv-d1">選ばれる3つの理由</h2>
+
+    <div class="why-grid">
+      <div class="why rv">
+        <div class="w-no">Reason 01</div>
+        <h3>30年、ブランドを<br>育ててきた当事者</h3>
+        <div class="w-en">30 Years of Brand Building</div>
+        <p>
+          机上の理論ではありません。原宿で30年以上、自らのブランドを育て、ファンと信頼を積み上げてきた「当事者」としての経験が、すべての提案の土台にあります。
+        </p>
+      </div>
+      <div class="why rv rv-d1">
+        <div class="w-no">Reason 02</div>
+        <h3>美容ブランドで磨いた<br>デザイン力と審美眼</h3>
+        <div class="w-en">Refined Design &amp; Aesthetics</div>
+        <p>
+          「美しさ」を商品として扱ってきたからこそ、妥協のない表現水準を知っています。特に美容・サロン・D2C・化粧品など、魅せ方が勝負を分ける業界で力を発揮します。
+        </p>
+      </div>
+      <div class="why rv rv-d2">
+        <div class="w-no">Reason 03</div>
+        <h3>AI・WEB3を実装する<br>先進性</h3>
+        <div class="w-en">AI &amp; Web3 Readiness</div>
+        <p>
+          伝統だけでは終わりません。生成AIによるマーケティング自動化から、WEB3.0時代のブランド資産づくりまで。次の10年を見据えた技術を、ビジネスの言葉に翻訳して実装します。
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -994,12 +1029,12 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
       <div>
         <div class="f-h">Menu</div>
         <nav class="f-nav">
-          <a href="#philosophy">Philosophy — 私たちの哲学</a>
-          <a href="ai-marketing.html#services">AI Marketing — 事業内容</a>
-          <a href="ai-marketing.html#plans">AI Plans — 料金プラン</a>
-          <a href="ai-marketing.html#process">Process — 伴走の流れ</a>
-          <a href="#beauty">Beauty — 美容事業</a>
-          <a href="#works">Works — 実績</a>
+          <a href="./#philosophy">Philosophy — 私たちの哲学</a>
+          <a href="#services">Services — 事業内容</a>
+          <a href="#plans">AI Plans — AIマーケティング</a>
+          <a href="#process">Process — 伴走の流れ</a>
+          <a href="./#beauty">Beauty — 美容事業</a>
+          <a href="./#works">Works — 実績</a>
           <a href="#contact">Contact — ご相談・ご予約</a>
         </nav>
       </div>
@@ -1251,9 +1286,9 @@ body.cb-open #cbPanel{opacity:1;visibility:visible;transform:none}
   var A = {
     services: {
       html: 'Dr.Jenaのクリエイティブ／マーケティング事業は5つです。<br>'
-        + '① <a href="ai-marketing.html#services">マーケットデザイン</a>（市場・仕組みの上流設計／フラッグシップ）<br>'
+        + '① <a href="#services">マーケットデザイン</a>（市場・仕組みの上流設計／フラッグシップ）<br>'
         + '② HP制作・Web制作<br>③ WEBコンサルティング<br>④ AIマーケティング（パッケージ）<br>⑤ WEB3.0<br>'
-        + '詳しくは<a href="ai-marketing.html#services">AI MARKETINGページ</a>をご覧ください。',
+        + '詳しくは<a href="#services">AI MARKETINGページ</a>をご覧ください。',
       chips: ['AIマーケの料金プラン','無料相談したい','美容サロンについて']
     },
     plans: {
@@ -1261,7 +1296,7 @@ body.cb-open #cbPanel{opacity:1;visibility:visible;transform:none}
         + '・<b>AIスタート</b>：AI活用の第一歩、コンテンツ制作の工数削減に<br>'
         + '・<b>AIグロース</b>：広告運用・分析まで含む標準プラン（おすすめ）<br>'
         + '・<b>AIパートナー</b>：戦略まで伴走する最上位プラン<br>'
-        + '価格は現在最終調整中のため、お見積りにてご案内しています。<a href="ai-marketing.html#plans">プラン比較表を見る</a>'
+        + '価格は現在最終調整中のため、お見積りにてご案内しています。<a href="#plans">プラン比較表を見る</a>'
         + '<a class="cb-cta" href="' + CONTACT + '" target="_blank" rel="noopener">無料相談で見積りを聞く →</a>',
       chips: ['サービス一覧を見たい','無料相談したい']
     },
@@ -1288,7 +1323,7 @@ body.cb-open #cbPanel{opacity:1;visibility:visible;transform:none}
     },
     web: {
       html: 'HP制作・Web制作は、ブランディングを起点に「伝わる・売れる」サイトをデザインから実装まで一気通貫でお作りします。30年ブランドを育てた審美眼をそのまま形にします。<br>'
-        + '公開後の運用・改善（WEBコンサルティング）まで伴走可能です。<a href="ai-marketing.html#services">詳しく見る</a>'
+        + '公開後の運用・改善（WEBコンサルティング）まで伴走可能です。<a href="#services">詳しく見る</a>'
         + '<a class="cb-cta" href="' + CONTACT + '" target="_blank" rel="noopener">制作の無料相談をする →</a>',
       chips: ['AIマーケの料金プラン','サービス一覧を見たい']
     },
@@ -1298,7 +1333,7 @@ body.cb-open #cbPanel{opacity:1;visibility:visible;transform:none}
       chips: ['サービス一覧を見たい','無料相談したい']
     },
     md: {
-      html: 'マーケットデザインは、個別の施策の前に「市場・インセンティブ・仕組みそのもの」を設計する、当社最上位のコンサルティングです。マッチングの仕組み、価格設計、エコシステム構築などを扱います。<a href="ai-marketing.html#services">詳しく見る</a>'
+      html: 'マーケットデザインは、個別の施策の前に「市場・インセンティブ・仕組みそのもの」を設計する、当社最上位のコンサルティングです。マッチングの仕組み、価格設計、エコシステム構築などを扱います。<a href="#services">詳しく見る</a>'
         + '<a class="cb-cta" href="' + CONTACT + '" target="_blank" rel="noopener">無料相談で詳しく聞く →</a>',
       chips: ['サービス一覧を見たい','AIマーケの料金プラン']
     },
