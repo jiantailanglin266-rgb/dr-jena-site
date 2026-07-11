@@ -266,7 +266,7 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
   --marquee-duration:110s;  /* 1ループの時間（大きいほどゆっくり） */
   --marquee-height:240px;   /* 画像の高さ */
   --marquee-gap:18px;       /* 画像同士の間隔 */
-  background:var(--ink);
+  background:var(--paper-deep); /* ベージュ：FVと理念ビジュアルを柔らかく繋ぐ */
   padding:60px 0;
   overflow:hidden;
   /* 左右端をそっとフェードさせて上品に */
@@ -304,9 +304,9 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 /* ============================================================
    2. Statement / Philosophy
 ============================================================ */
-.statement{position:relative;overflow:hidden}
+.statement{position:relative;overflow:hidden;padding-top:0} /* マーキーから画像へ直結させる */
 /* 理念ビジュアル：全幅バナー。高さは上限を設けて上品な帯に保つ */
-.ph-visual{position:relative;margin:26px 0 84px}
+.ph-visual{position:relative;margin:0 0 84px}
 .ph-visual img{
   width:100%;height:auto;display:block;
   max-height:620px;object-fit:cover;object-position:center;
@@ -709,10 +709,6 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
 
 <!-- ============ 2. Statement / Philosophy ============ -->
 <section class="section statement" id="philosophy">
-  <div class="wrap">
-    <div class="eyebrow rv">Philosophy</div>
-  </div>
-
   <!-- 理念ビジュアル（見出しは画像内に焼き込み。SEO・読み上げ用にh2を保持） -->
   <div class="ph-visual rv">
     <img src="images/philosophy.png"
