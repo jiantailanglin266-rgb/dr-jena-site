@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr.Jena（ドクタージェーナ）｜30年の美意識で、ブランドを育てる。美容 × クリエイティブ／マーケティング</title>
-<meta name="description" content="原宿で30年以上、美しさを追求してきたDr.Jena。ブランドを育て続けてきた審美眼と伝える力を、HP制作・WEBコンサルティング・AIマーケティング・WEB3.0・マーケットデザインへ。本物の美しさは、正しく伝わってこそ価値になる。">
-<meta property="og:title" content="Dr.Jena｜30年の美意識で、ブランドを育てる。">
-<meta property="og:description" content="美容 × クリエイティブ／マーケティング。原宿の美容ブランドDr.Jenaが、30年で培った「魅せる力・伝える力・育てる力」を企業とブランドの成長に注ぎます。">
+<title>PRIVACY POLICY｜Dr.Jena — プライバシーポリシー</title>
+<meta name="description" content="Dr.Jena（ドクタージェーナ）のプライバシーポリシー。個人情報の取得・利用目的・安全管理・お問い合わせ窓口についてご案内します。">
+<meta property="og:title" content="PRIVACY POLICY｜Dr.Jena">
+<meta property="og:description" content="Dr.Jena（ドクタージェーナ）のプライバシーポリシー。個人情報の取得・利用目的・安全管理・お問い合わせ窓口についてご案内します。">
 <meta property="og:type" content="website">
 
 <!-- Google Fonts：欧文セリフ（Cormorant Garamond）× 和文（Noto Sans JP / Noto Serif JP） -->
@@ -252,10 +252,29 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
   transition:background .3s var(--ease),box-shadow .3s var(--ease);
 }
 .fv-hotspot:hover{background:rgba(255,255,255,.14);box-shadow:0 6px 24px -6px rgba(190,80,110,.35)}
-/* 視覚的に隠すテキスト（SEO・スクリーンリーダー用） */
-.vh{
+.fv-under{
+  max-width:1160px;margin:0 auto;padding:30px 24px 44px;
+  display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+}
+/* PCではコピーは画像内に焼き込まれているため視覚的に隠す（SEO・読み上げ用に保持） */
+.fv-copy{
   position:absolute;width:1px;height:1px;overflow:hidden;
   clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
+.fv-cta{display:flex;gap:16px;flex-wrap:wrap}
+@media(max-width:860px){
+  .fv-under{flex-direction:column;align-items:stretch;padding:28px 22px 42px;gap:0}
+  .fv-copy{ /* モバイルでは表示に戻す */
+    position:static;width:auto;height:auto;overflow:visible;
+    clip:auto;clip-path:none;white-space:normal;
+  }
+  .fv-copy h1{
+    font-family:var(--serif-jp);font-weight:500;
+    font-size:27px;line-height:1.7;letter-spacing:.06em;
+  }
+  .fv-copy p{margin-top:14px;font-size:13px;line-height:2.1;color:var(--gray)}
+  .fv-cta{flex-direction:column;margin-top:22px}
+  .fv-cta .btn{width:100%;min-width:0}
 }
 
 /* ============================================================
@@ -263,10 +282,10 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
    速度・高さ・間隔は下の3つのCSS変数だけで調整可能
 ============================================================ */
 .marquee{
-  --marquee-duration:110s;  /* 1ループの時間（大きいほどゆっくり） */
+  --marquee-duration:55s;   /* 1ループの時間（大きいほどゆっくり） */
   --marquee-height:240px;   /* 画像の高さ */
   --marquee-gap:18px;       /* 画像同士の間隔 */
-  background:var(--paper-deep); /* ベージュ：FVと理念ビジュアルを柔らかく繋ぐ */
+  background:var(--ink);
   padding:60px 0;
   overflow:hidden;
   /* 左右端をそっとフェードさせて上品に */
@@ -292,7 +311,7 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
   to{transform:translateX(calc(-100% - var(--marquee-gap)))}
 }
 @media(max-width:860px){
-  .marquee{--marquee-duration:60s;--marquee-height:150px;--marquee-gap:10px;padding:40px 0}
+  .marquee{--marquee-duration:36s;--marquee-height:150px;--marquee-gap:10px;padding:40px 0}
 }
 /* モーション低減環境：自動再生を止め、手動の横スクロールで閲覧可能に */
 @media(prefers-reduced-motion:reduce){
@@ -304,16 +323,7 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 /* ============================================================
    2. Statement / Philosophy
 ============================================================ */
-.statement{position:relative;overflow:hidden;padding-top:0} /* マーキーから画像へ直結させる */
-/* 理念・美容ビジュアル：全幅バナー。焼き込みテキストが切れないよう原寸比率で完全表示 */
-.ph-visual{position:relative;margin:0 0 84px}
-.ph-visual img{width:100%;height:auto;display:block}
-/* 画像内に焼き込まれた見出しの代替テキスト（視覚的には非表示） */
-.ph-quote{
-  position:absolute;width:1px;height:1px;overflow:hidden;
-  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
-}
-@media(max-width:860px){.ph-visual{margin:14px 0 56px}}
+.statement{position:relative;overflow:hidden}
 .statement .quote{
   font-family:var(--serif-jp);font-weight:500;
   font-size:clamp(25px,3.6vw,40px);line-height:2;letter-spacing:.1em;
@@ -477,7 +487,7 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 /* ============================================================
    7. Beauty（美容事業）
 ============================================================ */
-.beauty{background:var(--paper-deep);position:relative;overflow:hidden;padding-top:0} /* 冒頭は全幅ビジュアル */
+.beauty{background:var(--paper-deep);position:relative;overflow:hidden}
 .beauty::before{
   content:"Beauty";position:absolute;top:44px;left:-10px;
   font-family:var(--serif-en);font-style:italic;font-size:clamp(80px,14vw,190px);
@@ -555,6 +565,30 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 .cta-tel a{font-family:var(--serif-en);font-size:21px;color:var(--gold-bright);letter-spacing:.12em;display:inline-block;margin-top:4px}
 
 /* ============================================================
+   3b. サービスインデックス（ページ内アンカーへのショートカット）
+============================================================ */
+.svc-index{margin:64px 0 84px;border-top:1px solid rgba(250,248,244,.14)}
+.svc-index > a{
+  display:flex;align-items:center;gap:34px;padding:28px 10px;
+  border-bottom:1px solid rgba(250,248,244,.14);
+  transition:background .4s var(--ease),padding .4s var(--ease);
+}
+.svc-index > a:hover{background:rgba(179,146,79,.06);padding-left:24px}
+.si-no{font-family:var(--serif-en);font-size:15px;letter-spacing:.2em;color:var(--gold-bright);flex-shrink:0}
+.si-body{flex:1;display:flex;align-items:baseline;gap:20px;flex-wrap:wrap}
+.si-t{font-family:var(--serif-jp);font-size:20px;font-weight:500;letter-spacing:.1em}
+.si-pkg{font-size:9px;letter-spacing:.24em;background:var(--gold-bright);color:var(--ink);padding:4px 10px;font-weight:500}
+.si-d{font-size:12.5px;color:rgba(250,248,244,.55);line-height:1.8}
+.si-ar{font-family:var(--serif-en);color:var(--gold-bright);transition:transform .4s var(--ease)}
+.svc-index > a:hover .si-ar{transform:translateX(6px)}
+.flagship,.svc-card{scroll-margin-top:96px} /* インデックスからのアンカー着地位置 */
+@media(max-width:860px){
+  .svc-index{margin:48px 0 64px}
+  .svc-index > a{gap:18px;padding:24px 4px}
+  .si-body{flex-direction:column;gap:6px}
+}
+
+/* ============================================================
    10. Footer
 ============================================================ */
 footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
@@ -626,6 +660,23 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
   .rv{opacity:1;transform:none}
   html{scroll-behavior:auto}
 }
+
+/* ============================================================
+   下層ページ：サブヒーロー（AI MARKETING）
+============================================================ */
+.subhero{position:relative;overflow:hidden;background:var(--paper);padding:180px 0 96px}
+.subhero::before{
+  content:"AI Marketing";position:absolute;top:90px;right:-12px;
+  font-family:var(--serif-en);font-style:italic;font-size:clamp(70px,12vw,170px);
+  color:transparent;-webkit-text-stroke:1px rgba(179,146,79,.12);pointer-events:none;white-space:nowrap;
+}
+.crumb{display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.2em;color:var(--gray-light);margin-bottom:40px}
+.crumb a{transition:color .4s}
+.crumb a:hover{color:var(--gold)}
+.crumb em{font-style:normal;color:var(--gold)}
+.sub-title{font-family:var(--serif-en);font-weight:500;font-size:clamp(42px,7vw,76px);letter-spacing:.05em;line-height:1.1}
+.sub-title .sub-jp{display:block;font-family:var(--serif-jp);font-size:15px;font-weight:500;letter-spacing:.24em;color:var(--gold);margin-top:20px}
+@media(max-width:860px){.subhero{padding:140px 0 70px}}
 
 /* ============================================================
    ベージュ統一テーマ：全セクションの背景をベージュ系に統一
@@ -711,6 +762,17 @@ footer{background:var(--beige-deep);color:var(--char)}
 #mobileNav li:nth-child(8) a{transition-delay:.52s}
 .f-sns{display:flex;flex-wrap:wrap;gap:10px}
 .f-sns svg{width:15px;height:15px}
+
+/* プライバシーポリシー本文 */
+.legal{max-width:820px}
+.legal h3{
+  font-family:var(--serif-jp);font-size:18px;font-weight:500;letter-spacing:.1em;
+  margin:54px 0 16px;padding-left:16px;border-left:2px solid var(--gold);
+}
+.legal p,.legal li{font-size:13.5px;color:var(--gray);line-height:2.2}
+.legal ul{list-style:disc;padding-left:1.4em}
+.legal a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.legal .date{margin-top:60px;text-align:right;font-size:12px;color:var(--gray-light)}
 </style>
 </head>
 <body>
@@ -724,12 +786,12 @@ footer{background:var(--beige-deep);color:var(--char)}
 <!-- ============ Header ============ -->
 <header id="header">
   <div class="h-inner">
-    <a href="#" class="logo" aria-label="Dr.Jena トップへ">
+    <a href="./" class="logo" aria-label="Dr.Jena トップへ">
       <span class="en">Dr.Jena</span>
       <span class="jp">ドクタージェーナ</span>
     </a>
     <nav class="pc" aria-label="メインナビゲーション">
-      <a href="#philosophy">Philosophy</a>
+      <a href="./">Top</a>
       <a href="ai-marketing.html">AI Marketing</a>
       <a href="beauty.html">Beauty</a>
       <a href="company.html">Company</a>
@@ -747,7 +809,7 @@ footer{background:var(--beige-deep);color:var(--char)}
 <!-- モバイルナビ -->
 <div id="mobileNav">
   <ul>
-    <li><a href="#philosophy">Philosophy</a></li>
+    <li><a href="./">Top</a></li>
     <li><a href="ai-marketing.html">AI Marketing</a></li>
     <li><a href="beauty.html">Beauty</a></li>
     <li><a href="company.html">Company</a></li>
@@ -760,178 +822,62 @@ footer{background:var(--beige-deep);color:var(--char)}
   </ul>
 </div>
 
-<!-- ============ 1. Hero（FV画像版） ============
-     画像の差し替え：images/fv.jpg を置き換えるだけ（width/height属性も実寸比に合わせる） -->
-<section class="hero-fv">
-  <div class="fv-visual">
-    <img class="fv-img" src="images/fv.png"
-         alt="Dr.Jena — 30年の美意識で、ブランドを育てる。原宿発、美容×クリエイティブ／マーケティング"
-         width="1672" height="941" fetchpriority="high" decoding="async">
-    <!-- 画像内に焼き込まれた「無料体験に申し込む」ボタンの位置に重ねた透明リンク -->
-    <a class="fv-hotspot" href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" aria-label="無料体験に申し込む"></a>
-  </div>
-  <!-- 見出しは画像内に焼き込み。SEO・読み上げ用にh1を保持 -->
-  <h1 class="vh">30年の美意識で、ブランドを育てる。｜Dr.Jena — 美容×クリエイティブ／マーケティング</h1>
-</section>
-
-<!-- ============ 1.5 Gallery Marquee（FV直下） ============
-     画像の差し替え方法：下のセットA（8枚の <img>）の src を実画像のパスに
-     変えるだけでOK。セットB（複製）はJSが自動生成するので触らなくてよい。
-     実画像には width/height 属性を実寸比で入れるとレイアウトシフトを防げる。 -->
-<section class="marquee" aria-label="ギャラリー">
-  <div class="marquee__viewport">
-    <ul class="marquee__track">
-      <!-- 画像セットA（12枚・720x480統一）：差し替えはこの12行のsrcを変えるだけ -->
-      <li class="marquee__item"><img src="images/marquee/01.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/02.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/03.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/04.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/05.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/06.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/07.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/08.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/09.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/10.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/11.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="images/marquee/12.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
-    </ul>
-    <!-- 画像セットB（Aの完全複製・継ぎ目消し用）はJSで自動生成 -->
-  </div>
-</section>
-
-<!-- ============ 2. Statement / Philosophy ============ -->
-<section class="section statement" id="philosophy">
-  <!-- 理念ビジュアル（見出しは画像内に焼き込み。SEO・読み上げ用にh2を保持） -->
-  <div class="ph-visual rv">
-    <img src="images/philosophy.png"
-         alt="本物の美しさは、正しく伝わってこそ価値になる。— 美しさを、もっと本質的に。あなたらしく、輝く未来へ。"
-         width="1717" height="916" loading="lazy" decoding="async">
-    <h2 class="ph-quote">本物の美しさは、正しく伝わってこそ価値になる。</h2>
-  </div>
-
+<!-- ============ 下層ヒーロー：PRIVACY POLICY ============ -->
+<section class="subhero">
   <div class="wrap">
-    <div class="body">
-      <p class="rv">
-        Dr.Jenaは、原宿の地で30年以上、"美しさ"を追求してきた美容ブランドです。
-        一人ひとりの肌と向き合い、技術を磨き、ブランドを育て、
-        ファンと信頼を静かに積み上げてきました。<strong>美しさをつくること</strong>と、
-        <strong>その価値を正しく伝え、育て続けること</strong>。この両輪こそが、私たちの30年でした。
-      </p>
-      <p class="rv rv-d1">
-        その「魅せる力・伝える力・継続して育てる力」を、今度は企業やブランドの成長そのものに注ぎます。
-        Web制作からAIマーケティング、WEB3.0、そして市場の仕組みづくりまで——
-        美容のプロフェッショナルだからこそできる、<strong>本質的で美しいブランディングとマーケティング</strong>を。
-        あなたのブランドが持つ本物の価値を、正しく届けるために。
-      </p>
-    </div>
-
-    <!-- 実績を数字で -->
-    <div class="stats rv rv-d1">
-      <div class="stat">
-        <div class="num"><span data-count="30">0</span><small>+ Years</small></div>
-        <div class="label">美容ブランドとしての歴史</div>
-      </div>
-      <div class="stat">
-        <div class="num"><span data-count="1">0</span><small>Patent</small></div>
-        <div class="label">特許取得技術「I.W波」（特許第4759694号）</div>
-      </div>
-      <div class="stat">
-        <div class="num"><span data-count="2">0</span><small>Fields</small></div>
-        <div class="label">美容 × クリエイティブ／マーケティング</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 7. Beauty（美容事業） ============ -->
-<section class="section beauty" id="beauty">
-  <!-- 美容事業ビジュアル（見出し・リード文は画像内に焼き込み。SEO・読み上げ用にh2を保持） -->
-  <div class="ph-visual rv">
-    <img src="images/beauty.png"
-         alt="Beauty — Our Origin すべての原点は、原宿の美容ブランドとして。私たちの提案に説得力があるのは、自らが30年以上、美の現場でお客様と向き合い続けてきたから。Dr.Jenaの美容事業は、いまもこれからも、ブランドの原点であり信頼の証です。"
-         width="1717" height="916" loading="lazy" decoding="async">
-    <h2 class="ph-quote">すべての原点は、原宿の美容ブランドとして。</h2>
-  </div>
-
-  <div class="wrap">
-    <div class="beauty-grid">
-      <!-- サロン -->
-      <div class="b-card rv">
-        <div class="b-en">Beauty Salon</div>
-        <h3>ビューティーサロン</h3>
-        <p>
-          明治神宮前〈原宿〉駅から徒歩5分。原宿の美容パワースポットとして、
-          プロの手技とホームエステを組み合わせたコラボレーションケアをご提供しています。
-          日々のケアとサロンでの集中ケア、その両輪で美しさに寄り添います。
-        </p>
-        <ul class="b-info">
-          <li><span class="k">営業時間</span><span>11:00〜20:00</span></li>
-          <li><span class="k">定休日</span><span>火曜日（月末の火曜日は営業）</span></li>
-          <li><span class="k">アクセス</span><span>東京メトロ千代田線・副都心線<br>明治神宮前〈原宿〉駅 徒歩5分</span></li>
-          <li><span class="k">TEL</span><span><a href="tel:0364273037">03-6427-3037</a></span></li>
-        </ul>
-        <div class="b-cta">
-          <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-dark">無料体験を予約する <span class="ar">→</span></a>
-          <a href="tel:0364273037" class="btn btn-outline">電話で問い合わせる</a>
-        </div>
-      </div>
-
-      <!-- ジェーナプロ -->
-      <div class="b-card rv rv-d1">
-        <div class="b-en">Home Esthetic Machine</div>
-        <h3>ホームエステマシン「ジェーナプロ」</h3>
-        <div class="patent">特許取得波形「I.W波」搭載｜特許第4759694号</div>
-        <p>
-          サロン品質のケアをご自宅でも。特許を取得した独自波形「I.W波」を搭載し、
-          4つの機能でお肌とボディのコンディションを整えるケアをサポートします。
-          サロンでのケアと組み合わせることで、より充実したホームケア習慣が期待できます。
-        </p>
-        <div class="func-grid">
-          <div class="func"><b>セルソニック</b><span>音波によるトリートメントケア</span></div>
-          <div class="func"><b>セルキュアプロ</b><span>肌を整えるコンディショニング</span></div>
-          <div class="func"><b>ディーポレーション</b><span>うるおいを届けるケアをサポート</span></div>
-          <div class="func"><b>セルソイオン</b><span>すこやかな肌へ導くイオンケア</span></div>
-        </div>
-        <div class="b-cta">
-          <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-dark">無料体験で試してみる <span class="ar">→</span></a>
-        </div>
-      </div>
-    </div>
-
-    <p class="b-note rv">
-      ※ 効果・効能には個人差があります。本ページの記載は特定の効果を保証するものではありません。
+    <nav class="crumb" aria-label="パンくず"><a href="./">TOP</a><span>/</span><em>PRIVACY POLICY</em></nav>
+    <div class="eyebrow">Privacy Policy</div>
+    <h1 class="sub-title">PRIVACY<span class="sub-jp">プライバシーポリシー</span></h1>
+    <p class="sec-lead">
+      Dr.Jena（以下「当社」）は、お客様の個人情報の重要性を認識し、以下の方針に基づき適切に取り扱います。
     </p>
   </div>
 </section>
 
-<!-- ============ 8. Works / 実績 ============ -->
-<section class="section dark" id="works">
+<!-- ============ ポリシー本文 ============ -->
+<section class="section" id="policy" style="padding-top:0">
   <div class="wrap">
-    <div class="eyebrow rv">Works</div>
-    <h2 class="sec-title rv rv-d1">実績・ケーススタディ</h2>
-    <p class="sec-lead rv rv-d2">
-      新事業のケーススタディは現在準備中です。まずは30年のブランド運営そのものを、私たちの最初の実績としてご覧ください。
-    </p>
+    <div class="legal rv">
+      <h3>1. 個人情報の取得</h3>
+      <p>当社は、お問い合わせ・無料相談・無料体験のご予約、サービスのご提供にあたり、氏名、電話番号、メールアドレス等の個人情報を、適法かつ公正な手段により取得します。</p>
 
-    <!-- 要確認：実績が確定したらカードを差し替え -->
-    <div class="works-grid">
-      <div class="work rv">
-        <div class="w-soon">Coming Soon</div>
-        <div class="w-case">CASE 01</div>
-        <p>ブランドサイト リニューアル（準備中）</p>
-      </div>
-      <div class="work rv rv-d1">
-        <div class="w-soon">Coming Soon</div>
-        <div class="w-case">CASE 02</div>
-        <p>AIマーケティング導入支援（準備中）</p>
-      </div>
-      <div class="work rv rv-d2">
-        <div class="w-soon">Coming Soon</div>
-        <div class="w-case">CASE 03</div>
-        <p>マーケットデザイン コンサルティング（準備中）</p>
-      </div>
+      <h3>2. 利用目的</h3>
+      <ul>
+        <li>お問い合わせ・ご予約への対応、ご連絡のため</li>
+        <li>当社サービス（美容事業、クリエイティブ／マーケティング事業）のご提供のため</li>
+        <li>サービス品質の向上、新サービスのご案内のため</li>
+        <li>法令に基づく対応のため</li>
+      </ul>
+
+      <h3>3. 第三者提供</h3>
+      <p>当社は、法令に基づく場合を除き、ご本人の同意なく個人情報を第三者に提供しません。</p>
+
+      <h3>4. 業務委託</h3>
+      <p>利用目的の達成に必要な範囲で個人情報の取り扱いを外部に委託する場合は、適切な委託先を選定し、必要な契約の締結と監督を行います。</p>
+
+      <h3>5. 安全管理措置</h3>
+      <p>当社は、個人情報の漏えい、滅失またはき損の防止のため、適切な安全管理措置を講じます。</p>
+
+      <h3>6. Cookie・アクセス解析について</h3>
+      <p>当サイトでは、利便性の向上やサイト改善のためにCookieおよびアクセス解析ツールを利用する場合があります。これらにより個人を特定できる情報を取得することはありません。ブラウザの設定によりCookieを無効にすることができます。</p>
+
+      <h3>7. 開示・訂正・利用停止等のご請求</h3>
+      <p>ご本人からの個人情報の開示・訂正・利用停止等のご請求には、ご本人であることを確認のうえ、法令に基づき速やかに対応します。</p>
+
+      <h3>8. お問い合わせ窓口</h3>
+      <p>
+        個人情報の取り扱いに関するお問い合わせは、下記までご連絡ください。<br>
+        Dr.Jena（ドクタージェーナ）<br>
+        〒150-0001 東京都渋谷区神宮前6-25-8 神宮前コーポラス1108<br>
+        TEL：<a href="tel:0364273037">03-6427-3037</a>（11:00〜20:00／火曜定休）<br>
+        MAIL：<a href="mailto:info@dr-jena.com">info@dr-jena.com</a>
+      </p>
+
+      <h3>9. 本ポリシーの改定</h3>
+      <p>本ポリシーの内容は、法令の改正や運用の変更に応じて、予告なく改定されることがあります。改定後の内容は当ページに掲載した時点から効力を生じます。</p>
+
+      <p class="date">2026年7月12日 制定</p>
     </div>
-    <p class="works-note rv">※ ケーススタディは順次公開予定です。個別の事例はお問い合わせの際にご紹介できる場合があります。</p>
   </div>
 </section>
 
@@ -1018,12 +964,12 @@ footer{background:var(--beige-deep);color:var(--char)}
       <div>
         <div class="f-h">Menu</div>
         <nav class="f-nav">
-          <a href="#philosophy">Philosophy — 私たちの哲学</a>
+          <a href="./#philosophy">Philosophy — 私たちの哲学</a>
           <a href="ai-marketing.html#services">AI Marketing — 事業内容</a>
           <a href="ai-marketing.html#plans">AI Plans — 料金プラン</a>
           <a href="beauty.html">Beauty — 美容事業</a>
           <a href="company.html">Company — 会社概要</a>
-          <a href="#works">Works — 実績</a>
+          <a href="./#works">Works — 実績</a>
           <a href="#contact">Contact — ご相談・ご予約</a>
           <a href="privacy.html">Privacy Policy</a>
         </nav>
