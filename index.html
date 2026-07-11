@@ -243,7 +243,15 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
    1. Hero（FV画像版）：デザインカンプ画像をそのまま全幅表示
 ============================================================ */
 .hero-fv{background:#fdf7f6} /* 画像の余白と馴染むソフトピンク */
+.fv-visual{position:relative}
 .fv-img{width:100%;height:auto;display:block}
+/* 画像内ボタン（無料体験に申し込む）の座標に合わせた透明クリック領域 */
+.fv-hotspot{
+  position:absolute;left:3.9%;top:76.2%;width:31.5%;height:11.4%;
+  border-radius:999px;cursor:pointer;
+  transition:background .3s var(--ease),box-shadow .3s var(--ease);
+}
+.fv-hotspot:hover{background:rgba(255,255,255,.14);box-shadow:0 6px 24px -6px rgba(190,80,110,.35)}
 .fv-under{
   max-width:1160px;margin:0 auto;padding:30px 24px 44px;
   display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
@@ -674,9 +682,13 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
 <!-- ============ 1. Hero（FV画像版） ============
      画像の差し替え：images/fv.jpg を置き換えるだけ（width/height属性も実寸比に合わせる） -->
 <section class="hero-fv">
-  <img class="fv-img" src="images/fv.jpg"
-       alt="Dr.Jena — 30年の美意識で、ブランドを育てる。原宿発、美容×クリエイティブ／マーケティング"
-       width="1823" height="863" fetchpriority="high" decoding="async">
+  <div class="fv-visual">
+    <img class="fv-img" src="images/fv.png"
+         alt="Dr.Jena — 30年の美意識で、ブランドを育てる。原宿発、美容×クリエイティブ／マーケティング"
+         width="1672" height="941" fetchpriority="high" decoding="async">
+    <!-- 画像内に焼き込まれた「無料体験に申し込む」ボタンの位置に重ねた透明リンク -->
+    <a class="fv-hotspot" href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" aria-label="無料体験に申し込む"></a>
+  </div>
   <div class="fv-under">
     <!-- モバイルでは画像内の文字が小さくなるため、DOMテキストで補完（PCでは非表示・SEO用に保持） -->
     <div class="fv-copy">
