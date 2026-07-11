@@ -528,6 +528,10 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 }
 .work p{font-size:12px;color:rgba(250,248,244,.5);margin-top:8px;line-height:1.8}
 .works-note{margin-top:30px;font-size:12px;color:rgba(250,248,244,.4)}
+/* ケーススタディカバー画像カード */
+.work-img{overflow:hidden;border:1px solid rgba(179,146,79,.3);background:var(--white)}
+.work-img img{width:100%;height:auto;display:block;transition:transform .8s var(--ease)}
+.work-img:hover img{transform:scale(1.04)}
 
 /* ============================================================
    9. CTA（2導線）
@@ -915,23 +919,11 @@ footer{background:var(--beige-deep);color:var(--char)}
   </div>
 
   <div class="wrap">
-    <!-- 要確認：実績が確定したらカードを差し替え -->
+    <!-- ケーススタディカバー（テキストは画像内に焼き込み） -->
     <div class="works-grid">
-      <div class="work rv">
-        <div class="w-soon">Coming Soon</div>
-        <div class="w-case">CASE 01</div>
-        <p>ブランドサイト リニューアル（準備中）</p>
-      </div>
-      <div class="work rv rv-d1">
-        <div class="w-soon">Coming Soon</div>
-        <div class="w-case">CASE 02</div>
-        <p>AIマーケティング導入支援（準備中）</p>
-      </div>
-      <div class="work rv rv-d2">
-        <div class="w-soon">Coming Soon</div>
-        <div class="w-case">CASE 03</div>
-        <p>マーケットデザイン コンサルティング（準備中）</p>
-      </div>
+      <div class="work-img rv"><img src="images/case01.png" alt="CASE 01 ブランドサイト リニューアル" width="1536" height="1024" loading="lazy" decoding="async"></div>
+      <div class="work-img rv rv-d1"><img src="images/case02.png" alt="CASE 02 AIマーケティング導入支援" width="1536" height="1024" loading="lazy" decoding="async"></div>
+      <div class="work-img rv rv-d2"><img src="images/case03.png" alt="CASE 03 マーケットデザイン コンサルティング" width="1536" height="1024" loading="lazy" decoding="async"></div>
     </div>
     <p class="works-note rv">※ ケーススタディは順次公開予定です。個別の事例はお問い合わせの際にご紹介できる場合があります。</p>
   </div>
