@@ -695,6 +695,22 @@ footer{background:var(--beige-deep);color:var(--char)}
 .f-btm small{color:var(--gray-light)}
 .f-btm .top-link{color:var(--gray)}
 .f-btm .top-link:hover{color:var(--gold)}
+
+/* ============================================================
+   SNSアイコン（ヘッダー / モバイルメニュー / フッター）
+============================================================ */
+.h-sns{display:flex;align-items:center;gap:15px}
+.h-sns a{display:flex;padding:2px;color:var(--char);transition:color .4s}
+.h-sns a::after{display:none}
+.h-sns a:hover{color:var(--gold)}
+.h-sns svg{width:17px;height:17px}
+#mobileNav .m-sns{display:flex;justify-content:center;gap:30px;padding-top:24px}
+#mobileNav .m-sns a{display:flex;padding:6px;color:rgba(250,248,244,.85)}
+#mobileNav .m-sns a:hover{color:var(--gold-bright)}
+#mobileNav .m-sns svg{width:22px;height:22px}
+#mobileNav li:nth-child(8) a{transition-delay:.52s}
+.f-sns{display:flex;flex-wrap:wrap;gap:10px}
+.f-sns svg{width:15px;height:15px}
 </style>
 </head>
 <body>
@@ -717,6 +733,11 @@ footer{background:var(--beige-deep);color:var(--char)}
       <a href="ai-marketing.html">AI Marketing</a>
       <a href="#beauty">Beauty</a>
       <a href="#company">Company</a>
+      <div class="h-sns">
+        <a href="https://www.instagram.com/jenasalon/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.2"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.2 15 12l-5 2.8z" fill="currentColor" stroke="none"/></svg></a><!-- 要確認：YouTube URL -->
+        <a href="#" target="_blank" rel="noopener" aria-label="X（旧Twitter）"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.9 3H21l-6.8 7.8L22.2 21h-6.3l-4.9-6.4L5.4 21H2.3l7.3-8.3L2 3h6.4l4.4 5.9L17.9 3zm-1.1 16.1h1.7L7.1 4.7H5.3l11.5 14.4z"/></svg></a><!-- 要確認：X URL -->
+      </div>
       <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="h-cta">無料相談</a>
     </nav>
     <button id="menuBtn" aria-label="メニュー"><span></span><span></span></button>
@@ -731,6 +752,11 @@ footer{background:var(--beige-deep);color:var(--char)}
     <li><a href="#beauty">Beauty</a></li>
     <li><a href="#company">Company</a></li>
     <li><a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="m-cta">無料相談・無料体験</a></li>
+    <li class="m-sns">
+      <a href="https://www.instagram.com/jenasalon/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.2"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.2 15 12l-5 2.8z" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" target="_blank" rel="noopener" aria-label="X（旧Twitter）"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.9 3H21l-6.8 7.8L22.2 21h-6.3l-4.9-6.4L5.4 21H2.3l7.3-8.3L2 3h6.4l4.4 5.9L17.9 3zm-1.1 16.1h1.7L7.1 4.7H5.3l11.5 14.4z"/></svg></a>
+    </li>
   </ul>
 </div>
 
@@ -963,6 +989,14 @@ footer{background:var(--beige-deep);color:var(--char)}
             <!-- Instagramアイコン（インラインSVG） -->
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.2"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
             @jenasalon
+          </a>
+          <a href="#" target="_blank" rel="noopener" aria-label="YouTube"><!-- 要確認：YouTube URL -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.2 15 12l-5 2.8z" fill="currentColor" stroke="none"/></svg>
+            YouTube
+          </a>
+          <a href="#" target="_blank" rel="noopener" aria-label="X（旧Twitter）"><!-- 要確認：X URL -->
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.9 3H21l-6.8 7.8L22.2 21h-6.3l-4.9-6.4L5.4 21H2.3l7.3-8.3L2 3h6.4l4.4 5.9L17.9 3zm-1.1 16.1h1.7L7.1 4.7H5.3l11.5 14.4z"/></svg>
+            X
           </a>
         </div>
       </div>
