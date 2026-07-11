@@ -762,6 +762,46 @@ footer{background:var(--beige-deep);color:var(--char)}
 #mobileNav li:nth-child(8) a{transition-delay:.52s}
 .f-sns{display:flex;flex-wrap:wrap;gap:10px}
 .f-sns svg{width:15px;height:15px}
+
+/* ============================================================
+   レスポンシブ最適化（Pro polish）
+============================================================ */
+/* --- PC大画面：バナー画像の原寸超え拡大を防ぎ、中央にキャップ --- */
+@media(min-width:1841px){
+  .fv-visual,.ph-visual{max-width:1840px;margin-left:auto;margin-right:auto}
+}
+
+/* --- モバイル：焼き込みテキストの可読性を上げる（左寄せ4:3クロップ） ---
+   バナーの文字要素はすべて左側に配置されているため、右側をトリミングして
+   文字の実表示サイズを約1.3〜1.4倍に引き上げる */
+@media(max-width:640px){
+  .fv-visual{aspect-ratio:4/3;overflow:hidden}
+  .fv-visual .fv-img{width:100%;height:100%;object-fit:cover;object-position:left center}
+  /* クロップ（可視域=元画像の左75%）に合わせて焼き込みボタンの座標を再計算 */
+  .fv-hotspot{left:5.2%;width:42%}
+  .ph-visual{aspect-ratio:4/3;overflow:hidden}
+  .ph-visual img{width:100%;height:100%;object-fit:cover;object-position:left center}
+
+  /* 余白・密度の最適化 */
+  .section{padding:80px 0}
+  .wrap{padding:0 20px}
+  header{padding:14px 0}
+  header.scrolled{padding:10px 0}
+  .h-inner{padding:0 18px}
+  .logo .en{font-size:20px}
+  .subhero{padding:126px 0 56px}
+  .ph-visual{margin-bottom:48px}
+  .cta-box{padding:40px 26px}
+  .b-card{padding:40px 24px}
+  .plan{padding:44px 26px 40px}
+  .plan.reco{padding-bottom:48px}
+  .flagship{padding:40px 22px}
+  .flagship .fs-tag{left:22px}
+  .svc-card{padding:34px 22px}
+  .why{padding:42px 26px}
+  footer{padding:70px 0 36px}
+  .f-top{gap:36px;padding-bottom:48px}
+}
 </style>
 </head>
 <body>
