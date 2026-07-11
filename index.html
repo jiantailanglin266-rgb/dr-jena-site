@@ -109,13 +109,12 @@ header.scrolled{
 }
 .h-inner{max-width:1240px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;flex-direction:column;line-height:1.2}
-.logo .en{font-family:var(--serif-en);font-size:24px;letter-spacing:.14em;color:var(--paper);transition:color .5s}
-.logo .jp{font-size:9px;letter-spacing:.42em;color:var(--gold-bright);margin-top:3px;transition:color .5s}
-header.scrolled .logo .en{color:var(--ink)}
-header.scrolled .logo .jp{color:var(--gold)}
+/* FVが明るい画像になったため、最上部（非スクロール時）から黒文字で表示 */
+.logo .en{font-family:var(--serif-en);font-size:24px;letter-spacing:.14em;color:var(--ink);transition:color .5s}
+.logo .jp{font-size:9px;letter-spacing:.42em;color:var(--gold);margin-top:3px;transition:color .5s}
 nav.pc{display:flex;align-items:center;gap:34px}
 nav.pc a{
-  font-size:12px;letter-spacing:.18em;color:rgba(250,248,244,.85);
+  font-size:12px;letter-spacing:.18em;color:var(--char);
   position:relative;padding:4px 0;transition:color .5s;
 }
 nav.pc a::after{
@@ -123,16 +122,13 @@ nav.pc a::after{
   background:var(--gold);transition:width .4s var(--ease);
 }
 nav.pc a:hover::after{width:100%}
-header.scrolled nav.pc a{color:var(--char)}
 .h-cta{
   font-size:12px;letter-spacing:.18em;padding:11px 26px;
-  border:1px solid var(--gold);color:var(--gold-bright)!important;
+  border:1px solid var(--gold);color:var(--gold)!important;
   transition:all .4s var(--ease);
 }
-.h-cta:hover{background:var(--gold);color:var(--ink)!important}
+.h-cta:hover{background:var(--gold);color:var(--white)!important}
 .h-cta::after{display:none}
-header.scrolled .h-cta{color:var(--gold)!important}
-header.scrolled .h-cta:hover{color:var(--white)!important}
 
 /* ハンバーガー（モバイル） */
 #menuBtn{
@@ -140,10 +136,9 @@ header.scrolled .h-cta:hover{color:var(--white)!important}
   position:relative;z-index:120;
 }
 #menuBtn span{
-  position:absolute;left:10px;width:24px;height:1px;background:var(--paper);
+  position:absolute;left:10px;width:24px;height:1px;background:var(--ink);
   transition:all .45s var(--ease);
 }
-header.scrolled #menuBtn span{background:var(--ink)}
 #menuBtn span:nth-child(1){top:18px}
 #menuBtn span:nth-child(2){top:26px}
 body.menu-open #menuBtn span{background:var(--paper)!important}
@@ -243,6 +238,36 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
   background:var(--gold-bright);animation:cueDrop 2.2s var(--ease) infinite;
 }
 @keyframes cueDrop{0%{top:-40%}60%,100%{top:110%}}
+
+/* ============================================================
+   1. Hero（FV画像版）：デザインカンプ画像をそのまま全幅表示
+============================================================ */
+.hero-fv{background:#fdf7f6} /* 画像の余白と馴染むソフトピンク */
+.fv-img{width:100%;height:auto;display:block}
+.fv-under{
+  max-width:1160px;margin:0 auto;padding:30px 24px 44px;
+  display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+}
+/* PCではコピーは画像内に焼き込まれているため視覚的に隠す（SEO・読み上げ用に保持） */
+.fv-copy{
+  position:absolute;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
+.fv-cta{display:flex;gap:16px;flex-wrap:wrap}
+@media(max-width:860px){
+  .fv-under{flex-direction:column;align-items:stretch;padding:28px 22px 42px;gap:0}
+  .fv-copy{ /* モバイルでは表示に戻す */
+    position:static;width:auto;height:auto;overflow:visible;
+    clip:auto;clip-path:none;white-space:normal;
+  }
+  .fv-copy h1{
+    font-family:var(--serif-jp);font-weight:500;
+    font-size:27px;line-height:1.7;letter-spacing:.06em;
+  }
+  .fv-copy p{margin-top:14px;font-size:13px;line-height:2.1;color:var(--gray)}
+  .fv-cta{flex-direction:column;margin-top:22px}
+  .fv-cta .btn{width:100%;min-width:0}
+}
 
 /* ============================================================
    1.5 Gallery Marquee（FV直下：画像帯が左へ自動で流れ続ける）
@@ -646,31 +671,23 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
   </ul>
 </div>
 
-<!-- ============ 1. Hero ============ -->
-<section class="hero">
-  <div class="orb orb1" data-para="0.22"></div>
-  <div class="orb orb2" data-para="-0.14"></div>
-  <div class="hero-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-  <div class="hero-ghost" aria-hidden="true">Beauty × Marketing</div>
-
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Harajuku, Tokyo — 30+ Years of Excellence</div>
-    <h1>
-      <span class="line"><span>30年の美意識で、</span></span>
-      <span class="line"><span>ブランドを育てる。</span></span>
-    </h1>
-    <p class="hero-sub">
-      原宿で30年以上、"美しさ"と向き合い、ブランドを育て、信頼を積み上げてきたDr.Jena。<br>
-      その「魅せる力・伝える力・育てる力」を、今度はあなたのビジネスに。<br>
-      美容 × クリエイティブ／マーケティングの新しいかたちが、ここから始まります。
-    </p>
-    <div class="hero-cta">
-      <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-gold">事業の無料相談をする <span class="ar">→</span></a>
-      <a href="#beauty" class="btn btn-ghost">美容事業を見る <span class="ar">→</span></a>
+<!-- ============ 1. Hero（FV画像版） ============
+     画像の差し替え：images/fv.jpg を置き換えるだけ（width/height属性も実寸比に合わせる） -->
+<section class="hero-fv">
+  <img class="fv-img" src="images/fv.jpg"
+       alt="Dr.Jena — 30年の美意識で、ブランドを育てる。原宿発、美容×クリエイティブ／マーケティング"
+       width="1823" height="863" fetchpriority="high" decoding="async">
+  <div class="fv-under">
+    <!-- モバイルでは画像内の文字が小さくなるため、DOMテキストで補完（PCでは非表示・SEO用に保持） -->
+    <div class="fv-copy">
+      <h1>30年の美意識で、<br>ブランドを育てる。</h1>
+      <p>原宿で30年以上、"美しさ"と向き合い、ブランドを育て、信頼を積み上げてきたDr.Jena。その「魅せる力・伝える力・育てる力」を、今度はあなたのビジネスに。</p>
+    </div>
+    <div class="fv-cta">
+      <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-dark">事業の無料相談をする <span class="ar">→</span></a>
+      <a href="#beauty" class="btn btn-outline">美容事業を見る <span class="ar">→</span></a>
     </div>
   </div>
-
-  <div class="scroll-cue">Scroll<i></i></div>
 </section>
 
 <!-- ============ 1.5 Gallery Marquee（FV直下） ============
