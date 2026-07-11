@@ -252,29 +252,10 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
   transition:background .3s var(--ease),box-shadow .3s var(--ease);
 }
 .fv-hotspot:hover{background:rgba(255,255,255,.14);box-shadow:0 6px 24px -6px rgba(190,80,110,.35)}
-.fv-under{
-  max-width:1160px;margin:0 auto;padding:30px 24px 44px;
-  display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
-}
-/* PCではコピーは画像内に焼き込まれているため視覚的に隠す（SEO・読み上げ用に保持） */
-.fv-copy{
+/* 視覚的に隠すテキスト（SEO・スクリーンリーダー用） */
+.vh{
   position:absolute;width:1px;height:1px;overflow:hidden;
   clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
-}
-.fv-cta{display:flex;gap:16px;flex-wrap:wrap}
-@media(max-width:860px){
-  .fv-under{flex-direction:column;align-items:stretch;padding:28px 22px 42px;gap:0}
-  .fv-copy{ /* モバイルでは表示に戻す */
-    position:static;width:auto;height:auto;overflow:visible;
-    clip:auto;clip-path:none;white-space:normal;
-  }
-  .fv-copy h1{
-    font-family:var(--serif-jp);font-weight:500;
-    font-size:27px;line-height:1.7;letter-spacing:.06em;
-  }
-  .fv-copy p{margin-top:14px;font-size:13px;line-height:2.1;color:var(--gray)}
-  .fv-cta{flex-direction:column;margin-top:22px}
-  .fv-cta .btn{width:100%;min-width:0}
 }
 
 /* ============================================================
@@ -697,17 +678,8 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
     <!-- 画像内に焼き込まれた「無料体験に申し込む」ボタンの位置に重ねた透明リンク -->
     <a class="fv-hotspot" href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" aria-label="無料体験に申し込む"></a>
   </div>
-  <div class="fv-under">
-    <!-- モバイルでは画像内の文字が小さくなるため、DOMテキストで補完（PCでは非表示・SEO用に保持） -->
-    <div class="fv-copy">
-      <h1>30年の美意識で、<br>ブランドを育てる。</h1>
-      <p>原宿で30年以上、"美しさ"と向き合い、ブランドを育て、信頼を積み上げてきたDr.Jena。その「魅せる力・伝える力・育てる力」を、今度はあなたのビジネスに。</p>
-    </div>
-    <div class="fv-cta">
-      <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-dark">事業の無料相談をする <span class="ar">→</span></a>
-      <a href="#beauty" class="btn btn-outline">美容事業を見る <span class="ar">→</span></a>
-    </div>
-  </div>
+  <!-- 見出しは画像内に焼き込み。SEO・読み上げ用にh1を保持 -->
+  <h1 class="vh">30年の美意識で、ブランドを育てる。｜Dr.Jena — 美容×クリエイティブ／マーケティング</h1>
 </section>
 
 <!-- ============ 1.5 Gallery Marquee（FV直下） ============
