@@ -263,7 +263,7 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
    速度・高さ・間隔は下の3つのCSS変数だけで調整可能
 ============================================================ */
 .marquee{
-  --marquee-duration:55s;   /* 1ループの時間（大きいほどゆっくり） */
+  --marquee-duration:110s;  /* 1ループの時間（大きいほどゆっくり） */
   --marquee-height:240px;   /* 画像の高さ */
   --marquee-gap:18px;       /* 画像同士の間隔 */
   background:var(--ink);
@@ -292,7 +292,7 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
   to{transform:translateX(calc(-100% - var(--marquee-gap)))}
 }
 @media(max-width:860px){
-  .marquee{--marquee-duration:36s;--marquee-height:150px;--marquee-gap:10px;padding:40px 0}
+  .marquee{--marquee-duration:60s;--marquee-height:150px;--marquee-gap:10px;padding:40px 0}
 }
 /* モーション低減環境：自動再生を止め、手動の横スクロールで閲覧可能に */
 @media(prefers-reduced-motion:reduce){
@@ -689,15 +689,19 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
 <section class="marquee" aria-label="ギャラリー">
   <div class="marquee__viewport">
     <ul class="marquee__track">
-      <!-- 画像セットA（※要確認：実画像に差し替え） -->
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%231d1b14'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2001%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20280%20240'%3E%3Crect%20width='280'%20height='240'%20fill='%23232017'/%3E%3Crect%20x='12'%20y='12'%20width='256'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='140'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2002%3C/text%3E%3C/svg%3E" alt="" width="280" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%23191812'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2003%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%20240'%3E%3Crect%20width='240'%20height='240'%20fill='%2326221a'/%3E%3Crect%20x='12'%20y='12'%20width='216'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='120'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2004%3C/text%3E%3C/svg%3E" alt="" width="240" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%231d1b14'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2005%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20280%20240'%3E%3Crect%20width='280'%20height='240'%20fill='%23191812'/%3E%3Crect%20x='12'%20y='12'%20width='256'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='140'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2006%3C/text%3E%3C/svg%3E" alt="" width="280" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20240'%3E%3Crect%20width='360'%20height='240'%20fill='%23232017'/%3E%3Crect%20x='12'%20y='12'%20width='336'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='180'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2007%3C/text%3E%3C/svg%3E" alt="" width="360" height="240" loading="lazy" decoding="async"></li>
-      <li class="marquee__item"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%20240'%3E%3Crect%20width='240'%20height='240'%20fill='%231d1b14'/%3E%3Crect%20x='12'%20y='12'%20width='216'%20height='216'%20fill='none'%20stroke='%23b3924f'%20stroke-opacity='.3'/%3E%3Ctext%20x='120'%20y='127'%20fill='%23b3924f'%20font-family='Georgia,serif'%20font-style='italic'%20font-size='16'%20letter-spacing='3'%20text-anchor='middle'%3EImage%2008%3C/text%3E%3C/svg%3E" alt="" width="240" height="240" loading="lazy" decoding="async"></li>
+      <!-- 画像セットA（12枚・720x480統一）：差し替えはこの12行のsrcを変えるだけ -->
+      <li class="marquee__item"><img src="images/marquee/01.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/02.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/03.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/04.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/05.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/06.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/07.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/08.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/09.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/10.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/11.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
+      <li class="marquee__item"><img src="images/marquee/12.jpg" alt="" width="720" height="480" loading="lazy" decoding="async"></li>
     </ul>
     <!-- 画像セットB（Aの完全複製・継ぎ目消し用）はJSで自動生成 -->
   </div>
