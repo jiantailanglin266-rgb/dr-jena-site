@@ -324,6 +324,18 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
    2. Statement / Philosophy
 ============================================================ */
 .statement{position:relative;overflow:hidden}
+/* 理念ビジュアル：全幅バナー。高さは上限を設けて上品な帯に保つ */
+.ph-visual{position:relative;margin:26px 0 84px}
+.ph-visual img{
+  width:100%;height:auto;display:block;
+  max-height:620px;object-fit:cover;object-position:center;
+}
+/* 画像内に焼き込まれた見出しの代替テキスト（視覚的には非表示） */
+.ph-quote{
+  position:absolute;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
+@media(max-width:860px){.ph-visual{margin:14px 0 56px}}
 .statement .quote{
   font-family:var(--serif-jp);font-weight:500;
   font-size:clamp(25px,3.6vw,40px);line-height:2;letter-spacing:.1em;
@@ -723,10 +735,17 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
 <section class="section statement" id="philosophy">
   <div class="wrap">
     <div class="eyebrow rv">Philosophy</div>
-    <h2 class="statement quote rv rv-d1">
-      本物の美しさは、<br>
-      <span class="gold">正しく伝わってこそ</span>価値になる。
-    </h2>
+  </div>
+
+  <!-- 理念ビジュアル（見出しは画像内に焼き込み。SEO・読み上げ用にh2を保持） -->
+  <div class="ph-visual rv">
+    <img src="images/philosophy.png"
+         alt="本物の美しさは、正しく伝わってこそ価値になる。— 美しさを、もっと本質的に。あなたらしく、輝く未来へ。"
+         width="1717" height="916" loading="lazy" decoding="async">
+    <h2 class="ph-quote">本物の美しさは、正しく伝わってこそ価値になる。</h2>
+  </div>
+
+  <div class="wrap">
     <div class="body">
       <p class="rv">
         Dr.Jenaは、原宿の地で30年以上、"美しさ"を追求してきた美容ブランドです。
