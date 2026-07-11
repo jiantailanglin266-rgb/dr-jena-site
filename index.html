@@ -480,7 +480,7 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 /* ============================================================
    7. Beauty（美容事業）
 ============================================================ */
-.beauty{background:var(--paper-deep);position:relative;overflow:hidden}
+.beauty{background:var(--paper-deep);position:relative;overflow:hidden;padding-top:0} /* 冒頭は全幅ビジュアル */
 .beauty::before{
   content:"Beauty";position:absolute;top:44px;left:-10px;
   font-family:var(--serif-en);font-style:italic;font-size:clamp(80px,14vw,190px);
@@ -753,14 +753,15 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
 
 <!-- ============ 7. Beauty（美容事業） ============ -->
 <section class="section beauty" id="beauty">
-  <div class="wrap">
-    <div class="eyebrow rv">Beauty — Our Origin</div>
-    <h2 class="sec-title rv rv-d1">すべての原点は、<br>原宿の美容ブランドとして。</h2>
-    <p class="sec-lead rv rv-d2">
-      私たちの提案に説得力があるのは、自らが30年以上、美の現場でお客様と向き合い続けてきたから。
-      Dr.Jenaの美容事業は、いまもこれからも、ブランドの原点であり信頼の証です。
-    </p>
+  <!-- 美容事業ビジュアル（見出し・リード文は画像内に焼き込み。SEO・読み上げ用にh2を保持） -->
+  <div class="ph-visual rv">
+    <img src="images/beauty.png"
+         alt="Beauty — Our Origin すべての原点は、原宿の美容ブランドとして。私たちの提案に説得力があるのは、自らが30年以上、美の現場でお客様と向き合い続けてきたから。Dr.Jenaの美容事業は、いまもこれからも、ブランドの原点であり信頼の証です。"
+         width="1717" height="916" loading="lazy" decoding="async">
+    <h2 class="ph-quote">すべての原点は、原宿の美容ブランドとして。</h2>
+  </div>
 
+  <div class="wrap">
     <div class="beauty-grid">
       <!-- サロン -->
       <div class="b-card rv">
