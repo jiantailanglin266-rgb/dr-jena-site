@@ -905,14 +905,16 @@ footer{background:var(--beige-deep);color:var(--char)}
 </section>
 
 <!-- ============ 8. Works / 実績 ============ -->
-<section class="section dark" id="works">
-  <div class="wrap">
-    <div class="eyebrow rv">Works</div>
-    <h2 class="sec-title rv rv-d1">実績・ケーススタディ</h2>
-    <p class="sec-lead rv rv-d2">
-      新事業のケーススタディは現在準備中です。まずは30年のブランド運営そのものを、私たちの最初の実績としてご覧ください。
-    </p>
+<section class="section dark" id="works" style="padding-top:0">
+  <!-- 実績ビジュアル（見出し・リード文は画像内に焼き込み。SEO・読み上げ用にh2を保持） -->
+  <div class="ph-visual rv">
+    <img src="images/works.png"
+         alt="Works 実績・ケーススタディ — 新事業のケーススタディは現在準備中です。まずは30年のブランド運営そのものを、私たちの最初の実績としてご覧ください。ブランド運営歴30年。"
+         width="1536" height="1024" loading="lazy" decoding="async">
+    <h2 class="ph-quote">実績・ケーススタディ</h2>
+  </div>
 
+  <div class="wrap">
     <!-- 要確認：実績が確定したらカードを差し替え -->
     <div class="works-grid">
       <div class="work rv">
