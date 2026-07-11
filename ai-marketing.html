@@ -565,6 +565,30 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 .cta-tel a{font-family:var(--serif-en);font-size:21px;color:var(--gold-bright);letter-spacing:.12em;display:inline-block;margin-top:4px}
 
 /* ============================================================
+   3b. サービスインデックス（ページ内アンカーへのショートカット）
+============================================================ */
+.svc-index{margin:64px 0 84px;border-top:1px solid rgba(250,248,244,.14)}
+.svc-index > a{
+  display:flex;align-items:center;gap:34px;padding:28px 10px;
+  border-bottom:1px solid rgba(250,248,244,.14);
+  transition:background .4s var(--ease),padding .4s var(--ease);
+}
+.svc-index > a:hover{background:rgba(179,146,79,.06);padding-left:24px}
+.si-no{font-family:var(--serif-en);font-size:15px;letter-spacing:.2em;color:var(--gold-bright);flex-shrink:0}
+.si-body{flex:1;display:flex;align-items:baseline;gap:20px;flex-wrap:wrap}
+.si-t{font-family:var(--serif-jp);font-size:20px;font-weight:500;letter-spacing:.1em}
+.si-pkg{font-size:9px;letter-spacing:.24em;background:var(--gold-bright);color:var(--ink);padding:4px 10px;font-weight:500}
+.si-d{font-size:12.5px;color:rgba(250,248,244,.55);line-height:1.8}
+.si-ar{font-family:var(--serif-en);color:var(--gold-bright);transition:transform .4s var(--ease)}
+.svc-index > a:hover .si-ar{transform:translateX(6px)}
+.flagship,.svc-card{scroll-margin-top:96px} /* インデックスからのアンカー着地位置 */
+@media(max-width:860px){
+  .svc-index{margin:48px 0 64px}
+  .svc-index > a{gap:18px;padding:24px 4px}
+  .si-body{flex-direction:column;gap:6px}
+}
+
+/* ============================================================
    10. Footer
 ============================================================ */
 footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
@@ -719,8 +743,37 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
       30年ブランドを育て続けてきた当事者として、戦略から表現、運用までを一気通貫でお引き受けします。
     </p>
 
+    <!-- サービスインデックス：各サービスの詳細へページ内ジャンプ -->
+    <div class="svc-index rv">
+      <a href="#svc-01">
+        <span class="si-no">01</span>
+        <span class="si-body"><span class="si-t">マーケットデザイン</span><span class="si-d">市場・インセンティブ・仕組みそのものを設計する、最上位の上流コンサルティング。</span></span>
+        <span class="si-ar">→</span>
+      </a>
+      <a href="#svc-02">
+        <span class="si-no">02</span>
+        <span class="si-body"><span class="si-t">HP制作 / Web制作</span><span class="si-d">30年の審美眼で「伝わる・売れる」サイトを、デザインから実装まで一気通貫。</span></span>
+        <span class="si-ar">→</span>
+      </a>
+      <a href="#svc-03">
+        <span class="si-no">03</span>
+        <span class="si-body"><span class="si-t">WEBコンサルティング</span><span class="si-d">サイト診断・SEO・CVR改善・運用伴走。作って終わりにしない。</span></span>
+        <span class="si-ar">→</span>
+      </a>
+      <a href="#svc-04">
+        <span class="si-no">04</span>
+        <span class="si-body"><span class="si-t">AIマーケティング</span><span class="si-pkg">PACKAGE</span><span class="si-d">生成AIで工数と成果を変える、明確な3プランのパッケージ商品。</span></span>
+        <span class="si-ar">→</span>
+      </a>
+      <a href="#svc-05">
+        <span class="si-no">05</span>
+        <span class="si-body"><span class="si-t">WEB3.0</span><span class="si-d">ブロックチェーン／NFTを「次の10年のブランド資産づくり」として実装。</span></span>
+        <span class="si-ar">→</span>
+      </a>
+    </div>
+
     <!-- フラッグシップ：マーケットデザイン（最上位配置） -->
-    <div class="flagship rv">
+    <div class="flagship rv" id="svc-01">
       <div class="fs-tag">FLAGSHIP SERVICE</div>
       <div class="fs-no">01</div>
       <h3>マーケットデザイン</h3>
@@ -742,7 +795,7 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
 
     <!-- サービスカード×4 -->
     <div class="svc-grid">
-      <div class="svc-card rv">
+      <div class="svc-card rv" id="svc-02">
         <div class="no">02</div>
         <h3>HP制作 / Web制作</h3>
         <div class="en">Web Design &amp; Development</div>
@@ -757,7 +810,7 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
         <div class="more">View Detail →</div>
       </div>
 
-      <div class="svc-card rv rv-d1">
+      <div class="svc-card rv rv-d1" id="svc-03">
         <div class="no">03</div>
         <h3>WEBコンサルティング</h3>
         <div class="en">Web Consulting</div>
@@ -772,7 +825,7 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
         <div class="more">View Detail →</div>
       </div>
 
-      <div class="svc-card rv">
+      <div class="svc-card rv" id="svc-04">
         <div class="no">04</div>
         <div class="pkg">PACKAGE</div>
         <h3>AIマーケティング</h3>
@@ -788,7 +841,7 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
         <a href="#plans" class="more">View Plans →</a>
       </div>
 
-      <div class="svc-card rv rv-d1">
+      <div class="svc-card rv rv-d1" id="svc-05">
         <div class="no">05</div>
         <h3>WEB3.0</h3>
         <div class="en">Web3 / Blockchain Strategy</div>

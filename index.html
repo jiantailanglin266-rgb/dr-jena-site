@@ -565,29 +565,6 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 .cta-tel a{font-family:var(--serif-en);font-size:21px;color:var(--gold-bright);letter-spacing:.12em;display:inline-block;margin-top:4px}
 
 /* ============================================================
-   3b. サービスインデックス（トップのダイジェスト → 下層ページ誘導）
-============================================================ */
-.svc-index{margin-top:64px;border-top:1px solid rgba(250,248,244,.14)}
-.svc-index > a{
-  display:flex;align-items:center;gap:34px;padding:28px 10px;
-  border-bottom:1px solid rgba(250,248,244,.14);
-  transition:background .4s var(--ease),padding .4s var(--ease);
-}
-.svc-index > a:hover{background:rgba(179,146,79,.06);padding-left:24px}
-.si-no{font-family:var(--serif-en);font-size:15px;letter-spacing:.2em;color:var(--gold-bright);flex-shrink:0}
-.si-body{flex:1;display:flex;align-items:baseline;gap:20px;flex-wrap:wrap}
-.si-t{font-family:var(--serif-jp);font-size:20px;font-weight:500;letter-spacing:.1em}
-.si-pkg{font-size:9px;letter-spacing:.24em;background:var(--gold-bright);color:var(--ink);padding:4px 10px;font-weight:500}
-.si-d{font-size:12.5px;color:rgba(250,248,244,.55);line-height:1.8}
-.si-ar{font-family:var(--serif-en);color:var(--gold-bright);transition:transform .4s var(--ease)}
-.svc-index > a:hover .si-ar{transform:translateX(6px)}
-.svc-more{margin-top:52px;text-align:center}
-@media(max-width:860px){
-  .svc-index > a{gap:18px;padding:24px 4px}
-  .si-body{flex-direction:column;gap:6px}
-}
-
-/* ============================================================
    10. Footer
 ============================================================ */
 footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
@@ -779,51 +756,6 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
         <div class="num"><span data-count="2">0</span><small>Fields</small></div>
         <div class="label">美容 × クリエイティブ／マーケティング</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 3. Creative / Marketing（ダイジェスト → 下層 AI MARKETING ページへ） ============ -->
-<section class="section dark services" id="services">
-  <div class="wrap">
-    <div class="eyebrow rv">Creative / Marketing</div>
-    <h2 class="sec-title rv rv-d1">ブランドを育ててきた会社が、<br>ブランドの成長を設計する。</h2>
-    <p class="sec-lead rv rv-d2">
-      作って終わりの制作会社でも、数字だけのコンサルでもありません。
-      30年ブランドを育て続けてきた当事者として、戦略から表現、運用までを一気通貫でお引き受けします。
-    </p>
-
-    <!-- サービスインデックス：詳細は下層 AI MARKETING ページで -->
-    <div class="svc-index rv">
-      <a href="ai-marketing.html#services">
-        <span class="si-no">01</span>
-        <span class="si-body"><span class="si-t">マーケットデザイン</span><span class="si-d">市場・インセンティブ・仕組みそのものを設計する、最上位の上流コンサルティング。</span></span>
-        <span class="si-ar">→</span>
-      </a>
-      <a href="ai-marketing.html#services">
-        <span class="si-no">02</span>
-        <span class="si-body"><span class="si-t">HP制作 / Web制作</span><span class="si-d">30年の審美眼で「伝わる・売れる」サイトを、デザインから実装まで一気通貫。</span></span>
-        <span class="si-ar">→</span>
-      </a>
-      <a href="ai-marketing.html#services">
-        <span class="si-no">03</span>
-        <span class="si-body"><span class="si-t">WEBコンサルティング</span><span class="si-d">サイト診断・SEO・CVR改善・運用伴走。作って終わりにしない。</span></span>
-        <span class="si-ar">→</span>
-      </a>
-      <a href="ai-marketing.html#plans">
-        <span class="si-no">04</span>
-        <span class="si-body"><span class="si-t">AIマーケティング</span><span class="si-pkg">PACKAGE</span><span class="si-d">生成AIで工数と成果を変える、明確な3プランのパッケージ商品。</span></span>
-        <span class="si-ar">→</span>
-      </a>
-      <a href="ai-marketing.html#services">
-        <span class="si-no">05</span>
-        <span class="si-body"><span class="si-t">WEB3.0</span><span class="si-d">ブロックチェーン／NFTを「次の10年のブランド資産づくり」として実装。</span></span>
-        <span class="si-ar">→</span>
-      </a>
-    </div>
-
-    <div class="svc-more rv">
-      <a href="ai-marketing.html" class="btn btn-gold">AI MARKETING 詳細ページへ <span class="ar">→</span></a>
     </div>
   </div>
 </section>
