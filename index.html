@@ -626,6 +626,75 @@ footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
   .rv{opacity:1;transform:none}
   html{scroll-behavior:auto}
 }
+
+/* ============================================================
+   ベージュ統一テーマ：全セクションの背景をベージュ系に統一
+   （ダークセクションは文字色ごと明るい配色に反転）
+============================================================ */
+:root{--beige:#f3efe7;--beige-deep:#eae3d5}
+body{background:var(--beige)}
+.hero-fv{background:var(--beige)}
+.marquee{background:var(--beige)}
+.beauty{background:var(--beige)}
+.subhero{background:var(--beige)}
+header.scrolled{background:rgba(243,239,231,.92)}
+/* --- ダークセクション（Services / Process / Works）を反転 --- */
+.dark{background:var(--beige);color:var(--ink)}
+.dark .sec-lead{color:var(--gray)}
+.services::before{-webkit-text-stroke:1px rgba(179,146,79,.14)}
+.flagship .fs-no,.flagship .fs-en{color:var(--gold)}
+.flagship .fs-body p{color:var(--gray)}
+.svc-flow .k{color:var(--gold)}
+.svc-flow .row div{color:var(--char)}
+.svc-card{border-color:rgba(22,21,15,.12)}
+.svc-card:hover{border-color:var(--gold-line);background:rgba(179,146,79,.06)}
+.svc-card .no,.svc-card .en,.svc-card dt,.svc-card .more{color:var(--gold)}
+.svc-card .pkg{background:var(--gold);color:var(--white)}
+.svc-card dd{color:var(--gray)}
+.svc-index{border-top-color:rgba(22,21,15,.12)}
+.svc-index > a{border-bottom-color:rgba(22,21,15,.12)}
+.si-no,.si-ar{color:var(--gold)}
+.si-pkg{background:var(--gold);color:var(--white)}
+.si-d{color:var(--gray)}
+.proc .p-no{background:transparent;color:var(--gold)}
+.proc p{color:var(--gray)}
+.work{
+  border-color:rgba(22,21,15,.15);
+  background:
+    linear-gradient(160deg,rgba(179,146,79,.10),transparent 55%),
+    repeating-linear-gradient(45deg,transparent,transparent 11px,rgba(22,21,15,.03) 11px,rgba(22,21,15,.03) 12px);
+}
+.work:hover{border-color:var(--gold)}
+.work .w-case{color:var(--gold)}
+.work .w-soon{color:rgba(22,21,15,.30)}
+.work p{color:var(--gray)}
+.works-note{color:var(--gray-light)}
+/* --- CTA --- */
+.cta-sec{background:var(--beige)}
+.cta-head h2{color:var(--ink)}
+.cta-head .en-ghost{color:var(--gold)}
+.cta-box{border-color:rgba(22,21,15,.14);background:var(--white)}
+.cta-box:hover{border-color:var(--gold)}
+.cta-box .c-en{color:var(--gold)}
+.cta-box h3{color:var(--ink)}
+.cta-box p{color:var(--gray)}
+.cta-tel{color:var(--gray)}
+.cta-tel a{color:var(--gold)}
+/* --- Footer：一段深いベージュで階層をつける --- */
+footer{background:var(--beige-deep);color:var(--char)}
+.f-top{border-bottom-color:rgba(22,21,15,.12)}
+.f-logo .en{color:var(--ink)}
+.f-logo .jp{color:var(--gold)}
+.f-logo p{color:var(--gray)}
+.f-h{color:var(--gold)}
+.f-list .k{color:var(--gray-light)}
+.f-list a:hover{color:var(--gold)}
+.f-nav a:hover{color:var(--gold)}
+.f-sns a{border-color:rgba(22,21,15,.2)}
+.f-sns a:hover{border-color:var(--gold);color:var(--gold)}
+.f-btm small{color:var(--gray-light)}
+.f-btm .top-link{color:var(--gray)}
+.f-btm .top-link:hover{color:var(--gold)}
 </style>
 </head>
 <body>
