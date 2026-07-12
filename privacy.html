@@ -1227,6 +1227,38 @@ body.cb-open #cbPanel{opacity:1;visibility:visible;transform:none}
   #cbBtn{right:16px;bottom:16px;width:54px;height:54px}
   #cbPanel{right:14px;bottom:84px}
 }
+
+/* ============================================================
+   チャットボット配色：ピンク × ベージュ（黒を使わない）
+============================================================ */
+:root{
+  --cb-pink:#d48ca6;        /* ローズピンク（メイン） */
+  --cb-pink-deep:#c06f8e;   /* 濃いピンク（ホバー・リンク） */
+  --cb-pink-soft:#f2dde4;   /* ソフトピンク（ヘッダー） */
+  --cb-rose-text:#96566b;   /* ローズブラウン（見出しテキスト） */
+}
+#cbBtn{background:var(--cb-pink);border:1px solid rgba(255,255,255,.75)}
+#cbBtn:hover{background:var(--cb-pink-deep)}
+#cbBtn svg{stroke:#fff}
+#cbBtn .cb-badge{background:#fff}
+#cbPanel{background:var(--beige);border-color:rgba(212,140,166,.45)}
+.cb-head{background:var(--cb-pink-soft)}
+.cb-head .cb-mark{border-color:var(--cb-pink);color:var(--cb-pink-deep)}
+.cb-head .t{color:var(--cb-rose-text)}
+.cb-head .s{color:var(--cb-pink-deep)}
+.cb-msg.bot{background:var(--white);border-color:rgba(212,140,166,.35);color:var(--gray)}
+.cb-msg.user{background:var(--cb-pink);color:#fff}
+.cb-msg a{color:var(--cb-pink-deep)}
+.cb-msg .cb-cta{background:var(--cb-pink);color:#fff}
+.cb-msg .cb-cta:hover{background:var(--cb-pink-deep)}
+.cb-chips button{border-color:var(--cb-pink);color:var(--cb-pink-deep)}
+.cb-chips button:hover{background:var(--cb-pink);color:#fff}
+.cb-typing{background:var(--white);border-color:rgba(212,140,166,.35)}
+.cb-typing i{background:var(--cb-pink)}
+.cb-foot{border-top-color:rgba(212,140,166,.4);background:var(--white)}
+.cb-foot input{color:var(--gray)}
+.cb-foot button{background:var(--cb-pink);color:#fff}
+.cb-foot button:hover{background:var(--cb-pink-deep)}
 </style>
 
 <button id="cbBtn" aria-label="チャットで相談する" aria-expanded="false">
