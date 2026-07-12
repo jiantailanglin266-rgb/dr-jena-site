@@ -842,6 +842,49 @@ a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 /* --- Lenis使用時はネイティブsmoothを無効化（二重イージング防止） --- */
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
+
+/* ============================================================
+   モバイル縦余白の最適化（PCは無変更・640px以下のみ）
+============================================================ */
+@media(max-width:640px){
+  /* セクションの基本リズムを一段圧縮 */
+  .section{padding:56px 0}
+  .marquee{padding:30px 0}
+  /* バナー直後の二重マージンを解消 */
+  .ph-visual{margin-bottom:32px}
+  .works-grid{margin-top:32px;gap:16px}
+  .cta-grid{margin-top:36px;gap:20px}
+  /* 実績数字まわり */
+  .stats{margin-top:48px}
+  .stat{padding:26px 16px}
+  .stat .num{font-size:38px}
+  /* CTAセクション（.sectionではないため個別に） */
+  .cta-sec{padding:0 0 64px}
+  .cta-tel{margin-top:16px}
+  /* Beauty */
+  .beauty-grid{gap:18px}
+  .b-note{margin-top:24px}
+  .b-cta{margin-top:26px;gap:10px}
+  /* 下層ページ */
+  .subhero{padding:118px 0 44px}
+  .crumb{margin-bottom:26px}
+  .flagship{margin-top:44px}
+  .why-grid{margin-top:44px}
+  .plan-grid{margin-top:44px;gap:24px}
+  .proc-list{margin-top:48px}
+  .svc-index{margin:36px 0 44px}
+  .svc-index > a{padding:20px 4px}
+  .co-table{margin-top:40px}
+  .co-table > div{padding:16px 8px}
+  .map-wrap{margin-top:36px}
+  .legal h3{margin:40px 0 12px}
+  /* フッター */
+  footer{padding:52px 0 30px}
+  .f-top{gap:30px;padding-bottom:38px}
+  .f-btm{padding-top:26px}
+  .f-logo p{margin-top:18px}
+  .f-sns{margin-top:20px}
+}
 </style>
 </head>
 <body>
