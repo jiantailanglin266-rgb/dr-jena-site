@@ -802,6 +802,46 @@ footer{background:var(--beige-deep);color:var(--char)}
   footer{padding:70px 0 36px}
   .f-top{gap:36px;padding-bottom:48px}
 }
+
+/* ============================================================
+   Brush-up：品位を上げるディテール（2026-07）
+============================================================ */
+/* --- 本文グレーの可読コントラストを微調整（トーンは維持） --- */
+:root{--gray:#655e52}
+/* --- キーボードフォーカス：ゴールドの細いリング（全インタラクティブ要素） --- */
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{
+  outline:1px solid var(--gold);outline-offset:3px;border-radius:1px;
+}
+/* --- スクロール進捗バー（ヘッダー上端の極細ゴールド） --- */
+#scrollProgress{
+  position:fixed;top:0;left:0;right:0;height:2px;z-index:130;pointer-events:none;
+}
+#scrollProgress i{
+  display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));
+  transform-origin:0 0;transform:scaleX(0);
+}
+/* --- CTAボタン：ホバーで一瞬だけ光が横切るシマー --- */
+.btn::before{
+  content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-18deg);pointer-events:none;
+}
+.btn:hover::before{animation:btnShine .9s var(--ease)}
+@keyframes btnShine{to{left:130%}}
+/* --- 見出しの「間」：和文セリフ見出しをわずかに開く --- */
+.sec-title{letter-spacing:.1em;line-height:1.7}
+/* --- バナー→本文の段差を消す繋ぎ（下端をベージュへ溶かす） --- */
+.ph-visual{overflow:hidden}
+.ph-visual::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:44px;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,var(--beige));
+}
+/* --- FVの静かなフェードイン（ローダーからの繋ぎ） --- */
+.fv-visual{animation:fvIn 1.2s var(--ease) .15s both}
+@keyframes fvIn{from{opacity:0}to{opacity:1}}
+/* --- Lenis使用時はネイティブsmoothを無効化（二重イージング防止） --- */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
 </style>
 </head>
 <body>
@@ -1679,5 +1719,129 @@ body.cb-open #cbPanel{opacity:1;visibility:visible;transform:none}
   }, 8000);
 })();
 </script>
+
+<!-- ▼ 演出ライブラリ（CDN・最小構成）
+     GSAP+ScrollTrigger：バナーの微パララックス／Lenis：上質な慣性スクロール -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+/* ============================================================
+   Brush-up演出（すべて prefers-reduced-motion を尊重）
+   調整ポイント：PARALLAX_PCT（視差量%）／LENIS_DURATION（慣性の重さ）
+============================================================ */
+(function(){
+  'use strict';
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var finePointer = matchMedia('(pointer: fine)').matches;
+  var PARALLAX_PCT = 3;      /* バナー視差の強さ（%）：気づかない程度が正解 */
+  var LENIS_DURATION = 1.05; /* 慣性スクロールの重さ（秒） */
+
+  /* ---- スクロール進捗バー（極細ゴールド） ---- */
+  var prog = document.createElement('div');
+  prog.id = 'scrollProgress';
+  prog.setAttribute('aria-hidden', 'true');
+  prog.innerHTML = '<i></i>';
+  document.body.appendChild(prog);
+  var progBar = prog.firstChild;
+  function updateProgress(){
+    var max = document.documentElement.scrollHeight - innerHeight;
+    progBar.style.transform = 'scaleX(' + (max > 0 ? Math.min(scrollY / max, 1) : 0) + ')';
+  }
+  addEventListener('scroll', updateProgress, {passive:true});
+  updateProgress();
+
+  /* ---- Lenis：上質な慣性スクロール（モーション低減時は無効） ---- */
+  var lenis = null;
+  if(!reduce && typeof Lenis !== 'undefined'){
+    lenis = new Lenis({duration: LENIS_DURATION, easing: function(t){ return 1 - Math.pow(1 - t, 3); }});
+    function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    /* ページ内アンカーはヘッダー高さ分オフセットして正確に着地 */
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var id = a.getAttribute('href');
+        if(id.length < 2) return;
+        var target = document.querySelector(id);
+        if(!target) return;
+        e.preventDefault();
+        lenis.scrollTo(target, {offset:-72});
+      });
+    });
+  }
+
+  /* ---- バナー画像の微パララックス（FVはホットスポット保護のため除外） ---- */
+  if(!reduce && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined'){
+    gsap.registerPlugin(ScrollTrigger);
+    if(lenis){ lenis.on('scroll', ScrollTrigger.update); }
+    document.querySelectorAll('.ph-visual img').forEach(function(img){
+      gsap.fromTo(img,
+        {yPercent:-PARALLAX_PCT, scale:1 + PARALLAX_PCT * 2 / 100},
+        {yPercent:PARALLAX_PCT, scale:1 + PARALLAX_PCT * 2 / 100, ease:'none',
+         scrollTrigger:{trigger:img.parentElement, start:'top bottom', end:'bottom top', scrub:true}});
+    });
+  }
+
+  /* ---- マーキー：スクロール速度に応じた繊細な加減速（継ぎ目ゼロ維持） ---- */
+  if(!reduce && lenis){
+    var rate = 1;
+    lenis.on('scroll', function(e){
+      var target = Math.min(1 + Math.abs(e.velocity || 0) * 0.05, 2.2);
+      rate = Math.max(rate, target);
+    });
+    (function decay(){
+      rate += (1 - rate) * 0.04; /* ゆっくり通常速度へ戻る */
+      document.querySelectorAll('.marquee__track').forEach(function(t){
+        t.getAnimations().forEach(function(a){ a.playbackRate = rate; });
+      });
+      requestAnimationFrame(decay);
+    })();
+  }
+
+  /* ---- マグネティックボタン（PC・ホバー時のみ、±4px） ---- */
+  if(!reduce && finePointer && typeof gsap !== 'undefined'){
+    document.querySelectorAll('.btn, .h-cta').forEach(function(btn){
+      var xTo = gsap.quickTo(btn, 'x', {duration:.4, ease:'power3'});
+      var yTo = gsap.quickTo(btn, 'y', {duration:.4, ease:'power3'});
+      btn.addEventListener('mousemove', function(e){
+        var r = btn.getBoundingClientRect();
+        xTo((e.clientX - r.left - r.width / 2) * .08);
+        yTo((e.clientY - r.top - r.height / 2) * .18);
+      });
+      btn.addEventListener('mouseleave', function(){ xTo(0); yTo(0); });
+    });
+  }
+
+  /* ---- アクセシビリティ：Escクローズ＋フォーカス管理 ---- */
+  var cbBtn = document.getElementById('cbBtn');
+  var cbInput = document.getElementById('cbInput');
+  var cbBody = document.getElementById('cbBody');
+  var menuBtn = document.getElementById('menuBtn');
+  if(cbBody){ cbBody.setAttribute('role', 'log'); cbBody.setAttribute('aria-live', 'polite'); }
+  if(menuBtn){ menuBtn.setAttribute('aria-expanded', 'false'); }
+  if(cbBtn && cbInput){
+    cbBtn.addEventListener('click', function(){
+      if(document.body.classList.contains('cb-open')){ setTimeout(function(){ cbInput.focus(); }, 550); }
+    });
+  }
+  if(menuBtn){
+    menuBtn.addEventListener('click', function(){
+      menuBtn.setAttribute('aria-expanded', document.body.classList.contains('menu-open') ? 'true' : 'false');
+    });
+  }
+  addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    if(document.body.classList.contains('cb-open')){
+      document.body.classList.remove('cb-open');
+      if(cbBtn){ cbBtn.setAttribute('aria-expanded', 'false'); cbBtn.focus(); }
+    }
+    if(document.body.classList.contains('menu-open')){
+      document.body.classList.remove('menu-open');
+      if(menuBtn){ menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.focus(); }
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
