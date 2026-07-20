@@ -8,6 +8,11 @@
 <meta property="og:title" content="BEAUTY｜Dr.Jena">
 <meta property="og:description" content="明治神宮前〈原宿〉駅 徒歩5分のビューティーサロンと、特許取得波形「I.W波」搭載のホームエステマシン「ジェーナプロ」。プロの手技×ホームケアのコラボケアで美しさに寄り添います。無料体験受付中。">
 <meta property="og:type" content="website">
+<link rel="canonical" href="https://jiantailanglin266-rgb.github.io/dr-jena-site/beauty.html">
+<meta property="og:image" content="https://jiantailanglin266-rgb.github.io/dr-jena-site/images/fv.webp">
+<meta property="og:url" content="https://jiantailanglin266-rgb.github.io/dr-jena-site/beauty.html">
+<meta name="format-detection" content="telephone=no">
+
 
 <!-- Google Fonts：欧文セリフ（Cormorant Garamond）× 和文（Noto Sans JP / Noto Serif JP） -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -885,7 +890,115 @@ html.lenis,html.lenis body{height:auto}
   .f-logo p{margin-top:18px}
   .f-sns{margin-top:20px}
 }
+
+/* ============================================================
+   LP最適化：縦のリズムを1つのスケールに統一
+   調整はこの3変数だけで全ページに効きます
+============================================================ */
+:root{
+  --sp-section:120px;  /* セクション上下の余白 */
+  --sp-banner:72px;    /* 画像バナー → 本文の余白 */
+  --sp-block:56px;     /* セクション内のブロック間 */
+}
+.section{padding:var(--sp-section) 0}
+.marquee{padding:var(--sp-block) 0}
+.ph-visual{margin-bottom:var(--sp-banner)}
+/* バナー直後のグリッドは自前の上マージンを持たない（二重余白の解消） */
+.ph-visual ~ .wrap > .beauty-grid,
+.ph-visual ~ .wrap > .works-grid,
+.ph-visual ~ .wrap > .cta-grid{margin-top:0}
+.stats{margin-top:var(--sp-block)}
+.why-grid,.plan-grid,.proc-list,.co-table{margin-top:var(--sp-block)}
+.cta-sec{padding-bottom:var(--sp-section)}
+footer{padding-top:var(--sp-block)}
+.works-note{margin-top:26px}
+
+/* ============================================================
+   スマホ固定追従CTA（日本式LPの必須要素／FV通過後に静かに出現）
+============================================================ */
+.sticky-cta{
+  position:fixed;left:0;right:0;bottom:0;z-index:90;
+  display:flex;gap:10px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));
+  background:rgba(250,248,244,.95);backdrop-filter:blur(12px);
+  border-top:1px solid var(--gold-line);
+  transform:translateY(110%);transition:transform .5s var(--ease);
+}
+.sticky-cta.is-on{transform:none}
+.sticky-cta a{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  min-height:50px;font-size:12.5px;letter-spacing:.1em;
+  transition:background .3s,color .3s;
+}
+.sticky-cta .sc-tel{
+  flex:0 0 33%;border:1px solid var(--gold);color:var(--gold);background:transparent;
+}
+.sticky-cta .sc-tel:hover{background:var(--gold);color:var(--white)}
+.sticky-cta .sc-main{flex:1;background:var(--gold);color:var(--white)}
+.sticky-cta .sc-main:hover{background:var(--gold-bright);color:var(--ink)}
+.sticky-cta svg{width:15px;height:15px;flex-shrink:0}
+@media(min-width:861px){.sticky-cta{display:none}}
+@media(max-width:860px){
+  /* 固定CTAでフッター末尾とチャットボットが隠れないよう退避 */
+  body{padding-bottom:74px}
+  #cbBtn{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+  #cbPanel{bottom:calc(150px + env(safe-area-inset-bottom,0px));height:min(520px,calc(100dvh - 250px))}
+}
+
+/* ============================================================
+   FAQ（申込みを止めている不安を1問ずつ潰す）
+============================================================ */
+.faq-list{margin-top:var(--sp-block);border-top:1px solid var(--gold-line)}
+.faq-list details{border-bottom:1px solid rgba(22,21,15,.1)}
+.faq-list summary{
+  list-style:none;cursor:pointer;padding:26px 44px 26px 40px;position:relative;
+  font-family:var(--serif-jp);font-size:16px;font-weight:500;letter-spacing:.06em;line-height:1.8;
+  transition:color .3s;
+}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary:hover{color:var(--gold)}
+.faq-list summary::before{
+  content:"Q";position:absolute;left:6px;top:26px;
+  font-family:var(--serif-en);font-style:italic;font-size:15px;color:var(--gold);
+}
+/* 開閉インジケータ（＋ → －） */
+.faq-list summary::after{
+  content:"";position:absolute;right:10px;top:34px;width:13px;height:1px;
+  background:var(--gold);transition:transform .4s var(--ease);
+}
+.faq-list .faq-x{position:absolute;right:10px;top:34px;width:13px;height:1px;background:var(--gold);transform:rotate(90deg);transition:transform .4s var(--ease)}
+.faq-list details[open] .faq-x{transform:rotate(0)}
+.faq-list .faq-a{
+  padding:0 44px 28px 40px;font-size:13.5px;line-height:2.1;color:var(--gray);
+}
+.faq-list .faq-a a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.faq-note{margin-top:24px;font-size:11px;color:var(--gray-light);line-height:1.9}
+@media(max-width:640px){
+  :root{--sp-section:56px;--sp-banner:32px;--sp-block:32px}
+  .marquee{padding:30px 0}
+  .faq-list summary{padding:20px 34px 20px 30px;font-size:14.5px}
+  .faq-list summary::before{top:20px;left:2px;font-size:13px}
+  .faq-list summary::after,.faq-list .faq-x{top:28px;right:6px}
+  .faq-list .faq-a{padding:0 34px 22px 30px;font-size:13px}
+}
 </style>
+<!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BeautySalon",
+  "name":"Dr.Jena（ドクタージェーナ）",
+  "url":"https://jiantailanglin266-rgb.github.io/dr-jena-site/",
+  "image":"https://jiantailanglin266-rgb.github.io/dr-jena-site/images/fv.webp",
+  "telephone":"+81-3-6427-3037",
+  "email":"info@dr-jena.com",
+  "founder":{"@type":"Person","name":"伊藤 紘子"},
+  "address":{"@type":"PostalAddress","postalCode":"150-0001","addressRegion":"東京都","addressLocality":"渋谷区","streetAddress":"神宮前6-25-8 神宮前コーポラス1108","addressCountry":"JP"},
+  "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"11:00","closes":"20:00"}],
+  "sameAs":["https://www.instagram.com/jenasalon/"],
+  "description":"原宿で30年以上続く美容ブランド。ビューティーサロンとホームエステマシン「ジェーナプロ」に加え、Web制作・AIマーケティング等のクリエイティブ／マーケティング事業を展開。"
+}
+</script>
 </head>
 <body>
 
@@ -912,7 +1025,7 @@ html.lenis,html.lenis body{height:auto}
         <a href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.2 15 12l-5 2.8z" fill="currentColor" stroke="none"/></svg></a><!-- 要確認：YouTube URL -->
         <a href="#" target="_blank" rel="noopener" aria-label="X（旧Twitter）"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.9 3H21l-6.8 7.8L22.2 21h-6.3l-4.9-6.4L5.4 21H2.3l7.3-8.3L2 3h6.4l4.4 5.9L17.9 3zm-1.1 16.1h1.7L7.1 4.7H5.3l11.5 14.4z"/></svg></a><!-- 要確認：X URL -->
       </div>
-      <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="h-cta">無料相談</a>
+      <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="h-cta" data-ev="tap_contact_header">無料相談</a>
     </nav>
     <button id="menuBtn" aria-label="メニュー"><span></span><span></span></button>
   </div>
@@ -949,7 +1062,7 @@ html.lenis,html.lenis body{height:auto}
 
 <!-- 美容事業ビジュアル -->
 <div class="ph-visual rv">
-  <img src="images/beauty.png"
+  <img src="images/beauty.webp"
        alt="すべての原点は、原宿の美容ブランドとして。私たちの提案に説得力があるのは、自らが30年以上、美の現場でお客様と向き合い続けてきたから。"
        width="1717" height="916" loading="lazy" decoding="async">
 </div>
@@ -1035,8 +1148,8 @@ html.lenis,html.lenis body{height:auto}
 <!-- ============ 9. CTA（2導線） ============ -->
 <section class="cta-sec" id="contact" style="padding-top:0">
   <!-- CTAビジュアル（見出しは画像内に焼き込み。SEO・読み上げ用にh2を保持） -->
-  <div class="ph-visual rv" style="margin-bottom:0">
-    <img src="images/contact.png"
+  <div class="ph-visual rv">
+    <img src="images/contact.webp"
          alt="Contact — あなたのブランドの価値を、正しく届けるために"
          width="1536" height="1024" loading="lazy" decoding="async">
     <h2 class="ph-quote">あなたのブランドの価値を、正しく届けるために</h2>
@@ -1052,7 +1165,7 @@ html.lenis,html.lenis body{height:auto}
           Web制作・AIマーケティング・WEB3.0・マーケットデザインのご相談はこちら。
           現状を伺い、最適な打ち手を一緒に描きます。相談は無料です。
         </p>
-        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-gold">無料相談を申し込む <span class="ar">→</span></a>
+        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" data-ev="tap_contact_main" class="btn btn-gold">無料相談を申し込む <span class="ar">→</span></a>
         <div class="cta-tel">メールでのご相談<br><a href="mailto:info@dr-jena.com" style="font-size:15px">info@dr-jena.com</a></div>
       </div>
 
@@ -1064,7 +1177,7 @@ html.lenis,html.lenis body{height:auto}
           原宿のサロンで、プロの手技とジェーナプロによるケアをご体験いただけます。
           まずはお気軽にお試しください。
         </p>
-        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" class="btn btn-gold">無料体験を予約する <span class="ar">→</span></a>
+        <a href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" data-ev="tap_trial_main" class="btn btn-gold">無料体験を予約する <span class="ar">→</span></a>
         <div class="cta-tel">お電話でのご予約（11:00〜20:00／火曜定休）<br><a href="tel:0364273037">03-6427-3037</a></div>
       </div>
     </div>
@@ -1697,5 +1810,76 @@ body.cb-open #cbPanel{opacity:1;visibility:visible;transform:none}
 })();
 </script>
 
+
+<!-- ▼ スマホ固定追従CTA（FV通過後に出現。文言・リンクはここを差し替え） -->
+<nav class="sticky-cta" id="stickyCta" aria-label="お問い合わせ">
+  <a class="sc-tel" href="tel:0364273037" data-ev="tap_tel" aria-label="電話で問い合わせる（11時〜20時／火曜定休）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a1.5 1.5 0 0 1-1.6 1.5C10.6 19.4 4.6 13.4 4 6.1A1.5 1.5 0 0 1 5.5 4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>お電話</a>
+  <a class="sc-main" href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" data-ev="tap_contact_sticky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6" stroke-linecap="round" stroke-linejoin="round"/></svg>無料相談・無料体験</a>
+</nav>
+
+<script>
+/* ============================================================
+   LP計測とスマホ固定CTA
+   - data-ev 属性を持つ要素のタップを dataLayer / gtag へ送信
+   - スクロール到達率（25/50/75/100%）を送信
+   - GA4等を導入する際は、このイベント名をそのまま設定できます
+============================================================ */
+(function(){
+  'use strict';
+  /* ---- クリック計測 ---- */
+  document.addEventListener('click', function(e){
+    var el = e.target.closest && e.target.closest('[data-ev]');
+    if(!el) return;
+    var ev = el.getAttribute('data-ev');
+    (window.dataLayer = window.dataLayer || []).push({event:'lp_action', lp_action:ev});
+    if(typeof gtag === 'function') gtag('event', ev);
+  }, true);
+
+  /* ---- スクロール到達率 ---- */
+  var marks = [25,50,75,100], sent = {};
+  addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var p = (h.scrollTop + innerHeight) / h.scrollHeight * 100;
+    marks.forEach(function(m){
+      if(p >= m && !sent[m]){
+        sent[m] = true;
+        (window.dataLayer = window.dataLayer || []).push({event:'lp_scroll', depth:m});
+      }
+    });
+  }, {passive:true});
+
+  /* ---- スクロール連動処理の一本化 ----
+     慣性スクロール(Lenis)使用時はネイティブのscrollイベントが発火しないため、
+     requestAnimationFrameでスクロール位置を監視し、以下をまとめて更新する。
+       1) ヘッダーの縮小・背景  2) 進捗バー  3) 固定CTAの出現  4) スクロール到達率
+     出現位置を変えたい場合は STICKY_SHOW_AT の数値（px）を調整してください。 */
+  var STICKY_SHOW_AT = 560;
+  var sticky = document.getElementById('stickyCta');
+  var header = document.getElementById('header');
+  var progBar = document.querySelector('#scrollProgress i');
+  var last = -1;
+  (function watch(){
+    var y = window.scrollY;
+    if(y !== last){
+      last = y;
+      if(header) header.classList.toggle('scrolled', y > 60);
+      if(sticky) sticky.classList.toggle('is-on', y > STICKY_SHOW_AT);
+      var docEl = document.documentElement;
+      if(progBar){
+        var max = docEl.scrollHeight - innerHeight;
+        progBar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
+      }
+      var p = (y + innerHeight) / docEl.scrollHeight * 100;
+      marks.forEach(function(m){
+        if(p >= m && !sent[m]){
+          sent[m] = true;
+          (window.dataLayer = window.dataLayer || []).push({event:'lp_scroll', depth:m});
+        }
+      });
+    }
+    requestAnimationFrame(watch);
+  })();
+})();
+</script>
 </body>
 </html>
