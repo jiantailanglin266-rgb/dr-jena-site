@@ -991,6 +991,67 @@ footer{padding-top:var(--sp-block)}
   .faq-list summary::after,.faq-list .faq-x{top:28px;right:6px}
   .faq-list .faq-a{padding:0 34px 22px 30px;font-size:13px}
 }
+
+/* ============================================================
+   Living Background：一枚布の連続背景＋グレイン＋光のゆらぎ
+   「静かな説得力」を保ったハイエンド・サロンの質感（引き算の演出）
+   ▼調整ポイント：オーロラの速度=auroraA/B の秒数、光量=各rgbaのalpha
+============================================================ */
+/* 背景はキャンバスに一元化。bodyは透過して境界の概念を消す */
+body{background:transparent}
+.bg-canvas{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;
+  background:
+    /* 上部からの柔らかなハイライト */
+    radial-gradient(120% 78% at 50% -12%, #faf7f0 0%, rgba(250,247,240,0) 60%),
+    /* 右上：ゴールドの気配 */
+    radial-gradient(96% 62% at 112% 20%, rgba(212,184,120,.12) 0%, rgba(212,184,120,0) 55%),
+    /* 左下：深いゴールドの気配 */
+    radial-gradient(88% 60% at -12% 78%, rgba(179,146,79,.10) 0%, rgba(179,146,79,0) 58%),
+    /* 四隅をわずかに沈めて奥行き（高級感の芯） */
+    radial-gradient(125% 125% at 50% 46%, transparent 58%, rgba(120,105,80,.07) 100%),
+    /* ベースの縦グラデ（3〜5ストップで縞を回避） */
+    linear-gradient(180deg,#f6f2ea 0%, #f1ebde 34%, #efe8da 66%, #f4efe6 100%);
+}
+/* ゆらぐ光（オーロラ）2枚：transformのみ・超低速。像は大きくぼかして"面で"感じさせる */
+.bg-canvas::before,.bg-canvas::after{
+  content:"";position:absolute;border-radius:50%;pointer-events:none;
+  filter:blur(64px);will-change:transform;
+}
+.bg-canvas::before{
+  width:72vw;height:72vw;left:-12vw;top:-16vw;
+  background:radial-gradient(circle, rgba(212,184,120,.17), rgba(212,184,120,0) 66%);
+  animation:auroraA 46s ease-in-out infinite;
+}
+.bg-canvas::after{
+  width:66vw;height:66vw;right:-15vw;bottom:-18vw;
+  background:radial-gradient(circle, rgba(198,166,108,.14), rgba(198,166,108,0) 64%);
+  animation:auroraB 58s ease-in-out infinite;
+}
+@keyframes auroraA{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(6vw,4vw,0) scale(1.14)}}
+@keyframes auroraB{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-5vw,-4vw,0) scale(1.12)}}
+/* グレイン：SVGノイズをoverlayで撹拌し、淡色グラデの縞を消す */
+.bg-grain{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px;
+}
+/* 全セクションの固有背景を透過（キャンバスを一枚布として見せる） */
+.hero-fv,.marquee,.beauty,.subhero,.cta-sec,.section,.dark{background:transparent}
+/* フッターは情報密度が高いので"接地"だけ残す（線ではなく淡いグラデで静かに沈める） */
+footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,203,.55) 26%, rgba(220,211,194,.72) 100%)}
+/* 焼き込みバナー下端をキャンバス色へ溶かす（段差を消す・処方C/D） */
+.ph-visual::after{height:60px;background:linear-gradient(to bottom, transparent, rgba(244,239,230,.9))}
+/* reveal を blur→sharp の「ゆっくり像を結ぶ」上質モーションへ（処方E） */
+.rv{filter:blur(6px);transition:opacity 1.15s var(--ease),transform 1.15s var(--ease),filter 1.15s var(--ease)}
+.rv.is-in{filter:blur(0)}
+/* 装飾：セクション上端に灯る"光の帯"（実線罫線の代わり／幅の狭い光） */
+.section::before,.subhero::before{content:none}
+.section{position:relative}
+/* 動きを止める環境では光のゆらぎも解除（必須） */
+@media(prefers-reduced-motion:reduce){
+  .bg-canvas::before,.bg-canvas::after{animation:none}
+  .rv{filter:none}
+}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
@@ -1011,6 +1072,10 @@ footer{padding-top:var(--sp-block)}
 </script>
 </head>
 <body>
+<!-- 生きた背景（固定・非干渉）：グラデ＋光のゆらぎ＋グレイン -->
+<div class="bg-canvas" aria-hidden="true"></div>
+<div class="bg-grain" aria-hidden="true"></div>
+
 
 <!-- ローディング（ブランドイントロ） -->
 <div id="loader" aria-hidden="true">
