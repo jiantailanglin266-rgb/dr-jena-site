@@ -290,7 +290,7 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
   border:1px solid rgba(179,146,79,.25); /* 角丸なし＝既存トーンに統一 */
 }
 /* ホバーで一時停止（離すと再開） */
-.marquee:hover .marquee__track{animation-play-state:paused}
+/* ホバー時も停止させない（常時スクロール） */
 /* トラック2セット連結を前提に、自分の幅＋gap分だけ左へ＝継ぎ目ゼロ */
 @keyframes marqueeScroll{
   from{transform:translateX(0)}
