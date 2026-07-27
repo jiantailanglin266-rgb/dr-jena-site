@@ -996,6 +996,36 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
   .bg-canvas::before,.bg-canvas::after{animation:none}
   .rv{filter:none}
 }
+
+/* ============================================================
+   背景装飾レイヤー：ゴールド線画の地紋＋四隅のボタニカル
+   （高級化粧品パッケージ/便箋の質感。静止・非干渉・極低不透明度）
+   ▼濃さ調整＝.bg-decor の opacity、地紋の細かさ＝background-size
+============================================================ */
+.bg-canvas{z-index:-3}          /* 装飾を挟むため一段奥へ */
+.bg-decor{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  opacity:.55;                   /* ← 装飾全体の濃さ。上げると華やか、下げると静謐 */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340' viewBox='0 0 340 340'%3E%3Cg fill='none' stroke='%23b3924f' stroke-width='1.1' stroke-opacity='.55' stroke-linecap='round'%3E%3Cpath d='M-10 34 C70 60 120 108 156 200 C168 232 176 268 180 300'/%3E%3Cpath d='M44 58 C30 40 32 14 54 2 C64 24 60 50 44 58 Z'/%3E%3Cpath d='M86 104 C104 92 130 96 146 82 C132 106 108 116 86 104 Z'/%3E%3Cpath d='M118 156 C102 142 100 116 78 106 C104 100 128 116 118 156 Z'/%3E%3Cpath d='M150 214 C168 204 194 210 210 198 C194 220 170 228 150 214 Z'/%3E%3Cpath d='M168 268 C154 250 156 224 178 214 C186 238 182 262 168 268 Z'/%3E%3Ccircle cx='56' cy='4' r='1.6' fill='%23b3924f' fill-opacity='.5' stroke='none'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340' viewBox='0 0 340 340'%3E%3Cg transform='rotate%28180 170 170%29' fill='none' stroke='%23b3924f' stroke-width='1.1' stroke-opacity='.55' stroke-linecap='round'%3E%3Cpath d='M-10 34 C70 60 120 108 156 200 C168 232 176 268 180 300'/%3E%3Cpath d='M44 58 C30 40 32 14 54 2 C64 24 60 50 44 58 Z'/%3E%3Cpath d='M86 104 C104 92 130 96 146 82 C132 106 108 116 86 104 Z'/%3E%3Cpath d='M118 156 C102 142 100 116 78 106 C104 100 128 116 118 156 Z'/%3E%3Cpath d='M150 214 C168 204 194 210 210 198 C194 220 170 228 150 214 Z'/%3E%3Cpath d='M168 268 C154 250 156 224 178 214 C186 238 182 262 168 268 Z'/%3E%3Ccircle cx='56' cy='4' r='1.6' fill='%23b3924f' fill-opacity='.5' stroke='none'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%23b3924f' stroke-width='1' stroke-opacity='.5' stroke-linecap='round'%3E%3Cpath d='M200 176 C214 189 214 211 200 224 C186 211 186 189 200 176 Z'/%3E%3Cpath d='M176 200 C189 186 211 186 224 200 C211 214 189 214 176 200 Z'/%3E%3Cpath d='M182 182 C193 187 195 205 200 200 C205 195 187 193 182 182 Z' stroke-opacity='.3'/%3E%3Cpath d='M218 182 C207 187 205 205 200 200 C195 195 213 193 218 182 Z' stroke-opacity='.3'/%3E%3Ccircle cx='200' cy='200' r='1.7' fill='%23b3924f' fill-opacity='.5' stroke='none'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%23b3924f' stroke-width='1' stroke-opacity='.5' stroke-linecap='round'%3E%3Cpath d='M200 176 C214 189 214 211 200 224 C186 211 186 189 200 176 Z'/%3E%3Cpath d='M176 200 C189 186 211 186 224 200 C211 214 189 214 176 200 Z'/%3E%3Cpath d='M182 182 C193 187 195 205 200 200 C205 195 187 193 182 182 Z' stroke-opacity='.3'/%3E%3Cpath d='M218 182 C207 187 205 205 200 200 C195 195 213 193 218 182 Z' stroke-opacity='.3'/%3E%3Ccircle cx='200' cy='200' r='1.7' fill='%23b3924f' fill-opacity='.5' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat:no-repeat,no-repeat,repeat,repeat;
+  background-position:
+    left -34px top -20px,
+    right -34px bottom -20px,
+    0 0,
+    200px 200px;
+  background-size:
+    clamp(200px,26vw,360px) auto,
+    clamp(200px,26vw,360px) auto,
+    380px 380px,
+    380px 380px;
+}
+@media(max-width:640px){
+  .bg-decor{opacity:.42;background-size:clamp(150px,40vw,220px) auto,clamp(150px,40vw,220px) auto,300px 300px,300px 300px}
+}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
@@ -1032,6 +1062,7 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 <body>
 <!-- 生きた背景（固定・非干渉）：グラデ＋光のゆらぎ＋グレイン -->
 <div class="bg-canvas" aria-hidden="true"></div>
+<div class="bg-decor" aria-hidden="true"></div>
 <div class="bg-grain" aria-hidden="true"></div>
 
 
