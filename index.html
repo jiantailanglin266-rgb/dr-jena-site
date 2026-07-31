@@ -1145,6 +1145,14 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 @media(prefers-reduced-motion:reduce){
   .bg-stars{display:none}   /* 点滅は動きなので低減環境では非表示 */
 }
+
+/* ============================================================
+   ネオンサインのロゴ（ヘッダー／フッター）
+============================================================ */
+.logo{display:flex;align-items:center}
+.logo-img{height:clamp(46px,3.4vw,54px);width:auto;display:block}
+.f-logo-img{height:80px;width:auto;display:block;margin-bottom:6px}
+@media(max-width:640px){.logo-img{height:42px}.f-logo-img{height:64px}}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
@@ -1196,8 +1204,7 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 <header id="header">
   <div class="h-inner">
     <a href="#" class="logo" aria-label="Dr.Jena トップへ">
-      <span class="en">Dr.Jena</span>
-      <span class="jp">ドクタージェーナ</span>
+      <img class="logo-img" src="images/logo-neon.webp" alt="Dr.Jena ドクタージェーナ" width="1000" height="797" decoding="async">
     </a>
     <nav class="pc" aria-label="メインナビゲーション">
       <a href="#philosophy">Philosophy</a>
@@ -1500,8 +1507,7 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
   <div class="wrap">
     <div class="f-top">
       <div class="f-logo">
-        <div class="en">Dr.Jena</div>
-        <div class="jp">ドクタージェーナ</div>
+        <img class="f-logo-img" src="images/logo-neon.webp" alt="Dr.Jena ドクタージェーナ" width="1000" height="797" loading="lazy" decoding="async">
         <p>
           本物の美しさは、正しく伝わってこそ価値になる。<br>
           原宿発、美容 × クリエイティブ／マーケティングの<br>
