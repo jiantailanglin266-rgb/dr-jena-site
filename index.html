@@ -1026,6 +1026,35 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 @media(max-width:640px){
   .bg-decor{opacity:.42;background-size:clamp(150px,40vw,220px) auto,clamp(150px,40vw,220px) auto,300px 300px,300px 300px}
 }
+
+/* ============================================================
+   画像・マーキーのサイズ最適化（流体スケール／プロ比率）
+   ▼ここだけで全画面幅の見え方が決まる
+============================================================ */
+/* --- マーキー：画面幅に比例して高さ・間隔をスケール（固定値をやめる） --- */
+.marquee{
+  --marquee-height:clamp(210px, 16.5vw, 288px);   /* PCで presence 確保、狭幅で自動縮小 */
+  --marquee-gap:clamp(14px, 1.3vw, 22px);
+  --marquee-duration:132s;                         /* 高さ増で伸びるトラックに合わせ速度を一定に保つ */
+}
+/* --- 大型グリッドの余白も vw 連動で均一スケール --- */
+.works-grid{gap:clamp(18px, 1.7vw, 30px)}
+.beauty-grid{gap:clamp(20px, 2vw, 34px)}
+.cta-grid{gap:clamp(20px, 1.8vw, 30px)}
+.why-grid{gap:clamp(20px, 1.8vw, 30px)}
+.svc-grid{gap:clamp(18px, 1.6vw, 26px)}
+.plan-grid{gap:clamp(0px, 0vw, 0px)} /* プラン表は重ね設計のため据え置き */
+
+/* --- 超ワイド(>1840px)：全幅バナーを 1600px で額装し装飾背景を効かせる --- */
+@media(min-width:1841px){
+  .fv-visual,.ph-visual{max-width:1600px;margin-left:auto;margin-right:auto}
+  .marquee__viewport{/* マーキーは全幅のまま流す（額装しない） */}
+}
+
+/* --- スマホ：マーキーも流体化して presence を最適化 --- */
+@media(max-width:640px){
+  .marquee{--marquee-height:clamp(152px, 42vw, 178px);--marquee-gap:11px;--marquee-duration:60s}
+}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
