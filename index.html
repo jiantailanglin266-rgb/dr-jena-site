@@ -1153,6 +1153,34 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 .logo-img{height:clamp(46px,3.4vw,54px);width:auto;display:block}
 .f-logo-img{height:80px;width:auto;display:block;margin-bottom:6px}
 @media(max-width:640px){.logo-img{height:42px}.f-logo-img{height:64px}}
+
+/* ============================================================
+   斜めマーキー：ピンクのレイヤーグラデ帯を流れるブランドリボン
+   ▼角度=--tilt、速度=--dm-dur、帯色=下のlinear-gradientを調整
+============================================================ */
+.dmarquee{--tilt:-5deg;--dm-dur:34s;position:relative;overflow:hidden;margin:8px 0;padding:22px 0}
+.dmarquee__band{
+  transform:rotate(var(--tilt));transform-origin:center;
+  width:116%;margin-left:-8%;overflow:hidden;
+  /* ピンクのレイヤー処理：光沢＋ローズ＋ゴールドを多層合成 */
+  background:
+    linear-gradient(112deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 24%),
+    linear-gradient(90deg, #e58bad 0%, #db6f95 40%, #dd86a1 64%, #e4a55f 100%);
+  box-shadow:0 14px 40px -18px rgba(190,90,120,.5), inset 0 1px 0 rgba(255,255,255,.35);
+  padding:14px 0;
+}
+.dmarquee__track{display:flex;width:max-content;animation:dmScroll var(--dm-dur) linear infinite;will-change:transform}
+.dmarquee__track .dm-item{
+  display:inline-flex;align-items:center;gap:26px;padding-right:26px;flex-shrink:0;
+  font-family:var(--serif-en);font-style:italic;font-weight:500;
+  font-size:clamp(19px,2.4vw,32px);letter-spacing:.06em;color:#fff;
+  text-shadow:0 1px 10px rgba(150,60,90,.35);white-space:nowrap;
+}
+.dmarquee__track .dm-jp{font-family:var(--serif-jp);font-style:normal;font-size:.72em;letter-spacing:.14em}
+.dmarquee__track .dm-star{color:#ffe9b0;font-style:normal;font-size:.7em;filter:drop-shadow(0 0 4px rgba(255,220,150,.7))}
+@keyframes dmScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:640px){.dmarquee{--dm-dur:22s;padding:14px 0}.dmarquee__band{width:126%;margin-left:-13%}}
+@media(prefers-reduced-motion:reduce){.dmarquee__track{animation:none}}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
@@ -1320,6 +1348,13 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
     </div>
   </div>
 </section>
+
+<!-- ============ 斜めマーキー（ピンクのレイヤー帯・ブランドリボン） ============ -->
+<div class="dmarquee" aria-hidden="true">
+  <div class="dmarquee__band">
+    <div class="dmarquee__track"><span class="dm-item">Dr.Jena<span class="dm-star">✦</span>BEAUTY <span class="dm-jp">×</span> CREATIVE<span class="dm-star">✦</span><span class="dm-jp">本物の美しさを、正しく伝える</span><span class="dm-star">✦</span>30 YEARS OF EXCELLENCE<span class="dm-star">✦</span>HARAJUKU TOKYO<span class="dm-star">✦</span></span><span class="dm-item">Dr.Jena<span class="dm-star">✦</span>BEAUTY <span class="dm-jp">×</span> CREATIVE<span class="dm-star">✦</span><span class="dm-jp">本物の美しさを、正しく伝える</span><span class="dm-star">✦</span>30 YEARS OF EXCELLENCE<span class="dm-star">✦</span>HARAJUKU TOKYO<span class="dm-star">✦</span></span><span class="dm-item">Dr.Jena<span class="dm-star">✦</span>BEAUTY <span class="dm-jp">×</span> CREATIVE<span class="dm-star">✦</span><span class="dm-jp">本物の美しさを、正しく伝える</span><span class="dm-star">✦</span>30 YEARS OF EXCELLENCE<span class="dm-star">✦</span>HARAJUKU TOKYO<span class="dm-star">✦</span></span><span class="dm-item">Dr.Jena<span class="dm-star">✦</span>BEAUTY <span class="dm-jp">×</span> CREATIVE<span class="dm-star">✦</span><span class="dm-jp">本物の美しさを、正しく伝える</span><span class="dm-star">✦</span>30 YEARS OF EXCELLENCE<span class="dm-star">✦</span>HARAJUKU TOKYO<span class="dm-star">✦</span></span><span class="dm-item">Dr.Jena<span class="dm-star">✦</span>BEAUTY <span class="dm-jp">×</span> CREATIVE<span class="dm-star">✦</span><span class="dm-jp">本物の美しさを、正しく伝える</span><span class="dm-star">✦</span>30 YEARS OF EXCELLENCE<span class="dm-star">✦</span>HARAJUKU TOKYO<span class="dm-star">✦</span></span><span class="dm-item">Dr.Jena<span class="dm-star">✦</span>BEAUTY <span class="dm-jp">×</span> CREATIVE<span class="dm-star">✦</span><span class="dm-jp">本物の美しさを、正しく伝える</span><span class="dm-star">✦</span>30 YEARS OF EXCELLENCE<span class="dm-star">✦</span>HARAJUKU TOKYO<span class="dm-star">✦</span></span><span class="dm-item">Dr.Jena<span class="dm-star">✦</span>BEAUTY <span class="dm-jp">×</span> CREATIVE<span class="dm-star">✦</span><span class="dm-jp">本物の美しさを、正しく伝える</span><span class="dm-star">✦</span>30 YEARS OF EXCELLENCE<span class="dm-star">✦</span>HARAJUKU TOKYO<span class="dm-star">✦</span></span><span class="dm-item">Dr.Jena<span class="dm-star">✦</span>BEAUTY <span class="dm-jp">×</span> CREATIVE<span class="dm-star">✦</span><span class="dm-jp">本物の美しさを、正しく伝える</span><span class="dm-star">✦</span>30 YEARS OF EXCELLENCE<span class="dm-star">✦</span>HARAJUKU TOKYO<span class="dm-star">✦</span></span></div>
+  </div>
+</div>
 
 <!-- ============ 7. Beauty（美容事業） ============ -->
 <section class="section beauty" id="beauty">
@@ -2224,5 +2259,6 @@ body.cb-open #cbPanel{opacity:1;visibility:visible;transform:none}
   host.appendChild(frag);
 })();
 </script>
+<script src="/assets/bg-fx.js" defer></script>
 </body>
 </html>
