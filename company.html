@@ -1111,6 +1111,52 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 @media(max-width:640px){
   .marquee{--marquee-height:clamp(152px, 42vw, 178px);--marquee-gap:11px;--marquee-duration:60s}
 }
+
+/* ============================================================
+   ピンク×ゴールドのグラデーション・レイヤー ＆ 画像境界のぼかし
+   ▼ピンク/ゴールドの濃さ＝各rgbaのalpha、境界ぼかし幅＝fade-h
+============================================================ */
+/* ① 背景キャンバス：ベージュの上にピンクとゴールドの光を重ねる（レイヤー合成） */
+.bg-canvas{
+  background:
+    radial-gradient(115% 72% at 50% -14%, #fbf4f2 0%, rgba(251,244,242,0) 58%),          /* 上：ピンク寄りの柔光 */
+    radial-gradient(72% 50% at 6% 8%,   rgba(233,188,203,.18) 0%, rgba(233,188,203,0) 56%),/* 左上：ローズ */
+    radial-gradient(84% 56% at 110% 20%, rgba(214,180,120,.17) 0%, rgba(214,180,120,0) 55%),/* 右上：ゴールド */
+    radial-gradient(80% 56% at 100% 84%, rgba(226,172,166,.16) 0%, rgba(226,172,166,0) 58%),/* 右下：ローズゴールド */
+    radial-gradient(80% 56% at -10% 80%, rgba(179,146,79,.12) 0%, rgba(179,146,79,0) 58%), /* 左下：ゴールド */
+    radial-gradient(126% 126% at 50% 46%, transparent 56%, rgba(120,100,78,.08) 100%),     /* 四隅を沈めて奥行き */
+    linear-gradient(180deg, #f8f2ee 0%, #f2eae0 32%, #efe7dc 64%, #f6efe8 100%);           /* ベージュ基調（微ピンク→微ゴールド） */
+}
+/* ゆらぐ光の片方をローズゴールドにして「ピンクも生きている」状態に */
+.bg-canvas::after{
+  background:radial-gradient(circle, rgba(226,178,188,.15), rgba(226,178,188,0) 64%);
+}
+
+/* ② セクション画像↔背景の境界をぼかす（上下フェードで矩形の縁を溶かす） */
+.ph-visual{--fade-h:clamp(48px,5vw,80px)}       /* ← 境界ぼかしの幅 */
+.ph-visual::before,.ph-visual::after{
+  content:"";position:absolute;left:0;right:0;height:var(--fade-h);
+  pointer-events:none;z-index:1;
+}
+.ph-visual::before{        /* 上端：背景から画像へ滑らかに入る */
+  top:0;
+  background:linear-gradient(to bottom, rgba(247,241,236,.94) 0%, rgba(247,241,236,.5) 42%, rgba(247,241,236,0) 100%);
+}
+.ph-visual::after{         /* 下端：画像から背景へ溶ける（既存を上書き・拡張） */
+  bottom:0;height:calc(var(--fade-h) + 8px);
+  background:linear-gradient(to top, rgba(246,240,233,.96) 0%, rgba(246,240,233,.55) 40%, rgba(246,240,233,0) 100%);
+}
+/* FVヒーローの下端も、次のベージュ帯へ静かに溶かす（焼き込みボタンには掛からない幅） */
+.fv-visual{position:relative}
+.fv-visual::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:clamp(30px,3.4vw,52px);
+  pointer-events:none;z-index:1;
+  background:linear-gradient(to top, rgba(247,241,236,.9), rgba(247,241,236,0));
+}
+@media(max-width:640px){
+  .ph-visual{--fade-h:34px}
+  .fv-visual::after{height:22px}
+}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
