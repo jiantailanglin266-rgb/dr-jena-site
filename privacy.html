@@ -1158,6 +1158,50 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
   .ph-visual{--fade-h:34px}
   .fv-visual::after{height:22px}
 }
+
+/* ============================================================
+   ①ピンク増強 ②境界ぼかし深化 ③金色スターの点滅アニメ
+============================================================ */
+/* ① 背景キャンバス：ローズをさらに強く重ねる（ピンク×ゴールドの高級感アップ） */
+.bg-canvas{
+  background:
+    radial-gradient(118% 74% at 50% -14%, #fceef1 0%, rgba(252,238,241,0) 58%),           /* 上：ピンクの柔光（強め） */
+    radial-gradient(78% 54% at 4% 6%,   rgba(233,170,192,.30) 0%, rgba(233,170,192,0) 58%),/* 左上：ローズ（強） */
+    radial-gradient(86% 58% at 112% 18%, rgba(216,180,120,.19) 0%, rgba(216,180,120,0) 55%),/* 右上：ゴールド */
+    radial-gradient(84% 58% at 100% 84%, rgba(230,158,158,.26) 0%, rgba(230,158,158,0) 58%),/* 右下：ローズゴールド（強） */
+    radial-gradient(60% 46% at 44% 108%, rgba(236,172,196,.22) 0%, rgba(236,172,196,0) 60%),/* 下中央：ローズ（追加） */
+    radial-gradient(82% 58% at -10% 78%, rgba(184,150,84,.13) 0%, rgba(184,150,84,0) 58%),  /* 左下：ゴールド */
+    radial-gradient(126% 126% at 50% 46%, transparent 56%, rgba(120,98,84,.08) 100%),       /* 四隅ヴィネット */
+    linear-gradient(180deg, #f9eef0 0%, #f4e9e2 30%, #f0e6dc 62%, #f7ede9 100%);             /* ベージュ基調（ピンク寄り） */
+}
+.bg-canvas::after{background:radial-gradient(circle, rgba(232,168,184,.20), rgba(232,168,184,0) 64%)} /* ローズのオーロラ（強め） */
+.bg-canvas::before{background:radial-gradient(circle, rgba(216,184,120,.19), rgba(216,184,120,0) 66%)} /* ゴールドのオーロラ */
+
+/* ② 境界ぼかしを深く（画像↔背景の溶けをより滑らかに） */
+.ph-visual{--fade-h:clamp(70px,8vw,132px)}
+.ph-visual::after{height:calc(var(--fade-h) + 10px)}
+.fv-visual::after{height:clamp(40px,4.4vw,72px)}
+@media(max-width:640px){
+  .ph-visual{--fade-h:46px}
+  .fv-visual::after{height:30px}
+}
+
+/* ③ 金色スターの点滅アニメーション（上品・低彩度・スタッガー） */
+.bg-stars{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.bg-stars i{
+  position:absolute;display:block;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0 C13 8 16 11 24 12 C16 13 13 16 12 24 C11 16 8 13 0 12 C8 11 11 8 12 0 Z' fill='%23e8cd8f'/%3E%3C/svg%3E") center/contain no-repeat;
+  filter:drop-shadow(0 0 3px rgba(212,184,120,.6));
+  opacity:0;transform:scale(.4);will-change:opacity,transform;
+  animation:starTwinkle var(--dur,3.6s) ease-in-out var(--delay,0s) infinite;
+}
+@keyframes starTwinkle{
+  0%,100%{opacity:0;transform:scale(.35) rotate(0deg)}
+  45%,55%{opacity:var(--peak,.6);transform:scale(1) rotate(8deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  .bg-stars{display:none}   /* 点滅は動きなので低減環境では非表示 */
+}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
@@ -1182,6 +1226,7 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 <div class="bg-canvas" aria-hidden="true"></div>
 <div class="bg-decor" aria-hidden="true"></div>
 <div class="bg-grain" aria-hidden="true"></div>
+<div class="bg-stars" id="bgStars" aria-hidden="true"></div>
 
 
 <!-- ローディング（ブランドイントロ） -->
@@ -2022,6 +2067,32 @@ body.cb-open #cbPanel{opacity:1;visibility:visible;transform:none}
     }
     requestAnimationFrame(watch);
   })();
+})();
+</script>
+
+<script>
+/* 金色スターを背景全体に散りばめ、スタッガーで点滅させる（おしゃれなアンビエント演出）
+   個数・大きさ・濃さは STAR_COUNT / サイズ範囲 / peak で調整可能 */
+(function(){
+  'use strict';
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return; // 動き低減環境では生成しない
+  var host = document.getElementById('bgStars');
+  if(!host) return;
+  var STAR_COUNT = 34;                 // ← 星の数（増やすと華やか／減らすと静謐）
+  var frag = document.createDocumentFragment();
+  for(var k=0; k<STAR_COUNT; k++){
+    var s = document.createElement('i');
+    var size = 7 + Math.random()*13;   // 7〜20px（たまに大粒）
+    s.style.left = (Math.random()*100).toFixed(2) + 'vw';
+    s.style.top  = (Math.random()*100).toFixed(2) + 'vh';
+    s.style.width = size.toFixed(1) + 'px';
+    s.style.height = size.toFixed(1) + 'px';
+    s.style.setProperty('--dur', (2.6 + Math.random()*2.6).toFixed(2) + 's');   // 2.6〜5.2s
+    s.style.setProperty('--delay', (Math.random()*6).toFixed(2) + 's');          // 0〜6s ずらし
+    s.style.setProperty('--peak', (0.35 + Math.random()*0.45).toFixed(2));       // 0.35〜0.80
+    frag.appendChild(s);
+  }
+  host.appendChild(frag);
 })();
 </script>
 </body>
