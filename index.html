@@ -291,17 +291,11 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 /* 動画はヘッダーの下に収める（かぶらない）。上端の帯は基調色でヘッダーを可読に */
 .hero-vid{position:relative;background:var(--paper);line-height:0;overflow:hidden;padding-top:var(--header-h,90px)}
 .hero-vid video{display:block;width:100%;height:auto;background:#0a0912}
-.bv-mute{
-  position:absolute;right:16px;bottom:16px;z-index:2;width:44px;height:44px;border-radius:50%;
-  background:rgba(20,19,14,.5);border:1px solid rgba(255,255,255,.45);color:#fff;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .3s,transform .3s}
-.bv-mute:hover{background:rgba(20,19,14,.78);transform:translateY(-2px)}
-.bv-mute svg{width:19px;height:19px}
-.bv-mute .ic-sound{display:none}
-.bv-mute.is-unmuted .ic-muted{display:none}
-.bv-mute.is-unmuted .ic-sound{display:block}
-@media(max-width:640px){.brandvid-sec{padding:34px 0 4px}.brandvid{border-radius:5px;margin:0 14px}.bv-mute{width:40px;height:40px;right:12px;bottom:12px}}
+/* PC・タブレットは表示サイズを抑える（中央寄せ）。スマホ(≤640px)は全幅のまま変更しない */
+@media(min-width:641px){
+  .hero-vid{padding-bottom:6px}
+  .hero-vid video{max-width:1040px;margin:0 auto}
+}
 
 /* ============================================================
    1.5 Gallery Marquee（FV直下：画像帯が左へ自動で流れ続ける）
@@ -1559,7 +1553,7 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
   </ul>
 </div>
 
-<!-- ============ 1. Hero（ブランド動画・全幅／自動再生ミュート＋音声トグル） ============
+<!-- ============ 1. Hero（ブランド動画・自動再生ミュートループ／無音のため音声UIなし） ============
      差し替えは video/brand-hero.mp4 -->
 <section class="hero-vid" aria-label="Dr.Jena ブランドムービー">
   <!-- SEO・読み上げ用のh1（動画がヒーロー） -->
@@ -1567,10 +1561,6 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
   <video id="brandVid" muted loop playsinline autoplay preload="auto" poster="video/brand-hero-poster.jpg" aria-label="Dr.Jena ブランドムービー">
     <source src="video/brand-hero.mp4" type="video/mp4">
   </video>
-  <button class="bv-mute" id="bvMute" type="button" aria-label="音声のオン／オフ" aria-pressed="false">
-    <svg class="ic-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" stroke-linejoin="round"/><path d="M17 9l4 6M21 9l-4 6" stroke-linecap="round"/></svg>
-    <svg class="ic-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" stroke-linejoin="round"/><path d="M16.5 8.5a5 5 0 0 1 0 7M18.8 6.2a8 8 0 0 1 0 11.6" stroke-linecap="round"/></svg>
-  </button>
 </section>
 
 <!-- ============ 1.5 Gallery Marquee（FV直下） ============
@@ -2061,13 +2051,11 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
     window.addEventListener('load', setHeaderH);
   })();
 
-  /* ---- ブランドムービー：画面内で自動再生（ミュート）＋音声トグル ---- */
+  /* ---- ブランドムービー（無音）：画面内で自動再生・外れたら停止（省リソース） ---- */
   (function(){
     var v = document.getElementById('brandVid');
-    var btn = document.getElementById('bvMute');
     if(!v) return;
     var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    /* 表示領域に入ったら再生・外れたら停止（省リソース＝必要時のみ読み込み） */
     if('IntersectionObserver' in window){
       var io = new IntersectionObserver(function(entries){
         entries.forEach(function(e){
@@ -2077,15 +2065,6 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
       }, {threshold:.35});
       io.observe(v);
     } else if(!reduce){ v.play().catch(function(){}); }
-    /* 音声のオン／オフ */
-    if(btn){
-      btn.addEventListener('click', function(){
-        v.muted = !v.muted;
-        btn.classList.toggle('is-unmuted', !v.muted);
-        btn.setAttribute('aria-pressed', String(!v.muted));
-        if(!v.muted){ v.play().catch(function(){}); }
-      });
-    }
   })();
 
   /* ---- 美容ニュース：news.json（GitHub Actionsが日次更新）を読み込んで表示 ---- */
