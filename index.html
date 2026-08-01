@@ -286,6 +286,25 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 }
 
 /* ============================================================
+   ブランドムービー（FV直下）
+============================================================ */
+.brandvid-sec{padding:52px 0 8px}
+.brandvid{position:relative;max-width:1080px;margin:0 auto;border-radius:8px;overflow:hidden;
+  box-shadow:0 34px 74px -34px rgba(150,110,90,.42), 0 0 0 1px rgba(179,146,79,.12)}
+.brandvid video{display:block;width:100%;height:auto;background:#0a0912}
+.bv-mute{
+  position:absolute;right:16px;bottom:16px;z-index:2;width:44px;height:44px;border-radius:50%;
+  background:rgba(20,19,14,.5);border:1px solid rgba(255,255,255,.45);color:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .3s,transform .3s}
+.bv-mute:hover{background:rgba(20,19,14,.78);transform:translateY(-2px)}
+.bv-mute svg{width:19px;height:19px}
+.bv-mute .ic-sound{display:none}
+.bv-mute.is-unmuted .ic-muted{display:none}
+.bv-mute.is-unmuted .ic-sound{display:block}
+@media(max-width:640px){.brandvid-sec{padding:34px 0 4px}.brandvid{border-radius:5px;margin:0 14px}.bv-mute{width:40px;height:40px;right:12px;bottom:12px}}
+
+/* ============================================================
    1.5 Gallery Marquee（FV直下：画像帯が左へ自動で流れ続ける）
    速度・高さ・間隔は下の3つのCSS変数だけで調整可能
 ============================================================ */
@@ -1555,6 +1574,20 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
   <h1 class="vh">30年の美意識で、ブランドを育てる。｜Dr.Jena — 美容×クリエイティブ／マーケティング</h1>
 </section>
 
+<!-- ============ ブランドムービー（FV直下・自動再生ミュート＋音声トグル） ============
+     差し替えは video/brand-hero.mp4 -->
+<section class="brandvid-sec" aria-label="Dr.Jena ブランドムービー">
+  <div class="brandvid rv">
+    <video id="brandVid" muted loop playsinline preload="none" poster="video/brand-hero-poster.jpg" aria-label="Dr.Jena ブランドムービー">
+      <source src="video/brand-hero.mp4" type="video/mp4">
+    </video>
+    <button class="bv-mute" id="bvMute" type="button" aria-label="音声のオン／オフ" aria-pressed="false">
+      <svg class="ic-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" stroke-linejoin="round"/><path d="M17 9l4 6M21 9l-4 6" stroke-linecap="round"/></svg>
+      <svg class="ic-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" stroke-linejoin="round"/><path d="M16.5 8.5a5 5 0 0 1 0 7M18.8 6.2a8 8 0 0 1 0 11.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</section>
+
 <!-- ============ 1.5 Gallery Marquee（FV直下） ============
      画像の差し替え方法：下のセットA（8枚の <img>）の src を実画像のパスに
      変えるだけでOK。セットB（複製）はJSが自動生成するので触らなくてよい。
@@ -2027,6 +2060,33 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
     void track.offsetWidth; /* リフロー強制 */
     tracks.forEach(function(t){ t.style.animation = ''; });
   });
+
+  /* ---- ブランドムービー：画面内で自動再生（ミュート）＋音声トグル ---- */
+  (function(){
+    var v = document.getElementById('brandVid');
+    var btn = document.getElementById('bvMute');
+    if(!v) return;
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* 表示領域に入ったら再生・外れたら停止（省リソース＝必要時のみ読み込み） */
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ if(!reduce){ v.play().catch(function(){}); } }
+          else { v.pause(); }
+        });
+      }, {threshold:.35});
+      io.observe(v);
+    } else if(!reduce){ v.play().catch(function(){}); }
+    /* 音声のオン／オフ */
+    if(btn){
+      btn.addEventListener('click', function(){
+        v.muted = !v.muted;
+        btn.classList.toggle('is-unmuted', !v.muted);
+        btn.setAttribute('aria-pressed', String(!v.muted));
+        if(!v.muted){ v.play().catch(function(){}); }
+      });
+    }
+  })();
 
   /* ---- 美容ニュース：news.json（GitHub Actionsが日次更新）を読み込んで表示 ---- */
   (function(){
