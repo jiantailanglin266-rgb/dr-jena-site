@@ -1255,6 +1255,34 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 /* FVヒーロー下端も背景へ */
 .fv-visual::after{height:clamp(44px,5vw,80px);background:linear-gradient(to top, rgba(246,240,234,.95) 0%, rgba(246,240,234,.5) 45%, rgba(246,240,234,0) 100%)}
 @media(max-width:640px){.ph-visual{--fade-h:54px}.marquee::before,.marquee::after{height:24px}.fv-visual::after{height:28px}}
+
+/* ============================================================
+   カード枠をぼかす：硬い境界線 → 羽根状の柔らかい縁へ
+============================================================ */
+/* テキスト系カード：硬い枠を消して、ごく淡い縁＋柔らかい落ち影で浮遊させる */
+.why,.cta-box,.b-card,.svc-card,.plan,.func{
+  border:none !important;
+  box-shadow:0 0 0 1px rgba(179,146,79,.07),
+             0 22px 54px -26px rgba(150,110,90,.30),
+             0 5px 16px -9px rgba(150,110,90,.16);
+}
+.plan.reco{box-shadow:0 26px 60px -22px rgba(30,25,20,.5)} /* 濃色アクセントは奥行き重視 */
+.why:hover,.svc-card:hover,.cta-box:hover{
+  box-shadow:0 0 0 1px rgba(179,146,79,.14), 0 32px 68px -26px rgba(150,110,90,.36) !important;
+}
+/* Beautyカードの内側ゴールド細枠もぼかす */
+.b-card::after{filter:blur(.7px);opacity:.65}
+/* 画像カード：矩形の縁を4辺フェザーマスクでぼかす＋硬い枠を除去 */
+.work-img{border:none !important;box-shadow:0 18px 46px -24px rgba(150,110,90,.32)}
+.work-img img,.marquee__item img{
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 5%,#000 95%,transparent),
+                     linear-gradient(to bottom,transparent,#000 6%,#000 94%,transparent);
+  mask-image:linear-gradient(to right,transparent,#000 5%,#000 95%,transparent),
+             linear-gradient(to bottom,transparent,#000 6%,#000 94%,transparent);
+  -webkit-mask-composite:source-in;mask-composite:intersect;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+}
+.marquee__item img{border:none !important}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
