@@ -1239,6 +1239,22 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 .dtri .d-star{color:#9d86cf;font-style:normal;font-size:.52em;filter:drop-shadow(0 0 4px rgba(139,180,140,.5))}
 @media(max-width:640px){.dtri{padding:12px 0;--d-dur:24s}.dtri__inner{width:150%;margin-left:-25%;gap:2px}.dtri__row.d2 .dtri__track{--d-dur:28s}.dtri__row.d3 .dtri__track{--d-dur:32s}}
 @media(prefers-reduced-motion:reduce){.dtri__track{animation:none}}
+
+/* ============================================================
+   画像のつなぎ目をぼかす：全画像帯の上下端を背景へ溶かす
+============================================================ */
+/* マーキー写真帯：上下も背景へフェード（左右は既存maskで対応済み） */
+.marquee{position:relative}
+.marquee::before,.marquee::after{content:"";position:absolute;left:0;right:0;height:clamp(30px,4.6vw,66px);z-index:4;pointer-events:none}
+.marquee::before{top:0;background:linear-gradient(to bottom, rgba(245,240,234,.96) 0%, rgba(245,240,234,.5) 45%, rgba(245,240,234,0) 100%)}
+.marquee::after{bottom:0;background:linear-gradient(to top, rgba(245,240,234,.96) 0%, rgba(245,240,234,.5) 45%, rgba(245,240,234,0) 100%)}
+/* セクションバナー：上下フェードをさらに深く・なだらかに（3〜4ストップ） */
+.ph-visual{--fade-h:clamp(88px,10vw,150px)}
+.ph-visual::before{background:linear-gradient(to bottom, rgba(246,240,234,.96) 0%, rgba(246,240,234,.55) 38%, rgba(246,240,234,.2) 68%, rgba(246,240,234,0) 100%)}
+.ph-visual::after{height:calc(var(--fade-h) + 10px);background:linear-gradient(to top, rgba(246,240,234,.97) 0%, rgba(246,240,234,.55) 38%, rgba(246,240,234,.2) 68%, rgba(246,240,234,0) 100%)}
+/* FVヒーロー下端も背景へ */
+.fv-visual::after{height:clamp(44px,5vw,80px);background:linear-gradient(to top, rgba(246,240,234,.95) 0%, rgba(246,240,234,.5) 45%, rgba(246,240,234,0) 100%)}
+@media(max-width:640px){.ph-visual{--fade-h:54px}.marquee::before,.marquee::after{height:24px}.fv-visual::after{height:28px}}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
