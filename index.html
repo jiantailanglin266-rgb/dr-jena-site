@@ -286,12 +286,13 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 }
 
 /* ============================================================
-   ブランドムービー（FV直下）
+   Hero（ブランド動画・全幅）
 ============================================================ */
-.brandvid-sec{padding:52px 0 8px}
-.brandvid{position:relative;max-width:1080px;margin:0 auto;border-radius:8px;overflow:hidden;
-  box-shadow:0 34px 74px -34px rgba(150,110,90,.42), 0 0 0 1px rgba(179,146,79,.12)}
-.brandvid video{display:block;width:100%;height:auto;background:#0a0912}
+.hero-vid{position:relative;background:#0a0912;line-height:0;overflow:hidden}
+.hero-vid video{display:block;width:100%;height:auto}
+/* ヘッダーの可読性確保：動画上端に淡いスクリム（ヘッダー背後・非干渉） */
+.hero-vid::before{content:"";position:absolute;top:0;left:0;right:0;height:96px;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom, rgba(250,248,244,.9) 0%, rgba(250,248,244,.4) 55%, rgba(250,248,244,0) 100%)}
 .bv-mute{
   position:absolute;right:16px;bottom:16px;z-index:2;width:44px;height:44px;border-radius:50%;
   background:rgba(20,19,14,.5);border:1px solid rgba(255,255,255,.45);color:#fff;cursor:pointer;
@@ -1560,32 +1561,18 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
   </ul>
 </div>
 
-<!-- ============ 1. Hero（FV画像版） ============
-     画像の差し替え：images/fv.jpg を置き換えるだけ（width/height属性も実寸比に合わせる） -->
-<section class="hero-fv">
-  <div class="fv-visual">
-    <img class="fv-img" src="images/fv.webp"
-         alt="Dr.Jena — 30年の美意識で、ブランドを育てる。原宿発、美容×クリエイティブ／マーケティング"
-         width="1672" height="941" fetchpriority="high" decoding="async">
-    <!-- 画像内に焼き込まれた「無料体験に申し込む」ボタンの位置に重ねた透明リンク -->
-    <a class="fv-hotspot" data-ev="tap_fv_button" href="https://dr-jena.com/contact.php" target="_blank" rel="noopener" aria-label="無料体験に申し込む"></a>
-  </div>
-  <!-- 見出しは画像内に焼き込み。SEO・読み上げ用にh1を保持 -->
-  <h1 class="vh">30年の美意識で、ブランドを育てる。｜Dr.Jena — 美容×クリエイティブ／マーケティング</h1>
-</section>
-
-<!-- ============ ブランドムービー（FV直下・自動再生ミュート＋音声トグル） ============
+<!-- ============ 1. Hero（ブランド動画・全幅／自動再生ミュート＋音声トグル） ============
      差し替えは video/brand-hero.mp4 -->
-<section class="brandvid-sec" aria-label="Dr.Jena ブランドムービー">
-  <div class="brandvid rv">
-    <video id="brandVid" muted loop playsinline preload="none" poster="video/brand-hero-poster.jpg" aria-label="Dr.Jena ブランドムービー">
-      <source src="video/brand-hero.mp4" type="video/mp4">
-    </video>
-    <button class="bv-mute" id="bvMute" type="button" aria-label="音声のオン／オフ" aria-pressed="false">
-      <svg class="ic-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" stroke-linejoin="round"/><path d="M17 9l4 6M21 9l-4 6" stroke-linecap="round"/></svg>
-      <svg class="ic-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" stroke-linejoin="round"/><path d="M16.5 8.5a5 5 0 0 1 0 7M18.8 6.2a8 8 0 0 1 0 11.6" stroke-linecap="round"/></svg>
-    </button>
-  </div>
+<section class="hero-vid" aria-label="Dr.Jena ブランドムービー">
+  <!-- SEO・読み上げ用のh1（動画がヒーロー） -->
+  <h1 class="vh">30年の美意識で、ブランドを育てる。｜Dr.Jena — 美容×クリエイティブ／マーケティング</h1>
+  <video id="brandVid" muted loop playsinline autoplay preload="auto" poster="video/brand-hero-poster.jpg" aria-label="Dr.Jena ブランドムービー">
+    <source src="video/brand-hero.mp4" type="video/mp4">
+  </video>
+  <button class="bv-mute" id="bvMute" type="button" aria-label="音声のオン／オフ" aria-pressed="false">
+    <svg class="ic-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" stroke-linejoin="round"/><path d="M17 9l4 6M21 9l-4 6" stroke-linecap="round"/></svg>
+    <svg class="ic-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" stroke-linejoin="round"/><path d="M16.5 8.5a5 5 0 0 1 0 7M18.8 6.2a8 8 0 0 1 0 11.6" stroke-linecap="round"/></svg>
+  </button>
 </section>
 
 <!-- ============ 1.5 Gallery Marquee（FV直下） ============
