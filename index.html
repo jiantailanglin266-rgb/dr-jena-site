@@ -1209,6 +1209,36 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 @keyframes tmScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:640px){.tmarquee{padding:16px 0;gap:2px;--tm-dur:24s}.tmarquee__row.r2 .tmarquee__track{--tm-dur:30s}}
 @media(prefers-reduced-motion:reduce){.tmarquee__track{animation:none}}
+
+/* ============================================================
+   ① 最上部マーキーの背景：淡い紫×グリーンのグラデ
+   ② 右から左下へ流れる3段の英語テキストマーキー（色を合わせて）
+============================================================ */
+.marquee.mq-top{
+  background:linear-gradient(118deg, #e9e1f4 0%, #e3ebef 38%, #e0eee7 68%, #e6f1ea 100%);
+}
+/* 3段・斜め（右上→左下へ descend）テキストマーキー */
+.dtri{overflow:hidden;padding:20px 0;--d-dur:36s}
+.dtri__inner{
+  transform:rotate(-6deg);transform-origin:center;
+  width:122%;margin-left:-11%;display:flex;flex-direction:column;gap:4px;
+}
+.dtri__row{overflow:hidden;white-space:nowrap}
+.dtri__track{display:flex;width:max-content;animation:tmScroll var(--d-dur) linear infinite;will-change:transform}
+.dtri__row.d2 .dtri__track{--d-dur:42s}
+.dtri__row.d3 .dtri__track{--d-dur:48s}
+.dtri .d-item{
+  display:inline-flex;align-items:center;gap:26px;padding-right:26px;flex-shrink:0;
+  font-family:var(--serif-en);font-weight:600;font-style:italic;
+  font-size:clamp(22px,3.8vw,46px);line-height:1.12;letter-spacing:.05em;white-space:nowrap;
+}
+.dtri .d-w{
+  background:linear-gradient(92deg,#9a7fd0 0%,#7babbf 38%,#6bb894 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.dtri .d-star{color:#9d86cf;font-style:normal;font-size:.52em;filter:drop-shadow(0 0 4px rgba(139,180,140,.5))}
+@media(max-width:640px){.dtri{padding:12px 0;--d-dur:24s}.dtri__inner{width:150%;margin-left:-25%;gap:2px}.dtri__row.d2 .dtri__track{--d-dur:28s}.dtri__row.d3 .dtri__track{--d-dur:32s}}
+@media(prefers-reduced-motion:reduce){.dtri__track{animation:none}}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
@@ -1312,7 +1342,7 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
      画像の差し替え方法：下のセットA（8枚の <img>）の src を実画像のパスに
      変えるだけでOK。セットB（複製）はJSが自動生成するので触らなくてよい。
      実画像には width/height 属性を実寸比で入れるとレイアウトシフトを防げる。 -->
-<section class="marquee" aria-label="ギャラリー">
+<section class="marquee mq-top" aria-label="ギャラリー">
   <div class="marquee__viewport">
     <ul class="marquee__track">
       <!-- 画像セットA（12枚・720x480統一）：差し替えはこの12行のsrcを変えるだけ -->
@@ -1332,6 +1362,15 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
     <!-- 画像セットB（Aの完全複製・継ぎ目消し用）はJSで自動生成 -->
   </div>
 </section>
+
+<!-- ============ 3段・英語テキストマーキー（右から左下へ・紫×緑） ============ -->
+<div class="dtri" aria-hidden="true">
+  <div class="dtri__inner">
+    <div class="dtri__row d1"><div class="dtri__track"><span class="d-item"><span class="d-w">NATURAL BEAUTY</span><span class="d-star">✦</span><span class="d-w">WELLNESS</span><span class="d-star">✦</span><span class="d-w">RADIANCE</span><span class="d-star">✦</span><span class="d-w">HARMONY</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">NATURAL BEAUTY</span><span class="d-star">✦</span><span class="d-w">WELLNESS</span><span class="d-star">✦</span><span class="d-w">RADIANCE</span><span class="d-star">✦</span><span class="d-w">HARMONY</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">NATURAL BEAUTY</span><span class="d-star">✦</span><span class="d-w">WELLNESS</span><span class="d-star">✦</span><span class="d-w">RADIANCE</span><span class="d-star">✦</span><span class="d-w">HARMONY</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">NATURAL BEAUTY</span><span class="d-star">✦</span><span class="d-w">WELLNESS</span><span class="d-star">✦</span><span class="d-w">RADIANCE</span><span class="d-star">✦</span><span class="d-w">HARMONY</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">NATURAL BEAUTY</span><span class="d-star">✦</span><span class="d-w">WELLNESS</span><span class="d-star">✦</span><span class="d-w">RADIANCE</span><span class="d-star">✦</span><span class="d-w">HARMONY</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">NATURAL BEAUTY</span><span class="d-star">✦</span><span class="d-w">WELLNESS</span><span class="d-star">✦</span><span class="d-w">RADIANCE</span><span class="d-star">✦</span><span class="d-w">HARMONY</span><span class="d-star">✦</span></span></div></div>
+    <div class="dtri__row d2"><div class="dtri__track"><span class="d-item"><span class="d-w">PURE GLOW</span><span class="d-star">✦</span><span class="d-w">SERENITY</span><span class="d-star">✦</span><span class="d-w">FRESH CARE</span><span class="d-star">✦</span><span class="d-w">BALANCE</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">PURE GLOW</span><span class="d-star">✦</span><span class="d-w">SERENITY</span><span class="d-star">✦</span><span class="d-w">FRESH CARE</span><span class="d-star">✦</span><span class="d-w">BALANCE</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">PURE GLOW</span><span class="d-star">✦</span><span class="d-w">SERENITY</span><span class="d-star">✦</span><span class="d-w">FRESH CARE</span><span class="d-star">✦</span><span class="d-w">BALANCE</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">PURE GLOW</span><span class="d-star">✦</span><span class="d-w">SERENITY</span><span class="d-star">✦</span><span class="d-w">FRESH CARE</span><span class="d-star">✦</span><span class="d-w">BALANCE</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">PURE GLOW</span><span class="d-star">✦</span><span class="d-w">SERENITY</span><span class="d-star">✦</span><span class="d-w">FRESH CARE</span><span class="d-star">✦</span><span class="d-w">BALANCE</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">PURE GLOW</span><span class="d-star">✦</span><span class="d-w">SERENITY</span><span class="d-star">✦</span><span class="d-w">FRESH CARE</span><span class="d-star">✦</span><span class="d-w">BALANCE</span><span class="d-star">✦</span></span></div></div>
+    <div class="dtri__row d3"><div class="dtri__track"><span class="d-item"><span class="d-w">VITALITY</span><span class="d-star">✦</span><span class="d-w">MINDFUL BEAUTY</span><span class="d-star">✦</span><span class="d-w">DR.JENA</span><span class="d-star">✦</span><span class="d-w">HARAJUKU TOKYO</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">VITALITY</span><span class="d-star">✦</span><span class="d-w">MINDFUL BEAUTY</span><span class="d-star">✦</span><span class="d-w">DR.JENA</span><span class="d-star">✦</span><span class="d-w">HARAJUKU TOKYO</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">VITALITY</span><span class="d-star">✦</span><span class="d-w">MINDFUL BEAUTY</span><span class="d-star">✦</span><span class="d-w">DR.JENA</span><span class="d-star">✦</span><span class="d-w">HARAJUKU TOKYO</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">VITALITY</span><span class="d-star">✦</span><span class="d-w">MINDFUL BEAUTY</span><span class="d-star">✦</span><span class="d-w">DR.JENA</span><span class="d-star">✦</span><span class="d-w">HARAJUKU TOKYO</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">VITALITY</span><span class="d-star">✦</span><span class="d-w">MINDFUL BEAUTY</span><span class="d-star">✦</span><span class="d-w">DR.JENA</span><span class="d-star">✦</span><span class="d-w">HARAJUKU TOKYO</span><span class="d-star">✦</span></span><span class="d-item"><span class="d-w">VITALITY</span><span class="d-star">✦</span><span class="d-w">MINDFUL BEAUTY</span><span class="d-star">✦</span><span class="d-w">DR.JENA</span><span class="d-star">✦</span><span class="d-w">HARAJUKU TOKYO</span><span class="d-star">✦</span></span></div></div>
+  </div>
+</div>
 
 <!-- ============ 2. Statement / Philosophy ============ -->
 <section class="section statement" id="philosophy">
