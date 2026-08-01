@@ -88,13 +88,20 @@ section{scroll-margin-top:72px}
    Loader：最小限のブランドイントロ
 ============================================================ */
 #loader{
-  position:fixed;inset:0;z-index:999;background:#0b0a08;
+  position:fixed;inset:0;z-index:999;background:#0a0912; /* 動画の暗色に合わせレターボックスを馴染ませる */
   display:flex;align-items:center;justify-content:center;overflow:hidden;
   transition:opacity 1s var(--ease),visibility 1s;
 }
 #loader.done{opacity:0;visibility:hidden}
 /* イントロ動画：全画面カバー再生（桜が舞い→Dr.Jenaロゴ） */
 #introVid{width:100%;height:100%;object-fit:cover;display:block}
+/* スマホ（縦画面）：横長動画の左右が切れないよう全体を収める（上下は暗背景と一体化） */
+@media(max-width:640px){
+  #introVid{object-fit:contain}
+}
+@media(max-width:640px) and (orientation:portrait){
+  #introVid{width:100%;height:auto} /* 縦画面では全幅・中央配置で構図を最大化 */
+}
 /* スキップボタン */
 #introSkip{
   position:absolute;right:22px;bottom:20px;z-index:2;
