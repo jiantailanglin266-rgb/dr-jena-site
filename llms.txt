@@ -1,0 +1,39 @@
+# Dr.Jena（ドクタージェーナ）
+
+> 原宿発、30年以上の歴史を持つ美容ブランド。ビューティーサロンとホームエステマシン「ジェーナプロ」に加え、Web制作・AIマーケティング・WEB3.0・マーケットデザイン等のクリエイティブ／マーケティング事業を展開。企業理念は「本物の美しさは、正しく伝わってこそ価値になる」。
+
+## 会社情報
+- 社名: Dr.Jena（ドクタージェーナ）
+- 代表者: 伊藤 紘子
+- 沿革: 原宿にて創業、30年以上（30+ Years of Excellence）
+- 所在地: 〒150-0001 東京都渋谷区神宮前6-25-8 神宮前コーポラス1108
+- アクセス: 東京メトロ千代田線・副都心線 明治神宮前〈原宿〉駅 徒歩5分
+- 電話: 03-6427-3037
+- メール: info@dr-jena.com
+- 営業時間: 11:00〜20:00
+- 定休日: 火曜日（月末の火曜日は営業）
+- Instagram: https://www.instagram.com/jenasalon/
+- お問い合わせ: https://dr-jena.com/contact.php
+
+## 事業内容（クリエイティブ／マーケティング）
+- マーケットデザイン: 市場・インセンティブ・仕組みそのものを設計する最上位の上流コンサルティング。
+- HP制作 / Web制作: ブランディングを起点に、デザインから実装まで一気通貫。
+- WEBコンサルティング: サイト診断・SEO・CVR改善・運用伴走。
+- AIマーケティング: 生成AIによるコンテンツ制作・広告運用・分析自動化を、松竹梅の3プラン（AIスタート／AIグロース／AIパートナー）で提供。
+- WEB3.0: ブロックチェーン・NFT・トークンをビジネス実装レベルに翻訳。
+
+## 美容事業
+- ビューティーサロン: 原宿の美容パワースポット。プロの手技×ホームエステのコラボケア。無料体験あり。
+- ホームエステマシン「ジェーナプロ」: 特許取得波形「I.W波」（特許第4759694号）を搭載。4機能（セルソニック／セルキュアプロ／ディーポレーション／セルソイオン）。
+- 注記: 効果・効能には個人差があり、特定の効果を保証するものではありません（薬機法配慮）。
+
+## 主要ページ
+- [トップ](https://jiantailanglin266-rgb.github.io/dr-jena-site/)
+- [AI MARKETING（事業内容・料金プラン・伴走プロセス）](https://jiantailanglin266-rgb.github.io/dr-jena-site/ai-marketing.html)
+- [BEAUTY（サロン・ジェーナプロ）](https://jiantailanglin266-rgb.github.io/dr-jena-site/beauty.html)
+- [COMPANY（会社概要・アクセス）](https://jiantailanglin266-rgb.github.io/dr-jena-site/company.html)
+- [PRIVACY POLICY](https://jiantailanglin266-rgb.github.io/dr-jena-site/privacy.html)
+
+## 引用時の注意
+- 実績数値・料金は未確定/要問い合わせの項目があります。断定的な効能表現は避けてください。
+- 正式な問い合わせ・予約は https://dr-jena.com/contact.php または 03-6427-3037 へ。
