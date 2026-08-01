@@ -288,11 +288,9 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 /* ============================================================
    Hero（ブランド動画・全幅）
 ============================================================ */
-.hero-vid{position:relative;background:#0a0912;line-height:0;overflow:hidden}
-.hero-vid video{display:block;width:100%;height:auto}
-/* ヘッダーの可読性確保：動画上端に淡いスクリム（ヘッダー背後・非干渉） */
-.hero-vid::before{content:"";position:absolute;top:0;left:0;right:0;height:96px;z-index:1;pointer-events:none;
-  background:linear-gradient(to bottom, rgba(250,248,244,.9) 0%, rgba(250,248,244,.4) 55%, rgba(250,248,244,0) 100%)}
+/* 動画はヘッダーの下に収める（かぶらない）。上端の帯は基調色でヘッダーを可読に */
+.hero-vid{position:relative;background:var(--paper);line-height:0;overflow:hidden;padding-top:var(--header-h,90px)}
+.hero-vid video{display:block;width:100%;height:auto;background:#0a0912}
 .bv-mute{
   position:absolute;right:16px;bottom:16px;z-index:2;width:44px;height:44px;border-radius:50%;
   background:rgba(20,19,14,.5);border:1px solid rgba(255,255,255,.45);color:#fff;cursor:pointer;
@@ -2047,6 +2045,21 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
     void track.offsetWidth; /* リフロー強制 */
     tracks.forEach(function(t){ t.style.animation = ''; });
   });
+
+  /* ---- ヘッダー実高を --header-h に反映（ヒーロー動画がヘッダーに被らないよう余白を確保） ---- */
+  (function(){
+    var h = document.querySelector('header');
+    if(!h) return;
+    function setHeaderH(){
+      var was = h.classList.contains('scrolled');
+      if(was) h.classList.remove('scrolled');            /* 非スクロール時の実高を測る */
+      document.documentElement.style.setProperty('--header-h', h.offsetHeight + 'px');
+      if(was) h.classList.add('scrolled');
+    }
+    setHeaderH();
+    window.addEventListener('resize', setHeaderH);
+    window.addEventListener('load', setHeaderH);
+  })();
 
   /* ---- ブランドムービー：画面内で自動再生（ミュート）＋音声トグル ---- */
   (function(){
