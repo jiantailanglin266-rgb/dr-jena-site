@@ -1281,11 +1281,7 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 <div class="bg-stars" id="bgStars" aria-hidden="true"></div>
 
 
-<!-- ローディング（ブランドイントロ） -->
-<div id="loader" aria-hidden="true">
-  <div class="l-logo">Dr.Jena</div>
-  <div class="l-line"></div>
-</div>
+<!-- ローダーなし：下層ページは即時表示（オープニング演出を削除） -->
 
 <!-- ============ Header ============ -->
 <header id="header">
@@ -1494,16 +1490,7 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 (function(){
   'use strict';
 
-  /* ---- ローダー：読み込み後にフェードアウト ---- */
-  window.addEventListener('load', function(){
-    setTimeout(function(){
-      document.getElementById('loader').classList.add('done');
-    }, 900);
-  });
-  /* 保険：loadが遅くても2.5秒で必ず開く */
-  setTimeout(function(){
-    document.getElementById('loader').classList.add('done');
-  }, 2500);
+  /* 下層ページはローダー演出なし（削除済み） */
 
   /* ---- ヘッダー：スクロールで背景付与 ---- */
   var header = document.getElementById('header');
