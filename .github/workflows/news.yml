@@ -1,0 +1,41 @@
+name: Daily beauty news
+
+on:
+  schedule:
+    # 毎日 22:00 UTC = 翌 07:00 JST に1件追加
+    - cron: "0 22 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-news
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch & update news.json
+        run: python .github/scripts/update_news.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "drjena-news-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if [ -n "$(git status --porcelain news.json)" ]; then
+            git add news.json
+            git commit -m "news: daily beauty news update [skip ci]"
+            git push
+          else
+            echo "No changes."
+          fi

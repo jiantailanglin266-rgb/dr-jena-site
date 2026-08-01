@@ -586,6 +586,32 @@ body.menu-open #mobileNav a{opacity:1;transform:none}
 .cta-tel a{font-family:var(--serif-en);font-size:21px;color:var(--gold-bright);letter-spacing:.12em;display:inline-block;margin-top:4px}
 
 /* ============================================================
+   News（美容ニュース・RSS日次更新）
+============================================================ */
+.news-list{margin-top:var(--sp-block,56px);border-top:1px solid var(--gold-line);list-style:none;padding:0}
+.news-item,.news-empty{
+  display:flex;align-items:baseline;gap:22px;padding:22px 6px;
+  border-bottom:1px solid rgba(22,21,15,.1);flex-wrap:wrap;
+}
+.news-empty{color:var(--gray);font-size:13.5px}
+.news-item time{
+  flex:0 0 auto;font-family:var(--serif-en);font-size:13px;letter-spacing:.14em;color:var(--gold);
+}
+.news-item a{
+  flex:1;min-width:60%;font-family:var(--serif-jp);font-size:15px;line-height:1.8;color:var(--ink);
+  transition:color .3s;border-bottom:1px solid transparent;
+}
+.news-item a:hover{color:var(--gold)}
+.news-item .news-src{font-size:11px;letter-spacing:.1em;color:var(--gray-light)}
+.news-note{margin-top:26px;font-size:11px;color:var(--gray-light);line-height:1.9}
+@media(max-width:640px){
+  .news-item,.news-empty{gap:6px;padding:16px 4px}
+  .news-item a{min-width:100%;font-size:14px;order:2}
+  .news-item time{order:1}
+  .news-item .news-src{order:3;width:100%}
+}
+
+/* ============================================================
    10. Footer
 ============================================================ */
 footer{background:#0f0e0a;color:rgba(250,248,244,.75);padding:100px 0 44px}
@@ -1801,6 +1827,19 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
   </div>
 </section>
 
+<!-- ============ News（国内美容ニュース・RSS日次自動更新） ============ -->
+<section class="section news-sec" id="news">
+  <div class="wrap">
+    <div class="eyebrow rv">News</div>
+    <h2 class="sec-title rv rv-d1">美容ニュース</h2>
+    <p class="sec-lead rv rv-d2">国内の美容関連ニュースを、毎日ひとつずつお届けします（RSSで自動更新）。</p>
+    <ul class="news-list rv rv-d1" id="newsList">
+      <li class="news-empty">ニュースを読み込んでいます…</li>
+    </ul>
+    <p class="news-note rv">※ 見出し・提供元をもとに外部記事へリンクします。各記事の著作権は提供元各社に帰属します。</p>
+  </div>
+</section>
+
 <!-- ============ 10. Footer ============ -->
 <footer id="company">
   <div class="wrap">
@@ -1988,6 +2027,26 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
     void track.offsetWidth; /* リフロー強制 */
     tracks.forEach(function(t){ t.style.animation = ''; });
   });
+
+  /* ---- 美容ニュース：news.json（GitHub Actionsが日次更新）を読み込んで表示 ---- */
+  (function(){
+    var list = document.getElementById('newsList');
+    if(!list) return;
+    var esc = function(t){ var d=document.createElement('div'); d.textContent=t; return d.innerHTML; };
+    fetch('news.json?ts=' + Date.now()).then(function(r){ return r.ok ? r.json() : []; }).then(function(items){
+      if(!items || !items.length){
+        list.innerHTML = '<li class="news-empty">ニュースは近日公開します。</li>';
+        return;
+      }
+      list.innerHTML = items.slice(0, 12).map(function(n){
+        return '<li class="news-item"><time>' + esc(n.date || '') + '</time>'
+          + '<a href="' + esc(n.link || '#') + '" target="_blank" rel="noopener noreferrer">' + esc(n.title || '') + '</a>'
+          + (n.source ? '<span class="news-src">' + esc(n.source) + '</span>' : '') + '</li>';
+      }).join('');
+    }).catch(function(){
+      list.innerHTML = '<li class="news-empty">ニュースを取得できませんでした。</li>';
+    });
+  })();
 
   /* ---- コピーライト年 ---- */
   document.getElementById('year').textContent = new Date().getFullYear();
