@@ -1187,6 +1187,28 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
 @keyframes dmScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:640px){.dmarquee{height:clamp(150px,44vw,190px);--dm-dur:22s}.dmarquee__band{width:150%;padding:11px 0}.dmarquee__band.b2 .dmarquee__track{--dm-dur:26s}}
 @media(prefers-reduced-motion:reduce){.dmarquee__track{animation:none}}
+
+/* ============================================================
+   上下2段・英語キーワードの文字マーキー（ピンク・左右逆巻き）
+   ▼速度=--tm-dur、文字サイズ=.tm-item font-size
+============================================================ */
+.tmarquee{overflow:hidden;padding:26px 0;display:flex;flex-direction:column;gap:6px;--tm-dur:38s}
+.tmarquee__row{overflow:hidden;white-space:nowrap}
+.tmarquee__track{display:flex;width:max-content;animation:tmScroll var(--tm-dur) linear infinite;will-change:transform}
+.tmarquee__row.r2 .tmarquee__track{animation-direction:reverse;--tm-dur:46s} /* 下段は逆巻き（右へ） */
+.tm-item{
+  display:inline-flex;align-items:center;gap:30px;padding-right:30px;flex-shrink:0;
+  font-family:var(--serif-en);font-weight:600;font-style:italic;
+  font-size:clamp(30px,5.6vw,66px);line-height:1.1;letter-spacing:.04em;white-space:nowrap;
+}
+.tm-item .tm-w{
+  background:linear-gradient(92deg,#ef73ae 0%,#e0559a 45%,#d4457f 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.tm-item .tm-star{color:#e7b968;font-style:normal;font-size:.5em;filter:drop-shadow(0 0 4px rgba(231,185,104,.6))}
+@keyframes tmScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:640px){.tmarquee{padding:16px 0;gap:2px;--tm-dur:24s}.tmarquee__row.r2 .tmarquee__track{--tm-dur:30s}}
+@media(prefers-reduced-motion:reduce){.tmarquee__track{animation:none}}
 </style>
 <!-- 構造化データ：検索エンジンに会社の実在情報を正しく伝える -->
 <script type="application/ld+json">
@@ -1482,6 +1504,12 @@ footer{background:linear-gradient(180deg, rgba(224,216,201,0) 0%, rgba(226,218,2
     </div>
   </div>
 </section>
+
+<!-- ============ 上下2段・英語キーワード文字マーキー（ピンク・左右逆巻き） ============ -->
+<div class="tmarquee" aria-hidden="true">
+  <div class="tmarquee__row r1"><div class="tmarquee__track"><span class="tm-item"><span class="tm-w">BEAUTY</span><span class="tm-star">✦</span><span class="tm-w">CREATIVE</span><span class="tm-star">✦</span><span class="tm-w">BRANDING</span><span class="tm-star">✦</span><span class="tm-w">AI MARKETING</span><span class="tm-star">✦</span><span class="tm-w">WEB DESIGN</span><span class="tm-star">✦</span><span class="tm-w">CONSULTING</span><span class="tm-star">✦</span></span><span class="tm-item"><span class="tm-w">BEAUTY</span><span class="tm-star">✦</span><span class="tm-w">CREATIVE</span><span class="tm-star">✦</span><span class="tm-w">BRANDING</span><span class="tm-star">✦</span><span class="tm-w">AI MARKETING</span><span class="tm-star">✦</span><span class="tm-w">WEB DESIGN</span><span class="tm-star">✦</span><span class="tm-w">CONSULTING</span><span class="tm-star">✦</span></span><span class="tm-item"><span class="tm-w">BEAUTY</span><span class="tm-star">✦</span><span class="tm-w">CREATIVE</span><span class="tm-star">✦</span><span class="tm-w">BRANDING</span><span class="tm-star">✦</span><span class="tm-w">AI MARKETING</span><span class="tm-star">✦</span><span class="tm-w">WEB DESIGN</span><span class="tm-star">✦</span><span class="tm-w">CONSULTING</span><span class="tm-star">✦</span></span><span class="tm-item"><span class="tm-w">BEAUTY</span><span class="tm-star">✦</span><span class="tm-w">CREATIVE</span><span class="tm-star">✦</span><span class="tm-w">BRANDING</span><span class="tm-star">✦</span><span class="tm-w">AI MARKETING</span><span class="tm-star">✦</span><span class="tm-w">WEB DESIGN</span><span class="tm-star">✦</span><span class="tm-w">CONSULTING</span><span class="tm-star">✦</span></span><span class="tm-item"><span class="tm-w">BEAUTY</span><span class="tm-star">✦</span><span class="tm-w">CREATIVE</span><span class="tm-star">✦</span><span class="tm-w">BRANDING</span><span class="tm-star">✦</span><span class="tm-w">AI MARKETING</span><span class="tm-star">✦</span><span class="tm-w">WEB DESIGN</span><span class="tm-star">✦</span><span class="tm-w">CONSULTING</span><span class="tm-star">✦</span></span><span class="tm-item"><span class="tm-w">BEAUTY</span><span class="tm-star">✦</span><span class="tm-w">CREATIVE</span><span class="tm-star">✦</span><span class="tm-w">BRANDING</span><span class="tm-star">✦</span><span class="tm-w">AI MARKETING</span><span class="tm-star">✦</span><span class="tm-w">WEB DESIGN</span><span class="tm-star">✦</span><span class="tm-w">CONSULTING</span><span class="tm-star">✦</span></span></div></div>
+  <div class="tmarquee__row r2"><div class="tmarquee__track"><span class="tm-item"><span class="tm-w">MARKET DESIGN</span><span class="tm-star">✦</span><span class="tm-w">WEB3.0</span><span class="tm-star">✦</span><span class="tm-w">GROWTH</span><span class="tm-star">✦</span><span class="tm-w">HARAJUKU TOKYO</span><span class="tm-star">✦</span><span class="tm-w">EXCELLENCE</span><span class="tm-star">✦</span><span class="tm-w">DR.JENA</span><span class="tm-star">✦</span></span><span class="tm-item"><span class="tm-w">MARKET DESIGN</span><span class="tm-star">✦</span><span class="tm-w">WEB3.0</span><span class="tm-star">✦</span><span class="tm-w">GROWTH</span><span class="tm-star">✦</span><span class="tm-w">HARAJUKU TOKYO</span><span class="tm-star">✦</span><span class="tm-w">EXCELLENCE</span><span class="tm-star">✦</span><span class="tm-w">DR.JENA</span><span class="tm-star">✦</span></span><span class="tm-item"><span class="tm-w">MARKET DESIGN</span><span class="tm-star">✦</span><span class="tm-w">WEB3.0</span><span class="tm-star">✦</span><span class="tm-w">GROWTH</span><span class="tm-star">✦</span><span class="tm-w">HARAJUKU TOKYO</span><span class="tm-star">✦</span><span class="tm-w">EXCELLENCE</span><span class="tm-star">✦</span><span class="tm-w">DR.JENA</span><span class="tm-star">✦</span></span><span class="tm-item"><span class="tm-w">MARKET DESIGN</span><span class="tm-star">✦</span><span class="tm-w">WEB3.0</span><span class="tm-star">✦</span><span class="tm-w">GROWTH</span><span class="tm-star">✦</span><span class="tm-w">HARAJUKU TOKYO</span><span class="tm-star">✦</span><span class="tm-w">EXCELLENCE</span><span class="tm-star">✦</span><span class="tm-w">DR.JENA</span><span class="tm-star">✦</span></span><span class="tm-item"><span class="tm-w">MARKET DESIGN</span><span class="tm-star">✦</span><span class="tm-w">WEB3.0</span><span class="tm-star">✦</span><span class="tm-w">GROWTH</span><span class="tm-star">✦</span><span class="tm-w">HARAJUKU TOKYO</span><span class="tm-star">✦</span><span class="tm-w">EXCELLENCE</span><span class="tm-star">✦</span><span class="tm-w">DR.JENA</span><span class="tm-star">✦</span></span><span class="tm-item"><span class="tm-w">MARKET DESIGN</span><span class="tm-star">✦</span><span class="tm-w">WEB3.0</span><span class="tm-star">✦</span><span class="tm-w">GROWTH</span><span class="tm-star">✦</span><span class="tm-w">HARAJUKU TOKYO</span><span class="tm-star">✦</span><span class="tm-w">EXCELLENCE</span><span class="tm-star">✦</span><span class="tm-w">DR.JENA</span><span class="tm-star">✦</span></span></div></div>
+</div>
 
 <!-- ============ FAQ（ご検討中の不安を解消） ============ -->
 <section class="section" id="faq">
