@@ -21,7 +21,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <div className="flex min-h-screen">
       <Sidebar appName={org.appName} pending={pendingMessages} />
       <div className="flex min-w-0 flex-1 flex-col">
-        <Topbar user={{ name: user.name, email: user.email, role: user.role }} org={{ name: org.name, plan: org.plan }} locale={locale} pending={{ proposals: pendingProposals, messages: pendingMessages, deals: pendingDeals }} demo={isDemoMode()} />
+        <Topbar user={{ name: user.name, email: user.email, role: user.role }} org={{ name: org.name, plan: org.plan }} locale={locale} pending={{ proposals: pendingProposals, messages: pendingMessages, deals: pendingDeals }} demo={isDemoMode()} appName={org.appName} />
         <main className="flex-1 px-4 py-6 lg:px-8 lg:py-8">
           <div className="mx-auto w-full max-w-[1400px] fade-in">{children}</div>
         </main>

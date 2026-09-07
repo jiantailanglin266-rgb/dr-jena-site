@@ -72,7 +72,7 @@ Prisma `Job` に 1:1 対応。`(organizationId, platformKey, externalJobId)` で
 | ココナラ | 公開APIなし。自動投稿は規約上不可 | PROHIBITED | MANUAL_ONLY | 候補生成＋人間コピー送信 |
 | クラウドワークス | 公開APIなし（旧APIは終了）。自動化は規約で制限 | PROHIBITED | MANUAL_ONLY | 同上 |
 | ランサーズ | 公開APIなし | PROHIBITED | MANUAL_ONLY | 同上 |
-| Fiverr / Indeed / LinkedIn | 公式APIは限定的 | UNKNOWN | MANUAL_ONLY | generic-api / manual-import で対応 |
+| Fiverr / Indeed / LinkedIn | 公開APIなし（パートナー限定） | PROHIBITED | MANUAL_ONLY | manual-only コネクタ（規約メタデータ＋手動取込＋候補生成） |
 | generic-api | 任意 JSON API | 設定次第 | MANUAL_APPROVAL | 動作 |
 | manual-import | — | — | MANUAL_ONLY | 動作 |
 | demo-marketplace | Fake API | ALLOWED | AUTO 可 | 完全動作 |

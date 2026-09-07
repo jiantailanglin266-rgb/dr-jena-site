@@ -1,6 +1,7 @@
 import type { PlatformConnector, NormalizedJob } from "../types";
 import { normalizeJob, toIsoOrNull, toNumberOrNull } from "../base";
 import { z } from "zod";
+import { createHash } from "crypto";
 
 export const manualJobSchema = z.object({
   platform: z.string().default("manual-import"),
@@ -27,7 +28,8 @@ export const manualJobSchema = z.object({
 
 export function importRowToJob(row: z.infer<typeof manualJobSchema>): NormalizedJob {
   const skills = Array.isArray(row.required_skills) ? row.required_skills : (row.required_skills ?? "").split(/[,;]/).map((s) => s.trim()).filter(Boolean);
-  const id = row.job_id || `manual-${Buffer.from(`${row.project_title}|${row.job_url ?? ""}`).toString("base64url").slice(0, 24)}`;
+  // Stable id derived from the full title + url (hash, so long/multibyte titles never collide)
+  const id = row.job_id || `manual-${createHash("sha256").update(`${row.project_title}|${row.job_url ?? ""}`).digest("base64url").slice(0, 24)}`;
   return normalizeJob(row.platform || "manual-import", {
     job_id: id,
     job_url: row.job_url ?? null,

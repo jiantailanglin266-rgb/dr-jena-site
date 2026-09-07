@@ -10,7 +10,7 @@ import { toUsd, fromUsd } from "@/lib/currency";
 describe("Platform Connector Architecture", () => {
   it("registers all connectors with compliance metadata", () => {
     const keys = listConnectors().map((c) => c.key).sort();
-    expect(keys).toEqual(["coconala", "crowdworks", "demo-marketplace", "freelancer", "generic-api", "lancers", "manual-import", "peopleperhour", "upwork"].sort());
+    expect(keys).toEqual(["coconala", "crowdworks", "demo-marketplace", "fiverr", "freelancer", "generic-api", "indeed", "lancers", "linkedin", "manual-import", "peopleperhour", "upwork"].sort());
     for (const key of ["coconala", "crowdworks", "lancers"]) {
       const c = getConnector(key);
       expect(c.compliance.automatedSendingPolicy).toBe("PROHIBITED");

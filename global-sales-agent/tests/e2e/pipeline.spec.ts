@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { login, apiCall, resetDemoData, pickJob } from "./helpers";
+import { login, apiCall, resetDemoData, pickJob, ADMIN } from "./helpers";
 
 /**
  * Full demo flow through the real UI + API:
@@ -11,6 +11,19 @@ test("login and dashboard render", async ({ page }) => {
   await login(page);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByTestId("run-discovery")).toBeVisible();
+});
+
+test("responsive: mobile drawer navigation", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/login");
+  await page.getByTestId("login-email").fill(ADMIN.email);
+  await page.getByTestId("login-password").fill(ADMIN.password);
+  await page.getByTestId("login-submit").click();
+  await page.waitForURL(/\/dashboard/); // desktop sidebar (app-name) is hidden on mobile
+  await page.getByTestId("mobile-nav-open").click();
+  await page.getByTestId("mnav-jobs").click();
+  await page.waitForURL(/\/jobs/);
+  await expect(page.getByTestId("jobs-table")).toBeVisible();
 });
 
 test("discovery + analysis + proposal + send + reply + negotiation + deal → CRM", async ({ page }) => {
@@ -34,8 +47,10 @@ test("discovery + analysis + proposal + send + reply + negotiation + deal → CR
   await expect(page.getByTestId("proposal-text")).toBeVisible({ timeout: 60_000 });
   const translated = await page.getByTestId("proposal-text").innerText();
   expect(translated.length).toBeGreaterThan(200);
-  expect(translated).toContain("Guten Tag"); // German client → German proposal
-  await expect(page.getByTestId("proposal-language")).toContainText(/de/i);
+  // Proposal is written in the client's language (German preferred; greeting differs per language)
+  const GREETING: Record<string, string> = { de: "Guten Tag", ja: "様", ko: "님께", en: "Dear", fr: "Bonjour", es: "Estimado" };
+  expect(translated).toContain(GREETING[job.clientLanguage] ?? "");
+  await expect(page.getByTestId("proposal-language")).toContainText(new RegExp(`\\(${job.clientLanguage}\\)`));
   const jobDetail = await apiCall<{ proposal: { id: string; status: string; proposalOriginal: string; proposalTranslated: string; proposedPriceUsd: string } }>(page, `/api/jobs/${job.id}`);
   expect(jobDetail.proposal.proposalOriginal).not.toBe(jobDetail.proposal.proposalTranslated);
   expect(Number(jobDetail.proposal.proposedPriceUsd)).toBeGreaterThanOrEqual(1000);
@@ -117,10 +132,11 @@ test("price floor: lowball client is declined, never quoted below minimumPrice",
 
 test("manual-only platform: proposal generated for human sending, copy + mark sent", async ({ page }) => {
   await login(page);
+  const suffix = String(Date.now()).slice(-6); // unique per run (manual job ids derive from the title)
   const imported = await apiCall<{ created: string[] }>(page, "/api/jobs/import", "POST", {
     platform: "coconala",
     analyze: true,
-    rows: [{ project_title: "美容サロンのLP制作（予約フォーム付き）", project_description: "原宿の美容サロンです。新メニューの集客用ランディングページを制作してほしいです。予約フォーム、Instagram連携、スマホ対応必須。写真と原稿はこちらで用意します。納期は1ヶ月以内を希望します。", budget_min: 150000, budget_max: 300000, currency: "JPY", client_country: "JP", client_language: "ja", client_name: "テスト美容サロン", required_skills: "HTML,CSS,LP", payment_verified: "true" }],
+    rows: [{ project_title: `美容サロンのLP制作（予約フォーム付き）#${suffix}`, project_description: "原宿の美容サロンです。新メニューの集客用ランディングページを制作してほしいです。予約フォーム、Instagram連携、スマホ対応必須。写真と原稿はこちらで用意します。納期は1ヶ月以内を希望します。", budget_min: 150000, budget_max: 300000, currency: "JPY", client_country: "JP", client_language: "ja", client_name: "テスト美容サロン", required_skills: "HTML,CSS,LP", payment_verified: "true" }],
   });
   expect(imported.created.length).toBe(1);
   const jobId = imported.created[0];

@@ -1,7 +1,7 @@
 import { requireSession } from "@/lib/auth";
 import { listOpportunities } from "@/lib/services/crm";
 import { PageHeader } from "@/components/ui/misc";
-import { KanbanBoard, LEAD_STATUSES, type KanbanItem } from "@/components/pipeline/kanban";
+import { KanbanBoard, type KanbanItem } from "@/components/pipeline/kanban";
 import { dec, formatCurrency } from "@/lib/utils";
 
 export default async function PipelinePage() {
@@ -29,7 +29,7 @@ export default async function PipelinePage() {
     <>
       <PageHeader
         title="Pipeline"
-        description={`${open.length} open · ${formatCurrency(openValue, "USD")} in play · ${won.length} won · ${LEAD_STATUSES.length} stages`}
+        description={`${open.length} open · ${formatCurrency(openValue, "USD")} in play · ${won.length} won` + " · drag cards between stages (WON is set via deal approval)"}
       />
       <KanbanBoard items={items} />
     </>

@@ -35,6 +35,20 @@ const COLUMN_ACCENT: Partial<Record<LeadStatusKey, string>> = { WON: "bg-success
 export function KanbanBoard({ items }: { items: KanbanItem[] }) {
   const router = useRouter();
   const [busy, setBusy] = useState<string | null>(null);
+  const [dragOver, setDragOver] = useState<LeadStatusKey | null>(null);
+
+  function onDrop(status: LeadStatusKey, e: React.DragEvent) {
+    e.preventDefault();
+    setDragOver(null);
+    const id = e.dataTransfer.getData("text/opportunity-id");
+    const item = items.find((i) => i.id === id);
+    if (!item || item.status === status || item.status === "WON") return;
+    if (status === "WON") {
+      toast.info("WON is set through deal approval, not by dragging");
+      return;
+    }
+    void move(item, status);
+  }
 
   async function move(item: KanbanItem, status: LeadStatusKey) {
     setBusy(item.id);
@@ -71,7 +85,18 @@ export function KanbanBoard({ items }: { items: KanbanItem[] }) {
           const col = items.filter((i) => i.status === status);
           const total = col.reduce((s, i) => s + (i.valueUsd ?? 0), 0);
           return (
-            <section key={status} className="flex w-[268px] shrink-0 flex-col rounded-xl border border-border bg-muted/40" data-testid={`kanban-column-${status}`}>
+            <section
+              key={status}
+              className={cn("flex w-[268px] shrink-0 flex-col rounded-xl border bg-muted/40 transition-colors", dragOver === status ? "border-accent bg-accent-soft/60" : "border-border")}
+              data-testid={`kanban-column-${status}`}
+              onDragOver={(e) => {
+                if (status === "WON") return;
+                e.preventDefault();
+                if (dragOver !== status) setDragOver(status);
+              }}
+              onDragLeave={() => setDragOver((d) => (d === status ? null : d))}
+              onDrop={(e) => onDrop(status, e)}
+            >
               <header className="flex items-center justify-between gap-2 px-3 pt-3 pb-2">
                 <div className="flex min-w-0 items-center gap-2">
                   <span className={cn("size-2 shrink-0 rounded-full", COLUMN_ACCENT[status] ?? "bg-muted-foreground/40")} />
@@ -80,7 +105,7 @@ export function KanbanBoard({ items }: { items: KanbanItem[] }) {
                 <Badge variant="outline" className="tabular-nums">{col.length}</Badge>
               </header>
               <p className="px-3 pb-2 text-[11px] tabular-nums text-muted-foreground">{formatCurrency(total, "USD")}</p>
-              <div className="flex flex-col gap-2 px-2 pb-2">
+              <div className="flex max-h-[68vh] flex-col gap-2 overflow-y-auto px-2 pb-2 scrollbar-thin">
                 {col.length === 0 ? <div className="rounded-lg border border-dashed border-border px-3 py-6 text-center text-[11px] text-muted-foreground">Empty</div> : null}
                 {col.map((item) => (
                   <KanbanCard key={item.id} item={item} busy={busy === item.id} onMove={(s) => move(item, s)} onLost={() => markLost(item)} />
@@ -100,7 +125,16 @@ function KanbanCard({ item, busy, onMove, onLost }: { item: KanbanItem; busy: bo
   const targets = LEAD_STATUSES.filter((s) => s !== "WON" && s !== "LOST" && s !== item.status);
   const locked = item.status === "WON";
   return (
-    <article className={cn("group rounded-lg border border-border bg-card p-3 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-shadow hover:shadow-md", busy && "opacity-60")} data-testid="kanban-card" data-status={item.status}>
+    <article
+      className={cn("group rounded-lg border border-border bg-card p-3 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-shadow hover:shadow-md", busy && "opacity-60", !locked && "cursor-grab active:cursor-grabbing")}
+      data-testid="kanban-card"
+      data-status={item.status}
+      draggable={!locked && !busy}
+      onDragStart={(e) => {
+        e.dataTransfer.setData("text/opportunity-id", item.id);
+        e.dataTransfer.effectAllowed = "move";
+      }}
+    >
       <div className="flex items-start justify-between gap-2">
         <Link href={`/jobs/${item.jobId}`} className="line-clamp-2 text-[13px] font-medium leading-snug hover:underline">
           {item.title}

@@ -108,7 +108,7 @@ export async function runAnalystAgent(ctx: AgentContext, jobId: string): Promise
         detectedLanguage: detected, raw: data, aiRunId,
       },
     });
-    await tx.job.update({ where: { id: job.id }, data: { status: qualified ? "QUALIFIED" : "EXCLUDED", excludedReason, clientLanguage: detected } });
+    await tx.job.update({ where: { id: job.id }, data: { status: qualified ? "QUALIFIED" : "EXCLUDED", excludedReason, clientLanguage: detected, ...(!job.category && data.inferred_category ? { category: data.inferred_category } : {}) } });
     const opp = await tx.opportunity.findUnique({ where: { jobId: job.id } });
     if (opp && opp.status === "DISCOVERED") {
       await tx.opportunity.update({ where: { id: opp.id }, data: { status: qualified ? "QUALIFIED" : "LOST", lostReason: qualified ? null : excludedReason, estimatedValueUsd: budgetUsd ?? data.estimated_market_price, stageChangedAt: new Date() } });

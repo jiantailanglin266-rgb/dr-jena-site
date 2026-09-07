@@ -66,8 +66,37 @@ const CATEGORY_HOURS: Record<string, [number, number]> = {
 
 /* ───────────── Analyst ───────────── */
 
+const CATEGORY_HINTS: Record<string, RegExp> = {
+  SaaS: /saas|multi-?tenant|web app|webアプリ|subscription platform|マルチテナント|플랫폼|웹 애플리케이션/i,
+  AI: /\bai\b|chatbot|llm|rag|生成ai|チャットボット|ki-assistent|assistant ia|asistente de ia|챗봇|인공지능/i,
+  EC: /shopify|e-?commerce|online store|ecサイト|ec構築|onlineshop|boutique|tienda|쇼핑몰|通販/i,
+  SEO: /\bseo\b|検索順位|ranking|keyword|検索最適化/i,
+  Video: /video|vidéo|vídeo|movie|ムービー|動画|imagefilm|영상/i,
+  Design: /logo|branding|brand identity|identité visuelle|identidad|デザイン|ロゴ|corporate design|로고|브랜드/i,
+  Marketing: /ads|advert|instagram|campaign|marketing|広告|運用代行|sns|광고|마케팅/i,
+  Automation: /automat|zapier|make\.com|workflow|自動化|kintone|자동화/i,
+  Consulting: /consult|roadmap|strategy|戦略|ロードマップ|コンサル|beratung|conseil|consultor|컨설팅|전략/i,
+  "Web Development": /website|web site|landing page|homepage|サイト|ランディング|lp制作|relaunch|refonte|rediseño|홈페이지|next\.js|wordpress/i,
+};
+
+export function inferCategory(text: string): string | null {
+  for (const [cat, re] of Object.entries(CATEGORY_HINTS)) if (re.test(text)) return cat;
+  return null;
+}
+
+const GOAL_HINTS = /してほしい|したい|お願い|希望|need|want|looking for|we'd like|would like|require|benötigen|suchen|möchten|souhaitons|cherchons|besoin|necesitamos|queremos|buscamos|원합니다|필요|부탁|希望|需要/i;
+
+/** Pick the sentence that best expresses what the client wants (falls back to the longest sentence). */
+export function extractGoal(description: string, title: string): string {
+  const sentences = description.replace(/\s+/g, " ").split(/(?<=[.!?。！？])\s*/).map((s) => s.trim()).filter((s) => s.length > 8);
+  const hinted = sentences.find((s) => GOAL_HINTS.test(s));
+  const pick = hinted ?? sentences.sort((a, b) => b.length - a.length)[0] ?? title;
+  return pick.slice(0, 180);
+}
+
 export function mockAnalyzeJob(job: MockJob, profile: MockProfile): JobAnalysisOutput {
   const seed = hashString(job.title + job.description);
+  if (!job.category) job = { ...job, category: inferCategory(`${job.title} ${job.description}`) };
   const rnd = (n: number, spread: number) => ((seed >>> (n % 24)) % (spread * 2 + 1)) - spread; // deterministic jitter
   const skills = job.requiredSkills ?? [];
   const caps = lower([...(profile.capabilities ?? []), ...(profile.techStack ?? []), ...(profile.strengths ?? [])]);
@@ -119,7 +148,7 @@ export function mockAnalyzeJob(job: MockJob, profile: MockProfile): JobAnalysisO
   const action = forbidden.length || excludeHits.length ? "SKIP" : fit >= 70 && risk < 40 ? "PROPOSE" : fit >= 50 ? "PROPOSE_WITH_CAUTION" : fit >= 35 ? "REVIEW" : "SKIP";
 
   const sentences = job.description.replace(/\s+/g, " ").split(/(?<=[.!?。！？])\s*/).filter(Boolean);
-  const goal = (sentences[0] ?? job.title).slice(0, 180);
+  const goal = extractGoal(job.description, job.title);
   const deliverables = extractDeliverables(job);
   const preferred = skills.filter((s) => !matched.includes(s.toLowerCase())).slice(0, 4);
 
@@ -142,6 +171,7 @@ export function mockAnalyzeJob(job: MockJob, profile: MockProfile): JobAnalysisO
     profit_score: profit,
     risk_score: risk,
     detected_language: job.clientLanguage || detectLanguage(job.description),
+    inferred_category: job.category ?? null,
   };
 }
 

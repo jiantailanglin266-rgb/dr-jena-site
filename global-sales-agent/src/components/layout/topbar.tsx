@@ -7,8 +7,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown";
 import { useEffect, useState } from "react";
+import { MobileNav } from "./mobile-nav";
 
-export function Topbar({ user, org, locale, pending, demo }: { user: { name: string; email: string; role: string }; org: { name: string; plan: string }; locale: string; pending: { proposals: number; messages: number; deals: number }; demo: boolean }) {
+export function Topbar({ user, org, locale, pending, demo, appName }: { user: { name: string; email: string; role: string }; org: { name: string; plan: string }; locale: string; pending: { proposals: number; messages: number; deals: number }; demo: boolean; appName: string }) {
   const t = useTranslations("nav");
   const router = useRouter();
   const [dark, setDark] = useState(false);
@@ -39,9 +40,10 @@ export function Topbar({ user, org, locale, pending, demo }: { user: { name: str
   const total = pending.proposals + pending.messages + pending.deals;
   return (
     <header className="flex h-14 items-center justify-between gap-4 border-b border-border bg-card/70 px-4 backdrop-blur lg:px-6">
-      <div className="flex min-w-0 items-center gap-3">
+      <div className="flex min-w-0 items-center gap-2">
+        <MobileNav appName={appName} pending={pending.messages} />
         <span className="truncate text-sm font-medium">{org.name}</span>
-        <span className="rounded-full border border-border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">{org.plan}</span>
+        <span className="hidden rounded-full border border-border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground sm:inline">{org.plan}</span>
         {demo ? <span className="rounded-full bg-accent-soft px-2 py-0.5 text-[10px] font-medium text-accent">DEMO MODE</span> : null}
       </div>
       <div className="flex items-center gap-1">

@@ -17,7 +17,7 @@ export const DEFAULT_PROMPTS: Record<AgentName, { system: string; user: string }
   },
   analyst: {
     system: `You are the Analyst Agent of an AI sales platform. Analyse a marketplace job posting against the seller's company profile and return a strict JSON object with keys:
-summary, client_goal, required_deliverables[], required_skills[], preferred_skills[], estimated_difficulty (LOW|MEDIUM|HIGH|VERY_HIGH), estimated_hours (number), estimated_market_price (USD number), urgency_score (0-100), client_quality_score (0-100), competition_score (0-100), win_probability (0-100), risk_flags[] (snake_case codes), recommended_action (PROPOSE|PROPOSE_WITH_CAUTION|REVIEW|SKIP), fit_score (0-100), profit_score (0-100), risk_score (0-100), detected_language (ISO 639-1).
+summary, client_goal, required_deliverables[], required_skills[], preferred_skills[], estimated_difficulty (LOW|MEDIUM|HIGH|VERY_HIGH), estimated_hours (number), estimated_market_price (USD number), urgency_score (0-100), client_quality_score (0-100), competition_score (0-100), win_probability (0-100), risk_flags[] (snake_case codes), recommended_action (PROPOSE|PROPOSE_WITH_CAUTION|REVIEW|SKIP), fit_score (0-100), profit_score (0-100), risk_score (0-100), detected_language (ISO 639-1), inferred_category (one of Web Development|SaaS|AI|Marketing|Design|Video|EC|SEO|Automation|Consulting|null).
 Be calibrated: fit_score reflects skill/category overlap with the seller; profit_score compares budget vs market price and minimum order price; risk covers unverified payment, vague scope, unrealistic deadlines, forbidden conditions.
 ${SAFETY}`,
     user: "Company profile:\n{{company}}\n\nJob posting:\n{{job}}",

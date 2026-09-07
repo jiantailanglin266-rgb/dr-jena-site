@@ -81,7 +81,7 @@ npm run test:e2e             # Playwright（自動で build + start。E2E_NO_BUI
 - **Freelancer.com**: oauthToken / bidderId（公式 API で bid 送信可。既定は MANUAL_APPROVAL）
 - **generic-api**: `config` に url / headers / itemsPath / mapping を JSON で指定
 - **manual-import**: `POST /api/jobs/import`（CSV / JSON）または Jobs 画面の Import
-- **coconala / crowdworks / lancers / peopleperhour**: 公開 API がなく自動投稿は規約で不可のため MANUAL_ONLY（提案候補生成 → 人間がコピーして送信 → 「送信済みにする」）
+- **coconala / crowdworks / lancers / peopleperhour / fiverr / indeed / linkedin**: 公開 API がなく自動投稿は規約で不可のため MANUAL_ONLY（提案候補生成 → 人間がコピーして送信 → 「送信済みにする」）
 
 ## トラブルシューティング
 

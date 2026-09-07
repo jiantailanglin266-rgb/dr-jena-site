@@ -31,9 +31,15 @@ export async function resetDemoData(page: Page) {
 
 export type Persona = string;
 export async function pickJob(page: Page, persona: string[], preferLang?: string): Promise<{ id: string; projectTitle: string; clientLanguage: string; currency: string; opportunity: { id: string } }> {
-  const res = await apiCall<{ items: { id: string; projectTitle: string; clientLanguage: string; currency: string; sourceMetadata: { persona: string[] }; status: string; opportunity: { id: string } }[] }>(page, "/api/jobs?status=NEW&pageSize=100&sort=posted");
+  type Row = { id: string; projectTitle: string; clientLanguage: string; currency: string; sourceMetadata: { persona: string[] }; status: string; opportunity: { id: string } };
+  const items: Row[] = [];
+  for (let p = 1; p <= 3; p++) {
+    const res = await apiCall<{ items: Row[]; total: number }>(page, `/api/jobs?status=NEW&pageSize=100&sort=posted&page=${p}`);
+    items.push(...res.items);
+    if (items.length >= res.total) break;
+  }
   const wanted = persona.join(",");
-  const candidates = res.items.filter((j) => (j.sourceMetadata?.persona ?? []).join(",") === wanted);
+  const candidates = items.filter((j) => (j.sourceMetadata?.persona ?? []).join(",") === wanted);
   const job = (preferLang ? candidates.find((j) => j.clientLanguage === preferLang) : undefined) ?? candidates[0];
   if (!job) throw new Error(`No NEW job with persona ${wanted}`);
   return job;

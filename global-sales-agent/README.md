@@ -10,14 +10,14 @@
 
 | 領域 | 内容 |
 |---|---|
-| Discovery Engine | Platform Connector Architecture（`src/lib/connectors/*`）。demo-marketplace / upwork / freelancer / generic-api / manual-import + 規約上 手動のみの coconala / crowdworks / lancers / peopleperhour |
+| Discovery Engine | Platform Connector Architecture（`src/lib/connectors/*`）。demo-marketplace / upwork / freelancer / generic-api / manual-import + 規約上 手動のみの coconala / crowdworks / lancers / peopleperhour / fiverr / indeed / linkedin |
 | AI Analysis | Analyst Agent → JSON解析 + Fit / Profit / Client Quality / Win Probability / Urgency / Risk → **Opportunity Score**（閾値未満は自動除外） |
 | Proposal | 10構造の完全個別化提案、SHORT/STANDARD/DETAILED × 6トーン、**Client Language Detection + Language Layer**（`proposalOriginal` / `proposalTranslated` / `detectedLanguage`）、Performance Memory を反映、A/B variant |
 | Send Engine | Proposal Queue（DRAFT→…→SENT）、AUTO / MANUAL_APPROVAL / MANUAL_ONLY、Daily / Hourly / Client 接触制限、重複送信禁止、Compliance Agent、営業時間 |
 | Reply Intelligence | 11分類 + sentiment / intent / purchase_probability / urgency / next_best_action。**Thread Memory** でスレッド全体を理解 |
 | Negotiation | Pricing Engine（minimumPrice / targetPrice / idealPrice / maximumDiscount / hourlyRate）。**AI は minimumPrice 以下に下げられない**。通常/割引/スコープ縮小/分割納品/オプション/保守契約。価格確定前の Human Approval |
 | Closing | Deal Summary（価格・納期・業務内容・成果物・修正回数・支払・IP・保守・契約方法）。**WON は人間承認のみ** |
-| CRM | Companies / Contacts / Opportunities（Kanban 12ステージ）/ Conversations / Proposals / Quotes / Deals / Tasks / Activities |
+| CRM | Companies / Contacts / Opportunities（Kanban 12ステージ、ドラッグ＆ドロップ）/ Conversations / Proposals / Quotes / Deals / Tasks / Activities |
 | Automation | No-code Rule Builder（IF fitScore > 85 AND budget > 1000 … THEN Create Proposal / IF reply = PRICE_NEGOTIATION THEN Negotiate …）、dry-run、実行ログ |
 | Analytics | KPI、AI Sales Funnel、Platform / Country / Language / Category 別、A/B、Performance Memory、AI Cost（Daily / Monthly / per Lead / Proposal / Reply / Won） |
 | Safety | CAPTCHA回避・不正ログイン・レート制限回避・身元偽装・虚偽実績・無制限送信を**実装しない**。Audit Log（誰が/いつ/どのAIが/どんな判断で/何を送ったか） |
@@ -70,6 +70,11 @@ tests/       unit / integration (Vitest) / e2e (Playwright)
 ## AI プロバイダ
 
 `.env` に `ANTHROPIC_API_KEY` または `OPENAI_API_KEY` を設定すると実 AI が有効になります（`AI_PROVIDER=auto|anthropic|openai|mock`、既定モデルは `claude-opus-5` / `gpt-4.1`。管理画面 → AI設定で変更可）。未設定または `DEMO_MODE=true` の場合は Mock Provider が決定論的に動作します。将来のプロバイダは `registerAIProvider()` で追加できます。
+
+## 動作確認済み環境
+
+- Node 22 / PostgreSQL 16 / Redis 7（BullMQ Worker 経由のタスク処理を確認済み）
+- Playwright E2E（デスクトップ 1440px + モバイル 390px ドロワーナビ）
 
 ## ライセンス / 注意
 

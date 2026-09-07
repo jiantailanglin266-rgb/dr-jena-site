@@ -19,6 +19,8 @@ export const jobAnalysisSchema = z.object({
   profit_score: z.number().min(0).max(100).default(50),
   risk_score: z.number().min(0).max(100).default(30),
   detected_language: z.string().default("en"),
+  /** Category inferred by the analyst when the platform did not provide one */
+  inferred_category: z.string().nullable().default(null),
 });
 export type JobAnalysisOutput = z.infer<typeof jobAnalysisSchema>;
 
