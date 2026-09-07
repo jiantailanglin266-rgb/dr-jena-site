@@ -10,8 +10,10 @@ function getKey(): Buffer {
     return createHmac("sha256", "dev-encryption-key").digest();
   }
   const buf = Buffer.from(raw, "base64");
-  if (buf.length !== 32) throw new Error("ENCRYPTION_KEY must be 32 bytes base64");
-  return buf;
+  if (buf.length === 32) return buf;
+  // Any other secret string (e.g. a platform-generated random value) → derive a 32-byte key via SHA-256
+  if (raw.length < 16) throw new Error("ENCRYPTION_KEY is too short (use `openssl rand -base64 32`)");
+  return createHmac("sha256", "gsa-key-derivation").update(raw).digest();
 }
 
 /** AES-256-GCM: returns base64(iv | tag | ciphertext) */

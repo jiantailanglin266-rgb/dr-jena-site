@@ -35,6 +35,15 @@ docker compose up --build       # postgres + redis + migrate/seed + web + worker
 
 ローカル（Docker なし）: [SETUP.md](./SETUP.md)。本番: [DEPLOYMENT.md](./DEPLOYMENT.md)。API: [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)。
 
+## 公開URLをすぐ作る（ワンクリックデプロイ）
+
+| 方法 | 手順 | 備考 |
+|---|---|---|
+| **Render（推奨・無料枠で完結）** | [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/jiantailanglin266-rgb/dr-jena-site) → Blueprint を承認 | `render.yaml` が Postgres + Key Value(Redis) + Web + Worker を作成し、マイグレーションと Seed まで自動実行。数分で `https://global-sales-agent-xxxx.onrender.com` が発行されます |
+| **Vercel + Neon(Postgres)** | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjiantailanglin266-rgb%2Fdr-jena-site&root-directory=global-sales-agent&env=DATABASE_URL,AUTH_SECRET,ENCRYPTION_KEY,DEMO_MODE,AUTH_TRUST_HOST,CRON_SECRET) → 環境変数入力 → Deploy 後に `npx prisma migrate deploy && npx tsx prisma/seed.ts` を一度実行 | Redis なしでも動作（タスクは Web 内で同期実行）。`vercel.json` の Cron が 30 分ごとに `/api/cron/tick` を呼び、探索・返信取得・予約送信を実行 |
+
+ログイン: `admin@demo.local` / `Demo1234!`（Seed 済み）。実 AI を使う場合は `ANTHROPIC_API_KEY` を環境変数に追加してください。
+
 ## デモの流れ
 
 1. **Dashboard → 「案件を探索」**：demo-marketplace から100件を取得（Seed 済みの場合は重複判定）→ Analyst Agent が解析 → Opportunity Score → 自動化ルールで高適合案件に提案生成。

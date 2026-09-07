@@ -4,7 +4,7 @@ import { authConfig } from "@/lib/auth.config";
 
 const { auth } = NextAuth(authConfig);
 
-const PUBLIC_PATHS = ["/login", "/api/auth", "/api/health", "/api/demo/marketplace", "/api/webhooks"];
+const PUBLIC_PATHS = ["/login", "/api/auth", "/api/health", "/api/demo/marketplace", "/api/webhooks", "/api/cron"];
 const MUTATING = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 
 /**

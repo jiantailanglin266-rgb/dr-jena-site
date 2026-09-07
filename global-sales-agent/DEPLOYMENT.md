@@ -8,6 +8,14 @@
                      └── Redis (BullMQ) ──> [worker]  (discovery / analysis / sending / reply polling / scheduler)
 ```
 
+## ワンクリック（Render Blueprint）
+
+リポジトリ直下の `global-sales-agent/render.yaml` を Render の Blueprint として読み込むと、Postgres / Key Value / Web / Worker が作成され、`prisma migrate deploy` と Seed が起動時に実行されます。`ENCRYPTION_KEY` は Render が生成する任意長のランダム値でも動作します（32 bytes base64 でない場合は SHA-256 で鍵導出）。
+
+## Vercel Cron（Worker を置けない場合）
+
+`vercel.json` の `crons` が `GET /api/cron/tick` を 30 分ごとに呼び出します。`CRON_SECRET` を環境変数に設定してください（Vercel が `Authorization: Bearer` で送信）。外部 cron から呼ぶ場合も同じヘッダーを付けます。
+
 ## Docker Compose（単一ホスト）
 
 ```bash
