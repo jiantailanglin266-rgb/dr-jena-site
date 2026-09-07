@@ -1,0 +1,11 @@
+import { chromium } from "@playwright/test";
+const browser = await chromium.launch(process.env.PLAYWRIGHT_CHROMIUM_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH } : {});
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+const errs = []; page.on("pageerror", e => errs.push(e.message)); page.on("console", m => { if (m.type()==="error") errs.push(m.text().slice(0,120)); });
+await page.goto("file://" + process.cwd() + "/public/demo/index.html");
+await page.waitForTimeout(1500);
+await page.screenshot({ path: process.env.OUT + "/demo-dashboard.png" });
+await page.click('[data-v="conversations"]'); await page.waitForTimeout(500);
+await page.screenshot({ path: process.env.OUT + "/demo-conv.png" });
+console.log("errors:", errs.length ? errs : "none");
+await browser.close();

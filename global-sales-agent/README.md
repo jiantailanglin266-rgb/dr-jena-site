@@ -35,6 +35,10 @@ docker compose up --build       # postgres + redis + migrate/seed + web + worker
 
 ローカル（Docker なし）: [SETUP.md](./SETUP.md)。本番: [DEPLOYMENT.md](./DEPLOYMENT.md)。API: [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)。
 
+## ブラウザ完結デモ（サーバー不要）
+
+`public/demo/index.html`（`npm run build:demo` で生成）は、Mock AI・100件の架空案件・返信シミュレータ・Pricing Engine をブラウザ内で動かす単一ファイルのプレイグラウンドです。デプロイ後は `/demo/` で閲覧でき、Claude Artifact としても公開できます。
+
 ## 公開URLをすぐ作る（ワンクリックデプロイ）
 
 | 方法 | 手順 | 備考 |

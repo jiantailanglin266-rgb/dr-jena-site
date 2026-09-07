@@ -1,0 +1,322 @@
+<title>Global Sales Agent Playground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+JP:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F6F5F2;--surface:#FFFFFF;--surface-2:#EFEEEA;--ink:#16161A;--muted:#6E6E76;--line:#E2E0DA;--line-strong:#CFCDC6;
+  --accent:#3E4FD8;--accent-ink:#FFFFFF;--accent-soft:#E8EBFB;--success:#1C7C4E;--success-soft:#E3F3EA;--warning:#B4711A;--warning-soft:#FBF0DF;--danger:#B5382E;--danger-soft:#F9E5E2;--info:#2662A8;--info-soft:#E3EDF8;
+  --client:#F1EFE9;--shadow:0 1px 2px rgba(20,20,26,.05),0 8px 24px -16px rgba(20,20,26,.25);
+  --font-body:"IBM Plex Sans","IBM Plex Sans JP","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;--font-display:"Sora","IBM Plex Sans JP","Hiragino Sans",system-ui,sans-serif;--font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ground:#101013;--surface:#18181D;--surface-2:#202026;--ink:#EEEDE8;--muted:#9C9BA3;--line:#2A2A31;--line-strong:#3A3A43;--accent:#7C8BFF;--accent-ink:#0F1330;--accent-soft:#232848;--success:#5CC98F;--success-soft:#14301F;--warning:#E0A34A;--warning-soft:#3A2A10;--danger:#F08A7E;--danger-soft:#3D1A17;--info:#7FB0F0;--info-soft:#172A44;--client:#20202A;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.6)}}
+:root[data-theme="dark"]{--ground:#101013;--surface:#18181D;--surface-2:#202026;--ink:#EEEDE8;--muted:#9C9BA3;--line:#2A2A31;--line-strong:#3A3A43;--accent:#7C8BFF;--accent-ink:#0F1330;--accent-soft:#232848;--success:#5CC98F;--success-soft:#14301F;--warning:#E0A34A;--warning-soft:#3A2A10;--danger:#F08A7E;--danger-soft:#3D1A17;--info:#7FB0F0;--info-soft:#172A44;--client:#20202A;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.6)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font-body);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:22px;font-weight:600}h2{font-size:16px;font-weight:600}h3{font-size:13px;font-weight:600}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+/* shell */
+.app{display:grid;grid-template-columns:224px 1fr;min-height:100vh}
+.rail{background:var(--surface);border-right:1px solid var(--line);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.brand .mark{width:28px;height:28px;border-radius:8px;background:var(--ink);color:var(--ground);display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:13px}
+.brand .name{font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.02em;text-transform:none;font-weight:500}
+.nav{padding:12px;display:flex;flex-direction:column;gap:2px}
+.nav .sec{margin:12px 10px 4px;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.nav button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;text-align:left;border:0;background:transparent;padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
+.nav button:hover{background:var(--surface-2);color:var(--ink)}
+.nav button.on{background:var(--surface-2);color:var(--ink);font-weight:600}
+.nav .cnt{font-family:var(--font-mono);font-size:11px;background:var(--warning-soft);color:var(--warning);border-radius:999px;padding:1px 7px}
+.rail .foot{margin-top:auto;padding:14px 18px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.5}
+.main{min-width:0}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 28px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 80%,transparent);backdrop-filter:blur(8px);position:sticky;top:0;z-index:5}
+.steps{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.step b{font-family:var(--font-mono);font-weight:500;color:var(--ink)}
+.step.done{border-color:color-mix(in srgb,var(--success) 40%,var(--line));background:var(--success-soft);color:var(--success)}
+.step.done b{color:var(--success)}
+.content{padding:26px 28px 60px;max-width:1360px}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.head p{margin:4px 0 0;color:var(--muted);max-width:64ch}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+/* controls */
+.btn{border:1px solid var(--line-strong);background:var(--surface);border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:500;font-size:13px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.btn.primary:hover{opacity:.9;background:var(--ink)}
+.btn.accent{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.success{background:var(--success);color:#fff;border-color:var(--success)}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.btn.sm{padding:4px 9px;font-size:12px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type=text],input[type=number],input[type=search],textarea{border:1px solid var(--line-strong);background:var(--surface);border-radius:8px;padding:7px 10px;font-size:13px;min-width:0}
+textarea{width:100%;min-height:120px;line-height:1.6;resize:vertical;font-family:var(--font-body)}
+label.f{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--muted);font-weight:500}
+/* surfaces */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.card .hd{padding:14px 18px 6px}.card .hd h2{font-size:14px}.card .hd p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+.card .bd{padding:10px 18px 16px}
+.grid{display:grid;gap:14px}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}@media (min-width:1200px){.kpis{grid-template-columns:repeat(5,1fr)}}
+.kpi{padding:14px 16px}
+.kpi .l{font-size:11px;color:var(--muted);font-weight:500}
+.kpi .v{font-family:var(--font-display);font-size:26px;font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.kpi .h{font-size:11px;color:var(--muted);margin-top:2px}
+.two{grid-template-columns:2fr 1fr}.three{grid-template-columns:repeat(3,1fr)}
+@media (max-width:1100px){.two,.three{grid-template-columns:1fr}}
+/* pills */
+.pill{display:inline-flex;align-items:center;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:600;letter-spacing:.02em;white-space:nowrap;border:1px solid transparent;background:var(--surface-2);color:var(--ink)}
+.pill.s{background:var(--success-soft);color:var(--success)}.pill.w{background:var(--warning-soft);color:var(--warning)}.pill.d{background:var(--danger-soft);color:var(--danger)}.pill.i{background:var(--info-soft);color:var(--info)}.pill.a{background:var(--accent-soft);color:var(--accent)}.pill.o{background:transparent;border-color:var(--line-strong);color:var(--muted)}
+.score{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;font-family:var(--font-mono);font-size:12px;font-weight:500;border:3px solid var(--line)}
+.score.g{border-color:var(--success)}.score.b{border-color:var(--accent)}.score.y{border-color:var(--warning)}.score.r{border-color:var(--danger)}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr.row{cursor:pointer}tr.row:hover td{background:var(--surface-2)}
+.tw{overflow-x:auto}
+.sub{font-size:11px;color:var(--muted)}
+/* bars */
+.bar{display:grid;grid-template-columns:110px 1fr 40px;align-items:center;gap:10px;font-size:12px;margin:5px 0}
+.bar .t{height:6px;background:var(--surface-2);border-radius:999px;overflow:hidden}.bar .t i{display:block;height:100%;border-radius:999px;background:var(--accent)}
+.bar .t i.g{background:var(--success)}.bar .t i.y{background:var(--warning)}.bar .t i.r{background:var(--danger)}
+.funnel .bar{grid-template-columns:120px 1fr 52px}.funnel .t{height:22px;border-radius:6px}.funnel .t i{border-radius:6px;display:flex;align-items:center;padding-left:8px;color:#fff;font-family:var(--font-mono);font-size:11px}
+/* layout: list + panel */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,520px);gap:16px;align-items:start}
+@media (max-width:1100px){.split{grid-template-columns:1fr}}
+.panel{position:sticky;top:70px;max-height:calc(100vh - 90px);overflow:auto}
+/* thread */
+.thread{display:flex;flex-direction:column;gap:12px;padding:6px 0}
+.msg{max-width:88%;padding:12px 14px;border-radius:12px;white-space:pre-wrap;word-break:break-word;font-size:13px;line-height:1.6}
+.msg.in{align-self:flex-start;background:var(--client);border:1px solid var(--line)}
+.msg.out{align-self:flex-end;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 25%,var(--line))}
+.msg.draft{align-self:flex-end;background:var(--surface);border:1px dashed var(--warning);max-width:96%;width:96%}
+.meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:6px}
+.kv{display:flex;justify-content:space-between;gap:12px;font-size:12px;padding:6px 0;border-bottom:1px solid var(--line)}.kv:last-child{border-bottom:0}.kv b{font-weight:500}
+.check{display:grid;grid-template-columns:24px 1fr 1fr;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line);font-size:12px}
+.check input[type=checkbox]{width:16px;height:16px;accent-color:var(--success)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.kanban{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
+.col{min-width:220px;width:220px;background:var(--surface-2);border-radius:12px;padding:10px;flex-shrink:0}
+.col h3{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:8px}
+.col .c{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:12px;cursor:pointer}
+.col .c:hover{border-color:var(--line-strong)}
+.empty{border:1px dashed var(--line-strong);border-radius:12px;padding:36px;text-align:center;color:var(--muted);font-size:13px}
+.toast{position:fixed;right:20px;bottom:20px;background:var(--ink);color:var(--ground);padding:10px 14px;border-radius:10px;font-size:13px;box-shadow:var(--shadow);opacity:0;transform:translateY(6px);transition:.2s;z-index:50;max-width:420px}
+.toast.on{opacity:1;transform:none}
+.tabs{display:inline-flex;background:var(--surface-2);border-radius:8px;padding:3px;gap:2px;margin:8px 0}
+.tabs button{border:0;background:transparent;padding:4px 10px;border-radius:6px;font-size:12px;cursor:pointer;color:var(--muted)}.tabs button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);font-weight:500}
+.note{font-size:12px;color:var(--muted);background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.banner{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--warning-soft);border:1px solid color-mix(in srgb,var(--warning) 35%,var(--line));border-radius:10px;padding:10px 14px;font-size:12px;margin-bottom:16px}
+.banner button{background:transparent;border:0;color:var(--warning);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:0}
+.pre{white-space:pre-wrap;word-break:break-word;font-size:13px;line-height:1.65;background:var(--surface-2);border-radius:10px;padding:14px;max-height:420px;overflow:auto}
+.hidden{display:none!important}
+@media (max-width:900px){.app{grid-template-columns:1fr}.rail{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center}.rail .nav{flex-direction:row;flex-wrap:wrap}.rail .foot,.nav .sec{display:none}.content{padding:16px}.top{padding:10px 16px}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="app">
+  <aside class="rail">
+    <div class="brand"><div class="mark">G</div><div><span class="name">Global Sales Agent</span><small>Playground · browser-only demo</small></div></div>
+    <nav class="nav" id="nav"></nav>
+    <div class="foot">Same pipeline as the SaaS, running locally in your browser: Analyst → Proposal → Compliance → Reply → Negotiation → Closing. State is kept in this browser only.</div>
+  </aside>
+  <div class="main">
+    <div class="top"><div class="steps" id="steps"></div><div class="actions"><button class="btn sm" id="reset">デモをリセット</button></div></div>
+    <div class="content" id="view"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>/*ENGINE*/</script>
+<script>
+(function(){
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const KEY="gsa-playground-v1";
+let state, view="dashboard", sel=null, filters={q:"",country:"",category:"",status:""}, propTab="translated", editing=false;
+const LANG=GSA.LANGUAGE_NAMES;
+const STATUSES=["DISCOVERED","QUALIFIED","PROPOSAL_CREATED","PROPOSAL_SENT","REPLIED","NEGOTIATING","MEETING_REQUESTED","QUOTE_SENT","VERBAL_ACCEPT","WON","LOST","EXCLUDED"];
+const PILL={DISCOVERED:"o",QUALIFIED:"s",EXCLUDED:"d",PROPOSAL_CREATED:"i",PROPOSAL_SENT:"i",REPLIED:"a",NEGOTIATING:"w",MEETING_REQUESTED:"a",QUOTE_SENT:"a",VERBAL_ACCEPT:"s",WON:"s",LOST:"d",INTERESTED:"s",QUESTION:"i",PRICE_NEGOTIATION:"w",SCHEDULE_NEGOTIATION:"w",TECHNICAL_QUESTION:"i",REQUEST_PORTFOLIO:"i",REQUEST_MEETING:"a",OBJECTION:"w",REJECTION:"d",ACCEPTANCE:"s",UNKNOWN:"o",POSITIVE:"s",NEUTRAL:"o",NEGATIVE:"d",WAITING_APPROVAL:"w",APPROVED:"i",SENT:"s",WAITING_HUMAN_APPROVAL:"w"};
+const money=(n,c)=>{try{return new Intl.NumberFormat("en-US",{style:"currency",currency:c,maximumFractionDigits:0}).format(n)}catch{return c+" "+Math.round(n)}};
+const usd=n=>money(n||0,"USD");
+const flag=c=>c&&c.length===2?String.fromCodePoint(...c.toUpperCase().split("").map(x=>127397+x.charCodeAt(0))):"";
+const pct=n=>(n||0).toFixed(1)+"%";
+const ago=iso=>{const m=Math.floor((Date.now()-new Date(iso))/60000);return m<1?"now":m<60?m+"m":Math.floor(m/60)+"h"};
+const pill=(s,cls)=>`<span class="pill ${cls??PILL[s]??"o"}">${esc(String(s).replace(/_/g," "))}</span>`;
+const scoreCls=n=>n>=80?"g":n>=60?"b":n>=40?"y":"r";
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}}
+function load(){try{const s=localStorage.getItem(KEY);if(s)return JSON.parse(s)}catch{}return null}
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),2600)}
+function seedDemo(){
+  state=GSA.createState();
+  GSA.analyzeAll(state);
+  const q=id=>state.leads[id].status==="QUALIFIED";
+  const pick=(p,lang)=>state.order.find(id=>q(id)&&state.leads[id].job.source_metadata.persona.join()===p&&(!lang||state.leads[id].job.client_language===lang));
+  // Three leads run to WON in different languages, one lost, two waiting for a human
+  for(const [p,l] of [["INTERESTED,PRICE_NEGOTIATION,ACCEPTANCE","de"],["QUESTION,REQUEST_MEETING,ACCEPTANCE","ja"],["REQUEST_PORTFOLIO,INTERESTED,ACCEPTANCE","en"],["PRICE_NEGOTIATION,PRICE_NEGOTIATION,REJECTION","es"]]){const id=pick(p,l)||pick(p);if(id)GSA.autoRun(state,id)}
+  const a=pick("TECHNICAL_QUESTION,PRICE_NEGOTIATION,SCHEDULE_NEGOTIATION,ACCEPTANCE","ko")||pick("TECHNICAL_QUESTION,PRICE_NEGOTIATION,SCHEDULE_NEGOTIATION,ACCEPTANCE");
+  if(a){GSA.createProposal(state,a);GSA.approveProposal(state,a);GSA.syncReplies(state,a)} // → AI reply waiting for approval
+  const b=pick("INTERESTED,SCHEDULE_NEGOTIATION,ACCEPTANCE","fr")||pick("INTERESTED,SCHEDULE_NEGOTIATION,ACCEPTANCE");
+  if(b)GSA.createProposal(state,b); // → proposal waiting for approval
+  save();
+}
+function commit(msg){save();if(msg)toast(msg);render()}
+/* ---------- navigation ---------- */
+const NAV=[["dashboard","ダッシュボード"],["jobs","案件 / Jobs"],["conversations","会話 / Conversations"],["pipeline","パイプライン"],["settings","設定 / Pricing"],["audit","監査ログ"]];
+function renderNav(){
+  const st=GSA.stats(state);
+  $("#nav").innerHTML=`<div class="sec">Workspace</div>`+NAV.map(([k,l])=>`<button class="${view===k?"on":""}" data-v="${k}">${l}${k==="conversations"&&st.pending?`<span class="cnt">${st.pending}</span>`:""}</button>`).join("");
+  $("#nav").querySelectorAll("button").forEach(b=>b.onclick=()=>{view=b.dataset.v;sel=null;render()});
+  const s=[["発見",st.total],["解析",st.analyzed],["適合",st.qualified],["提案送信",st.sent],["返信",st.replied],["商談",st.negotiating],["受注",st.won]];
+  $("#steps").innerHTML=s.map(([l,n],i)=>`<span class="step ${n>0?"done":""}"><b>${n}</b>${l}</span>${i<s.length-1?'<span style="color:var(--muted)">›</span>':""}`).join("");
+}
+/* ---------- dashboard ---------- */
+function renderDashboard(){
+  const st=GSA.stats(state);
+  const pendP=state.order.filter(id=>state.leads[id].proposal?.status==="WAITING_APPROVAL");
+  const pendM=state.order.filter(id=>state.leads[id].messages.some(m=>m.direction==="OUTBOUND"&&!m.sent));
+  const pendD=state.order.filter(id=>state.leads[id].deal?.status==="WAITING_HUMAN_APPROVAL");
+  const funnel=[["Discovery",st.total],["Qualified",st.qualified],["Proposal sent",st.sent],["Reply",st.replied],["Negotiation",st.negotiating],["Won",st.won]];
+  const max=Math.max(1,...funnel.map(f=>f[1]));
+  const tbl=(rows,name,fmt)=>`<table><thead><tr><th>${name}</th><th class="num">Jobs</th><th class="num">Sent</th><th class="num">Reply</th><th class="num">Won</th></tr></thead><tbody>${rows.slice(0,8).map(r=>`<tr><td>${fmt(r.key)}</td><td class="num">${r.jobs}</td><td class="num">${r.sent}</td><td class="num">${r.replied}</td><td class="num">${r.won}</td></tr>`).join("")}</tbody></table>`;
+  return `<div class="head"><div><h1>ダッシュボード</h1><p>Dr.Jena のサービスを登録した営業会社として、世界9カ国・10カテゴリの100案件に対してAI営業パイプラインを回しています。全処理はこのブラウザ内で実行され、外部AIは呼びません（Mock AI）。</p></div>
+    <div class="actions"><button class="btn" id="analyzeAll">未解析を解析</button><button class="btn accent" id="autoRun">適合案件5件をAIで自動進行</button></div></div>
+    ${(pendP.length+pendM.length+pendD.length)?`<div class="banner"><b style="color:var(--warning)">人間の承認待ち</b>${pendP.length?`<button data-go="jobs" data-id="${pendP[0]}">提案 ${pendP.length}</button>`:""}${pendM.length?`<button data-go="conversations" data-id="${pendM[0]}">返信案 ${pendM.length}</button>`:""}${pendD.length?`<button data-go="conversations" data-id="${pendD[0]}">受注確定 ${pendD.length}</button>`:""}<span class="sub">— 契約成立・価格変更は必ず人が確定します</span></div>`:""}
+    <div class="grid kpis">
+      ${[["案件発見数",st.total,st.analyzed+" analysed"],["適合案件",st.qualified,"Opportunity ≥ "+state.settings.minOpportunityScore],["提案送信",st.sent,pct(st.sent/Math.max(1,st.qualified)*100)+" of qualified"],["返信",st.replied,"返信率 "+pct(st.replyRate)],["商談中",st.negotiating,""],["受注",st.won,"受注率 "+pct(st.winRate)],["見込売上",usd(st.pipeline),"open pipeline"],["確定売上",usd(st.revenue),st.won?"avg "+usd(st.revenue/st.won):""],["AI runs",st.aiRuns,"$0.00 (mock)"]].map(([l,v,h])=>`<div class="card kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="h">${h||"&nbsp;"}</div></div>`).join("")}
+    </div>
+    <div class="grid two" style="margin-top:14px">
+      <div class="card"><div class="hd"><h2>AI Sales Funnel</h2><p>Discovery → Qualified → Proposal → Reply → Negotiation → Won</p></div><div class="bd funnel">${funnel.map(([l,n],i)=>`<div class="bar"><span>${l}</span><div class="t"><i style="width:${Math.max(6,n/max*100)}%;background:${["#8A8A94","var(--accent)","var(--info)","var(--warning)","#7A5AF8","var(--success)"][i]}">${n}</i></div><span class="num sub">${i?pct(n/Math.max(1,funnel[i-1][1])*100):""}</span></div>`).join("")}</div></div>
+      <div class="card"><div class="hd"><h2>最近の判断（Audit）</h2><p>誰が・どのAIが・何をしたか</p></div><div class="bd">${state.audit.slice(0,9).map(a=>`<div class="kv"><span>${pill(a.actor.startsWith("AI")?"AI":a.actor,a.actor.startsWith("AI")?"a":a.actor==="HUMAN"?"i":"o")} <b>${esc(a.action)}</b></span><span class="sub mono">${esc(a.entity)} · ${ago(a.at)}</span></div>`).join("")||'<div class="sub">まだありません</div>'}</div></div>
+    </div>
+    <div class="grid three" style="margin-top:14px">
+      <div class="card"><div class="hd"><h2>Country別</h2></div><div class="bd tw">${tbl(st.byCountry,"Country",k=>flag(k)+" "+k)}</div></div>
+      <div class="card"><div class="hd"><h2>Language別</h2></div><div class="bd tw">${tbl(st.byLanguage,"Language",k=>LANG[k]||k)}</div></div>
+      <div class="card"><div class="hd"><h2>Category別</h2></div><div class="bd tw">${tbl(st.byCategory,"Category",k=>esc(k))}</div></div>
+    </div>`;
+}
+/* ---------- jobs ---------- */
+function leadRows(){
+  const f=filters;
+  return state.order.map(id=>state.leads[id]).filter(l=>(!f.country||l.job.client_country===f.country)&&(!f.category||l.job.category===f.category)&&(!f.status||l.status===f.status)&&(!f.q||(l.job.project_title+" "+(l.job.client_name||"")).toLowerCase().includes(f.q.toLowerCase())))
+    .sort((a,b)=>(b.analysis?.opportunityScore??-1)-(a.analysis?.opportunityScore??-1));
+}
+function renderJobs(){
+  const rows=leadRows();
+  const countries=[...new Set(state.order.map(id=>state.leads[id].job.client_country))];
+  const cats=[...new Set(state.order.map(id=>state.leads[id].job.category))];
+  const list=`<div class="card"><div class="bd" style="padding-top:14px"><div class="actions" style="margin-bottom:10px">
+      <input type="search" placeholder="タイトル・クライアント検索" value="${esc(filters.q)}" data-f="q" style="flex:1;min-width:160px">
+      <select data-f="country"><option value="">All countries</option>${countries.map(c=>`<option ${filters.country===c?"selected":""} value="${c}">${flag(c)} ${c}</option>`).join("")}</select>
+      <select data-f="category"><option value="">All categories</option>${cats.map(c=>`<option ${filters.category===c?"selected":""}>${esc(c)}</option>`).join("")}</select>
+      <select data-f="status"><option value="">All statuses</option>${STATUSES.map(s=>`<option ${filters.status===s?"selected":""}>${s}</option>`).join("")}</select></div>
+      <div class="tw"><table><thead><tr><th>Score</th><th>Job</th><th>Category</th><th class="num">Budget</th><th class="num">Comp.</th><th>Status</th></tr></thead><tbody>
+      ${rows.map(l=>{const j=l.job,a=l.analysis;return `<tr class="row ${sel===j.job_id?"on":""}" data-id="${j.job_id}"><td>${a?`<span class="score ${scoreCls(a.opportunityScore)}">${a.opportunityScore}</span>`:'<span class="score">–</span>'}</td><td><div style="font-weight:500;max-width:34ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(j.project_title)}</div><div class="sub">${flag(j.client_country)} ${esc(j.client_name)} · ${LANG[j.client_language]||j.client_language}</div></td><td>${esc(j.category)}</td><td class="num" style="text-align:right">${money(j.budget_max,j.currency)}<div class="sub">${usd(GSA_toUsd(j))}</div></td><td class="num">${j.number_of_competitors}</td><td>${pill(l.status)}</td></tr>`}).join("")}
+      </tbody></table></div><div class="sub" style="margin-top:8px">${rows.length} jobs</div></div></div>`;
+  return `<div class="head"><div><h1>案件 / Jobs</h1><p>Scout Agent が Demo Marketplace から取得した正規化 Job。行をクリックすると解析と提案生成ができます。</p></div><div class="actions"><button class="btn" id="analyzeAll">未解析を解析</button></div></div>
+    <div class="split"><div>${list}</div><div class="panel">${sel?renderJobPanel(sel):'<div class="empty">案件を選択してください</div>'}</div></div>`;
+}
+const GSA_toUsd=j=>{const r={USD:1,JPY:.0067,EUR:1.08,GBP:1.27,SGD:.74,AUD:.66,KRW:.00073}[j.currency]||1;return (j.budget_max||0)*r};
+function renderJobPanel(id){
+  const l=state.leads[id],j=l.job,a=l.analysis,p=l.proposal;
+  const bars=a?[["Fit",a.fit_score],["Profit",a.profit_score],["Client quality",a.client_quality_score],["Win probability",a.win_probability],["Urgency",a.urgency_score],["Competition",a.competition_score],["Risk",a.risk_score]].map(([n,v])=>`<div class="bar"><span class="sub">${n}</span><div class="t"><i class="${n==="Risk"?(v>50?"r":"y"):scoreCls(v)}" style="width:${v}%"></i></div><span class="num">${v}</span></div>`).join(""):"";
+  const analysis=a?`<div class="card"><div class="hd"><div style="display:flex;justify-content:space-between;align-items:center"><h2>Analyst Agent</h2><span class="score ${scoreCls(a.opportunityScore)}">${a.opportunityScore}</span></div><p>${pill(a.recommended_action,a.recommended_action==="PROPOSE"?"s":a.recommended_action==="SKIP"?"d":"w")} · ${a.estimated_difficulty} · ~${a.estimated_hours}h · market ≈ ${usd(a.estimated_market_price)}</p></div><div class="bd">${bars}<div class="sub" style="margin-top:8px"><b>Goal:</b> ${esc(a.client_goal)}</div><div class="chips" style="margin-top:8px">${a.required_deliverables.map(d=>`<span class="pill o">${esc(d)}</span>`).join("")}</div>${a.risk_flags.length?`<div class="chips" style="margin-top:8px">${a.risk_flags.map(r=>`<span class="pill d">${esc(r)}</span>`).join("")}</div>`:""}${l.status==="EXCLUDED"?`<div class="note" style="margin-top:8px">除外: ${esc(l.excludedReason)}</div>`:""}</div></div>`:`<div class="card"><div class="bd" style="padding-top:14px"><button class="btn primary" data-act="analyze">AIで案件を解析</button></div></div>`;
+  let prop="";
+  if(!p){const langs=Object.keys(LANG);prop=`<div class="card"><div class="hd"><h2>Proposal Agent</h2><p>10構造・相手言語で完全個別化。価格は minimumPrice ${usd(state.settings.minimumPrice)} を下回りません。</p></div><div class="bd"><div class="actions" style="align-items:flex-end"><label class="f">Length<select id="pLen">${["SHORT","STANDARD","DETAILED"].map(x=>`<option ${x===state.settings.length?"selected":""}>${x}</option>`).join("")}</select></label><label class="f">Tone<select id="pTone">${["PROFESSIONAL","FRIENDLY","CONSULTATIVE","EXECUTIVE","TECHNICAL","PREMIUM"].map(x=>`<option ${x===state.settings.tone?"selected":""}>${x}</option>`).join("")}</select></label><label class="f">Language<select id="pLang">${langs.map(x=>`<option value="${x}" ${x===j.client_language?"selected":""}>${LANG[x]}</option>`).join("")}</select></label><button class="btn accent" data-act="propose" ${a?"":"disabled"}>提案を生成</button></div>${a?"":'<div class="sub" style="margin-top:8px">先に解析が必要です</div>'}</div></div>`}
+  else{const c=p.compliance;prop=`<div class="card"><div class="hd"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2>Proposal</h2>${pill(p.status)}</div><p>${p.length} · ${p.tone} · ${LANG[p.language]||p.language} · ${money(p.priceLocal,j.currency)} (${usd(p.priceUsd)}) · ${p.output.delivery_days}日${p.sentAt?" · sent "+ago(p.sentAt):""}</p></div><div class="bd">
+      <div class="tabs">${[["translated","相手言語"],["original","自社言語（原文）"],["structured","10構造"],["compliance","Compliance"]].map(([k,n])=>`<button class="${propTab===k?"on":""}" data-tab="${k}">${n}</button>`).join("")}</div>
+      ${propTab==="translated"?(editing?`<textarea id="pEdit" style="min-height:320px">${esc(p.text)}</textarea>`:`<div class="pre">${esc(p.text)}</div>`):propTab==="original"?`<div class="pre">${esc(p.original)}</div>`:propTab==="structured"?`<div>${Object.entries(p.output.sections).map(([k,v],i)=>v?`<div class="kv" style="flex-direction:column;align-items:flex-start;gap:2px"><span class="sub mono">${i+1}. ${k}</span><span>${esc(v)}</span></div>`:"").join("")}</div>`:`<div>${c.allowed?pill("ALLOWED","s"):pill("BLOCKED","d")} ${c.issues.length?c.issues.map(i=>`<div class="kv"><span>${pill(i.severity,i.severity==="BLOCK"?"d":"w")} ${esc(i.code)}</span><span class="sub">${esc(i.message)}</span></div>`).join(""):'<div class="sub" style="margin-top:6px">虚偽実績・保証表現・規約違反なし。送信制限 OK。</div>'}</div>`}
+      <div class="actions" style="margin-top:10px">${p.status==="WAITING_APPROVAL"?(editing?`<button class="btn primary" data-act="saveEdit">保存</button><button class="btn" data-act="cancelEdit">取消</button>`:`<button class="btn success" data-act="approve">承認して送信</button><button class="btn" data-act="edit">編集</button><button class="btn" data-act="regen">再生成</button>`):p.status==="SENT"?`<button class="btn accent" data-act="goConv">会話を開く →</button>`:""}</div></div></div>`}
+  return `<div class="grid" style="gap:12px"><div class="card"><div class="hd"><h2>${esc(j.project_title)}</h2><p>${flag(j.client_country)} ${esc(j.client_name)} · ${LANG[j.client_language]||j.client_language} · ${esc(j.category)} · ${money(j.budget_min,j.currency)}–${money(j.budget_max,j.currency)} · ${j.payment_verified?"payment verified":"payment unverified"} · rating ${j.client_rating??"—"}</p></div><div class="bd"><div class="pre" style="max-height:180px">${esc(j.project_description)}</div><div class="chips" style="margin-top:8px">${j.required_skills.map(s=>`<span class="pill o">${esc(s)}</span>`).join("")}<span class="pill o">persona: ${esc(j.source_metadata.persona.join(" → "))}</span></div></div></div>${analysis}${prop}</div>`;
+}
+/* ---------- conversations ---------- */
+function convLeads(){return state.order.map(id=>state.leads[id]).filter(l=>l.messages.length).sort((a,b)=>new Date(b.messages.at(-1).at)-new Date(a.messages.at(-1).at))}
+function renderConversations(){
+  const rows=convLeads();
+  if(!sel&&rows[0])sel=rows[0].job.job_id;
+  const list=`<div class="card"><div class="bd" style="padding-top:8px">${rows.length?rows.map(l=>{const last=l.messages.at(-1);const pend=l.messages.some(m=>m.direction==="OUTBOUND"&&!m.sent)||l.deal?.status==="WAITING_HUMAN_APPROVAL";return `<div class="kv row" data-id="${l.job.job_id}" style="cursor:pointer;flex-direction:column;align-items:stretch;gap:2px;${sel===l.job.job_id?"background:var(--surface-2);margin:0 -10px;padding:8px 10px;border-radius:8px":""}"><div style="display:flex;justify-content:space-between;gap:8px"><b>${flag(l.job.client_country)} ${esc(l.job.client_name)}</b><span>${pend?pill("PENDING","w"):""} ${pill(l.status)}</span></div><div class="sub" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${last.direction==="INBOUND"?"Client":"You"}: ${esc(last.body.replace(/\n/g," ").slice(0,90))}</div></div>`}).join(""):'<div class="empty">送信済み提案がまだありません。案件から提案を送ってください。</div>'}</div></div>`;
+  return `<div class="head"><div><h1>会話 / Conversations</h1><p>Thread Memory（案件・提案・見積・全メッセージ）を踏まえて Reply Agent が返信案を作成し、人が承認して送信します。</p></div><div class="actions"><button class="btn" id="syncAll">返信を同期（全スレッド）</button></div></div>
+    <div class="split" style="grid-template-columns:minmax(300px,380px) minmax(0,1fr)"><div>${list}</div><div>${sel?renderThread(sel):""}</div></div>`;
+}
+function renderThread(id){
+  const l=state.leads[id],j=l.job,s=state.settings;
+  const msgs=l.messages.map(m=>{
+    if(m.direction==="INBOUND"){const a=m.analysis;return `<div class="msg in"><div class="meta"><b>${esc(j.client_name)}</b> · ${LANG[m.language]||m.language} · ${ago(m.at)} ${a?pill(a.category)+pill(a.sentiment):""}</div>${esc(m.body)}${a?`<div class="sub" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px">purchase ${a.purchase_probability}% · urgency ${a.urgency} · <b>next:</b> ${esc(a.next_best_action)}${a.extracted.proposed_price?` · <b>asked:</b> ${money(a.extracted.proposed_price,a.extracted.currency||j.currency)}`:""}</div>`:""}</div>`}
+    if(!m.sent)return `<div class="msg draft"><div class="meta">${pill("AI DRAFT","a")} ${pill("WAITING APPROVAL","w")} ${m.kind?pill(m.kind):""}</div><textarea data-edit="${m.id}" style="min-height:220px">${esc(m.body)}</textarea><div class="actions" style="margin-top:8px"><button class="btn success sm" data-act="approveMsg" data-mid="${m.id}">承認して送信</button><button class="btn danger sm" data-act="rejectMsg" data-mid="${m.id}">却下</button>${l.quotes.find(q=>q.status==="DRAFT")?`<span class="sub">この送信で見積 v${l.quotes.at(-1).version}（${money(l.quotes.at(-1).totalLocal,j.currency)}）が確定送付されます</span>`:""}</div></div>`;
+    return `<div class="msg out"><div class="meta">${m.author==="HUMAN"?pill("HUMAN","i"):pill("AI","a")} · ${ago(m.at)}${m.kind==="proposal"?" · proposal":""}</div>${esc(m.body)}</div>`});
+  const deal=l.deal?`<div class="card"><div class="hd"><div style="display:flex;justify-content:space-between;align-items:center"><h2>Closing Agent — Deal Summary</h2>${pill(l.deal.status)}</div><p>confidence ${l.deal.summary.confidence} · ${usd(l.deal.amountUsd)}</p></div><div class="bd"><div class="note" style="margin-bottom:8px">${esc(l.deal.summary.narrative)}</div>${l.deal.checklist.map(c=>`<div class="check"><input type="checkbox" data-ck="${c.key}" ${c.confirmed?"checked":""} ${l.deal.status==="WON"?"disabled":""}><span>${esc(c.label)}</span><input type="text" data-cv="${c.key}" value="${esc(c.value||"")}" placeholder="未合意" ${l.deal.status==="WON"?"disabled":""}></div>`).join("")}<div class="actions" style="margin-top:10px">${l.deal.status==="WON"?`<span class="pill s">WON · ${ago(l.deal.wonAt)} · CRM 登録済み</span>`:`<button class="btn success" data-act="approveDeal">受注を確定（WON）</button><span class="sub">9項目すべて確認済みのときのみ。AIは契約成立を宣言しません。</span>`}</div></div></div>`:"";
+  const q=l.quotes;
+  return `<div class="grid" style="gap:12px"><div class="card"><div class="hd"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2>${esc(j.project_title)}</h2>${pill(l.status)}</div><p>${flag(j.client_country)} ${esc(j.client_name)} · ${LANG[j.client_language]||j.client_language} · persona ${esc(j.source_metadata.persona.join(" → "))}</p></div><div class="bd"><div class="thread">${msgs.join("")}</div>
+    <div class="actions" style="margin-top:12px;border-top:1px solid var(--line);padding-top:12px"><button class="btn primary" data-act="sync" ${["WON","LOST"].includes(l.status)?"disabled":""}>クライアントの返信を取得</button><button class="btn" data-act="draft">AI返信案</button><button class="btn" data-act="negotiate">価格交渉（Pricing Engine）</button><button class="btn" data-act="deal" ${l.deal?"disabled":""}>Deal Summary</button><button class="btn danger" data-act="lost" ${["WON","LOST"].includes(l.status)?"disabled":""}>失注</button></div></div></div>
+    ${deal}
+    <div class="grid" style="grid-template-columns:1fr 1fr"><div class="card"><div class="hd"><h2>Pricing state</h2><p>Negotiation memory</p></div><div class="bd"><div class="kv"><span>Current offer</span><b class="num">${usd(l.pricing.currentOfferUsd)}</b></div><div class="kv"><span>Discount applied</span><b class="num">${l.pricing.discountAppliedPct.toFixed(1)}% / max ${s.maximumDiscountPct}%</b></div><div class="kv"><span>Rounds</span><b class="num">${l.pricing.rounds}</b></div><div class="kv"><span>Floor (minimumPrice)</span><b class="num" style="color:var(--danger)">${usd(s.minimumPrice)}</b></div></div></div>
+    <div class="card"><div class="hd"><h2>Quotes</h2><p>${q.length} version(s)</p></div><div class="bd">${q.length?q.map(x=>`<div class="kv" style="flex-direction:column;align-items:flex-start;gap:2px"><span><b>v${x.version}</b> ${pill(x.strategy,x.strategy==="DECLINE"?"d":x.strategy==="HOLD"?"o":"w")} ${pill(x.status)}${x.needsApproval?pill("HUMAN PRICE APPROVAL","i"):""}</span><span class="num">${money(x.totalLocal,x.currency)} · ${usd(x.totalUsd)} · −${x.discountPct}%</span><span class="sub">${esc(x.rationale)}</span></div>`).join(""):'<div class="sub">まだありません</div>'}</div></div></div>
+    <div class="card"><div class="hd"><h2>Activity</h2></div><div class="bd">${l.log.slice().reverse().map(e=>`<div class="kv"><span>${pill(e.actor,e.actor==="AI"?"a":e.actor==="HUMAN"?"i":"o")} ${esc(e.text)}</span><span class="sub">${ago(e.at)}</span></div>`).join("")}</div></div></div>`;
+}
+/* ---------- pipeline ---------- */
+function renderPipeline(){
+  const cols=STATUSES.filter(s=>s!=="EXCLUDED");
+  return `<div class="head"><div><h1>商談パイプライン</h1><p>Lead Status 11ステージ。カードをクリックすると会話または案件へ移動します。</p></div></div><div class="kanban">${cols.map(s=>{const ls=state.order.map(id=>state.leads[id]).filter(l=>l.status===s);const v=ls.reduce((a,l)=>a+(l.pricing.currentOfferUsd||l.proposal?.priceUsd||GSA_toUsd(l.job)),0);return `<div class="col"><h3><span>${s.replace(/_/g," ")}</span><span class="num">${ls.length}</span></h3><div class="sub num" style="margin:-6px 0 8px">${usd(v)}</div>${ls.slice(0,12).map(l=>`<div class="c" data-go="${l.messages.length?"conversations":"jobs"}" data-id="${l.job.job_id}"><div style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.job.project_title)}</div><div class="sub">${flag(l.job.client_country)} ${esc(l.job.client_name)}${l.analysis?" · "+l.analysis.opportunityScore:""}</div></div>`).join("")}${ls.length>12?`<div class="sub">+${ls.length-12} more</div>`:""}</div>`}).join("")}</div>`;
+}
+/* ---------- settings ---------- */
+function renderSettings(){
+  const s=state.settings;const f=(k,l,t="number",step)=>`<label class="f">${l}<input type="${t}" data-s="${k}" value="${esc(s[k])}" ${step?`step="${step}"`:""}></label>`;
+  return `<div class="head"><div><h1>設定 / Pricing Engine</h1><p>AIは minimumPrice 以下に価格を下げられず、価格変更と受注確定は人間承認にできます。変更は次の生成・交渉から反映されます。</p></div></div>
+  <div class="grid" style="grid-template-columns:1fr 1fr"><div class="card"><div class="hd"><h2>Pricing</h2><p>USD</p></div><div class="bd grid" style="grid-template-columns:1fr 1fr">${f("minimumPrice","minimumPrice（下限・絶対）")}${f("targetPrice","targetPrice")}${f("idealPrice","idealPrice")}${f("maximumDiscountPct","maximumDiscount %")}${f("hourlyRate","hourlyRate")}<label class="f">価格変更の人間承認<select data-s="requireHumanApprovalForPrice"><option value="true" ${s.requireHumanApprovalForPrice?"selected":""}>必須</option><option value="false" ${!s.requireHumanApprovalForPrice?"selected":""}>不要</option></select></label></div></div>
+  <div class="card"><div class="hd"><h2>Proposal / Automation</h2></div><div class="bd grid" style="grid-template-columns:1fr 1fr"><label class="f">Tone<select data-s="tone">${["PROFESSIONAL","FRIENDLY","CONSULTATIVE","EXECUTIVE","TECHNICAL","PREMIUM"].map(x=>`<option ${x===s.tone?"selected":""}>${x}</option>`).join("")}</select></label><label class="f">Length<select data-s="length">${["SHORT","STANDARD","DETAILED"].map(x=>`<option ${x===s.length?"selected":""}>${x}</option>`).join("")}</select></label>${f("minOpportunityScore","自動除外しきい値（Opportunity）")}<label class="f">提案の自動承認・送信（AUTO platform）<select data-s="autoApproveProposals"><option value="false" ${!s.autoApproveProposals?"selected":""}>人間承認（既定）</option><option value="true" ${s.autoApproveProposals?"selected":""}>自動</option></select></label><label class="f">自社言語<select data-s="sourceLanguage">${Object.keys(LANG).map(x=>`<option value="${x}" ${x===s.sourceLanguage?"selected":""}>${LANG[x]}</option>`).join("")}</select></label></div></div></div>
+  <div class="card" style="margin-top:14px"><div class="hd"><h2>営業会社プロフィール（Seed）</h2><p>${esc(GSA.DEMO_PROFILE.companyName)} — ${esc(GSA.DEMO_PROFILE.tagline)}</p></div><div class="bd"><div class="chips">${GSA.DEMO_PROFILE.capabilities.slice(0,18).map(c=>`<span class="pill o">${esc(c)}</span>`).join("")}</div><div class="sub" style="margin-top:8px">実績 ${GSA.DEMO_PROFILE.achievements.length} 件 · FAQ ${GSA.DEMO_PROFILE.faq.length} 件 · 提案では登録済み実績のみ引用（虚偽実績は生成しない）</div></div></div>`;
+}
+function renderAudit(){
+  return `<div class="head"><div><h1>監査ログ</h1><p>すべての状態遷移・AI判断・人間の承認を記録（最新500件）。</p></div></div><div class="card"><div class="bd tw" style="padding-top:8px"><table><thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Entity</th></tr></thead><tbody>${state.audit.map(a=>`<tr><td class="sub mono">${new Date(a.at).toLocaleTimeString()}</td><td>${pill(a.actor,a.actor.startsWith("AI")?"a":a.actor==="HUMAN"?"i":"o")}</td><td class="mono" style="font-size:12px">${esc(a.action)}</td><td class="mono sub">${esc(a.entity)}</td></tr>`).join("")}</tbody></table></div></div>`;
+}
+/* ---------- render + events ---------- */
+function render(){
+  renderNav();
+  const v=$("#view");
+  v.innerHTML=view==="dashboard"?renderDashboard():view==="jobs"?renderJobs():view==="conversations"?renderConversations():view==="pipeline"?renderPipeline():view==="settings"?renderSettings():renderAudit();
+  bind(v);
+}
+function bind(v){
+  v.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{view=b.dataset.go;sel=b.dataset.id;render()});
+  v.querySelectorAll("tr.row,.kv.row").forEach(r=>r.onclick=()=>{sel=r.dataset.id;editing=false;render()});
+  v.querySelectorAll("[data-f]").forEach(i=>i.oninput=()=>{filters[i.dataset.f]=i.value;render();if(i.dataset.f==="q"){const n=$('[data-f="q"]');n.focus();n.setSelectionRange(n.value.length,n.value.length)}});
+  v.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{propTab=b.dataset.tab;render()});
+  v.querySelectorAll("[data-s]").forEach(i=>i.onchange=()=>{const k=i.dataset.s;let val=i.value;if(i.type==="number")val=Number(val);if(val==="true")val=true;if(val==="false")val=false;state.settings[k]=val;commit("設定を保存しました")});
+  const aa=v.querySelector("#analyzeAll");if(aa)aa.onclick=()=>{const before=GSA.stats(state).analyzed;GSA.analyzeAll(state);commit(`${GSA.stats(state).analyzed-before} 件を解析しました`)};
+  const ar=v.querySelector("#autoRun");if(ar)ar.onclick=()=>{const ids=state.order.filter(id=>state.leads[id].status==="QUALIFIED"&&!state.leads[id].proposal).slice(0,5);ids.forEach(id=>GSA.autoRun(state,id));commit(`${ids.length} 件を受注/失注まで自動進行しました（人間承認はデモのため自動）`)};
+  const sa=v.querySelector("#syncAll");if(sa)sa.onclick=()=>{let n=0;convLeads().forEach(l=>{if(GSA.syncReplies(state,l.job.job_id))n++});commit(`${n} 件の返信を取得・解析しました`)};
+  v.querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.dataset.act,b));
+}
+function act(a,b){
+  const id=sel;const l=state.leads[id];
+  switch(a){
+    case "analyze":GSA.analyze(state,id);commit("解析しました");break;
+    case "propose":GSA.createProposal(state,id,{length:$("#pLen").value,tone:$("#pTone").value,language:$("#pLang").value});propTab="translated";commit(`提案を生成しました（${l.proposal.status}）`);break;
+    case "regen":l.proposal=undefined;l.status="QUALIFIED";GSA.createProposal(state,id);commit("再生成しました");break;
+    case "approve":GSA.approveProposal(state,id);commit("承認 → Compliance/制限チェック → 送信しました");break;
+    case "edit":editing=true;render();break;
+    case "cancelEdit":editing=false;render();break;
+    case "saveEdit":GSA.editProposal(state,id,$("#pEdit").value);editing=false;commit("編集を保存しました（新バージョン）");break;
+    case "goConv":view="conversations";render();break;
+    case "sync":{const m=GSA.syncReplies(state,id);commit(m?`クライアント返信: ${m.analysis.category}`:"新しい返信はありません");break}
+    case "draft":GSA.draftReply(state,id);commit("AI返信案を作成しました（承認待ち）");break;
+    case "negotiate":{const m=GSA.negotiate(state,id);const q=l.quotes.at(-1);commit(`Pricing Engine: ${q.strategy} → ${usd(q.totalUsd)}`);break}
+    case "deal":GSA.createDealSummary(state,id);commit("Deal Summary を作成しました（人間承認待ち）");break;
+    case "lost":GSA.markLost(state,id,"manual");commit("失注にしました");break;
+    case "approveMsg":{const ta=$(`[data-edit="${b.dataset.mid}"]`);GSA.approveMessage(state,id,b.dataset.mid,ta?ta.value:undefined);commit("送信しました");break}
+    case "rejectMsg":GSA.rejectMessage(state,id,b.dataset.mid);commit("却下しました");break;
+    case "approveDeal":{l.deal.checklist.forEach(c=>{const ck=$(`[data-ck="${c.key}"]`),cv=$(`[data-cv="${c.key}"]`);if(ck)c.confirmed=ck.checked;if(cv)c.value=cv.value||c.value});const r=GSA.approveDeal(state,id);commit(r.ok?"受注確定 — WON。CRMへ登録しました":"未確認の項目があります: "+r.unconfirmed.join(", "));break}
+  }
+}
+$("#reset").onclick=()=>{if(confirm("デモの状態をリセットしますか？"))seedDemo(),view="dashboard",sel=null,render(),toast("リセットしました")};
+state=load();
+if(!state||!state.order)seedDemo();
+render();
+})();
+</script>
