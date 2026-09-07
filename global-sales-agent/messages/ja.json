@@ -1,0 +1,18 @@
+{
+  "nav": {
+    "dashboard": "ダッシュボード", "jobs": "案件", "proposals": "提案", "pipeline": "商談パイプライン", "conversations": "会話",
+    "crm": "CRM", "companies": "企業", "contacts": "担当者", "deals": "受注", "tasks": "タスク", "automation": "自動化ルール", "analytics": "アナリティクス",
+    "costs": "AIコスト", "audit": "監査ログ", "settings": "設定", "profile": "会社プロフィール", "platforms": "プラットフォーム", "ai": "AI設定", "limits": "送信制限", "team": "チーム", "general": "一般",
+    "approvals": "承認待ち", "signOut": "ログアウト", "language": "表示言語"
+  },
+  "dashboard": {
+    "title": "ダッシュボード", "subtitle": "案件発見から受注まで、AI営業パイプラインの現在地",
+    "jobsDiscovered": "案件発見数", "proposalsToday": "本日の提案数", "replies": "返信数", "replyRate": "返信率", "negotiations": "商談数", "won": "受注数", "winRate": "受注率",
+    "pipelineValue": "見込売上", "confirmedRevenue": "確定売上", "avgDeal": "平均案件単価", "funnel": "AI Sales Funnel", "daily": "日次推移", "byPlatform": "Platform別", "byCountry": "Country別", "byLanguage": "Language別", "byCategory": "Category別",
+    "pendingApprovals": "承認待ち", "runDiscovery": "案件を探索", "syncReplies": "返信を同期"
+  },
+  "common": {
+    "save": "保存", "cancel": "キャンセル", "approve": "承認", "reject": "却下", "send": "送信", "edit": "編集", "regenerate": "再生成", "loading": "読み込み中…", "search": "検索", "all": "すべて", "actions": "操作", "status": "ステータス", "none": "データがありません", "confirm": "確定", "close": "閉じる", "view": "表示", "new": "新規", "delete": "削除", "enabled": "有効", "disabled": "無効"
+  },
+  "login": { "title": "サインイン", "subtitle": "AI営業エージェントの管理画面へ", "email": "メールアドレス", "password": "パスワード", "submit": "サインイン", "demoHint": "デモ: admin@demo.local / Demo1234!", "error": "メールアドレスまたはパスワードが正しくありません" }
+}

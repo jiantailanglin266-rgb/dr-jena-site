@@ -1,0 +1,18 @@
+{
+  "nav": {
+    "dashboard": "Dashboard", "jobs": "Jobs", "proposals": "Proposals", "pipeline": "Pipeline", "conversations": "Conversations",
+    "crm": "CRM", "companies": "Companies", "contacts": "Contacts", "deals": "Deals", "tasks": "Tasks", "automation": "Automation", "analytics": "Analytics",
+    "costs": "AI Costs", "audit": "Audit Log", "settings": "Settings", "profile": "Company Profile", "platforms": "Platforms", "ai": "AI Settings", "limits": "Send Limits", "team": "Team", "general": "General",
+    "approvals": "Approvals", "signOut": "Sign out", "language": "Language"
+  },
+  "dashboard": {
+    "title": "Dashboard", "subtitle": "Where your AI sales pipeline stands, from discovery to won deals",
+    "jobsDiscovered": "Jobs discovered", "proposalsToday": "Proposals today", "replies": "Replies", "replyRate": "Reply rate", "negotiations": "Negotiations", "won": "Won", "winRate": "Win rate",
+    "pipelineValue": "Pipeline value", "confirmedRevenue": "Confirmed revenue", "avgDeal": "Avg. deal size", "funnel": "AI Sales Funnel", "daily": "Daily trend", "byPlatform": "By platform", "byCountry": "By country", "byLanguage": "By language", "byCategory": "By category",
+    "pendingApprovals": "Pending approvals", "runDiscovery": "Run discovery", "syncReplies": "Sync replies"
+  },
+  "common": {
+    "save": "Save", "cancel": "Cancel", "approve": "Approve", "reject": "Reject", "send": "Send", "edit": "Edit", "regenerate": "Regenerate", "loading": "Loading…", "search": "Search", "all": "All", "actions": "Actions", "status": "Status", "none": "No data", "confirm": "Confirm", "close": "Close", "view": "View", "new": "New", "delete": "Delete", "enabled": "Enabled", "disabled": "Disabled"
+  },
+  "login": { "title": "Sign in", "subtitle": "to your AI Sales Agent workspace", "email": "Email", "password": "Password", "submit": "Sign in", "demoHint": "Demo: admin@demo.local / Demo1234!", "error": "Invalid email or password" }
+}

@@ -1,0 +1,61 @@
+name: GLOBAL SALES AGENT CI
+
+on:
+  push:
+    paths: ["global-sales-agent/**", ".github/workflows/global-sales-agent-ci.yml"]
+  pull_request:
+    paths: ["global-sales-agent/**"]
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: global-sales-agent
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: gsa
+          POSTGRES_PASSWORD: gsa
+          POSTGRES_DB: global_sales_agent
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U gsa -d global_sales_agent"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgresql://gsa:gsa@localhost:5432/global_sales_agent?schema=public
+      AUTH_SECRET: ci-secret-ci-secret-ci-secret-ci-secret
+      AUTH_TRUST_HOST: "true"
+      ENCRYPTION_KEY: c2VjcmV0LWtleS1mb3ItY2ktdGVzdHMtMzJieXRlcw==
+      DEMO_MODE: "true"
+      AI_PROVIDER: mock
+      APP_URL: http://localhost:3100
+      PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: global-sales-agent/package-lock.json
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npx prisma migrate deploy
+      - run: npm run db:seed
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - run: npm run test:integration
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+        env:
+          E2E_NO_BUILD: "1"
+          CI: "true"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: global-sales-agent/playwright-report

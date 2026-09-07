@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: gsa
+      POSTGRES_PASSWORD: gsa
+      POSTGRES_DB: global_sales_agent
+    ports: ["5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gsa -d global_sales_agent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  migrate:
+    build: { context: ., target: worker }
+    command: sh -c "npx prisma migrate deploy && npx tsx prisma/seed.ts"
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://gsa:gsa@postgres:5432/global_sales_agent?schema=public
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  web:
+    build: { context: ., target: web }
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://gsa:gsa@postgres:5432/global_sales_agent?schema=public
+      REDIS_URL: redis://redis:6379
+      APP_URL: http://localhost:3000
+      AUTH_TRUST_HOST: "true"
+    ports: ["3000:3000"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+
+  worker:
+    build: { context: ., target: worker }
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://gsa:gsa@postgres:5432/global_sales_agent?schema=public
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+
+volumes:
+  pgdata:

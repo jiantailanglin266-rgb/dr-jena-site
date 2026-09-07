@@ -1,0 +1,873 @@
+// GLOBAL SALES AGENT — Prisma Schema
+// PostgreSQL 16 / Prisma 6
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────── Enums ───────────────────────────
+
+enum Role {
+  ADMIN
+  MANAGER
+  SALES
+  VIEWER
+}
+
+enum Plan {
+  STARTER
+  PRO
+  BUSINESS
+  ENTERPRISE
+}
+
+enum SendMode {
+  AUTO
+  MANUAL_APPROVAL
+  MANUAL_ONLY
+}
+
+enum AutomatedSendingPolicy {
+  ALLOWED
+  RESTRICTED
+  UNKNOWN
+  PROHIBITED
+}
+
+enum JobStatus {
+  NEW
+  ANALYZED
+  QUALIFIED
+  EXCLUDED
+  ARCHIVED
+}
+
+enum ProposalStatus {
+  DRAFT
+  AI_REVIEWED
+  WAITING_APPROVAL
+  APPROVED
+  SCHEDULED
+  SENT
+  FAILED
+  REPLIED
+  CLOSED
+}
+
+enum ProposalLength {
+  SHORT
+  STANDARD
+  DETAILED
+}
+
+enum ProposalTone {
+  PROFESSIONAL
+  FRIENDLY
+  CONSULTATIVE
+  EXECUTIVE
+  TECHNICAL
+  PREMIUM
+}
+
+enum LeadStatus {
+  DISCOVERED
+  QUALIFIED
+  PROPOSAL_CREATED
+  PROPOSAL_SENT
+  REPLIED
+  NEGOTIATING
+  MEETING_REQUESTED
+  QUOTE_SENT
+  FINAL_NEGOTIATION
+  VERBAL_ACCEPT
+  WON
+  LOST
+}
+
+enum ReplyCategory {
+  INTERESTED
+  QUESTION
+  PRICE_NEGOTIATION
+  SCHEDULE_NEGOTIATION
+  TECHNICAL_QUESTION
+  REQUEST_PORTFOLIO
+  REQUEST_MEETING
+  OBJECTION
+  REJECTION
+  ACCEPTANCE
+  UNKNOWN
+}
+
+enum MessageDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum AuthorType {
+  AI
+  HUMAN
+  CLIENT
+  SYSTEM
+}
+
+enum ApprovalStatus {
+  NOT_REQUIRED
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum QuoteStatus {
+  DRAFT
+  WAITING_APPROVAL
+  SENT
+  ACCEPTED
+  REJECTED
+  SUPERSEDED
+}
+
+enum DealStatus {
+  SUMMARY_DRAFT
+  WAITING_HUMAN_APPROVAL
+  WON
+  LOST
+}
+
+enum TaskStatus {
+  OPEN
+  DONE
+  CANCELLED
+}
+
+enum ActorType {
+  USER
+  AI
+  SYSTEM
+}
+
+enum AutomationTrigger {
+  JOB_ANALYZED
+  JOB_QUALIFIED
+  PROPOSAL_DRAFTED
+  REPLY_RECEIVED
+  REPLY_ANALYZED
+  QUOTE_REQUESTED
+  VERBAL_ACCEPT
+  SCHEDULE
+}
+
+enum AutomationLevel {
+  MANUAL
+  ASSISTED
+  SEMI_AUTO
+  FULL_AUTO
+}
+
+// ─────────────────────────── Tenant / Auth ───────────────────────────
+
+model Organization {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  appName      String   @default("GLOBAL SALES AGENT")
+  plan         Plan     @default(STARTER)
+  // 管理画面設定（AIモデル / temperature / 言語 / トーン / 自動送信 / 自動化レベル / 最低価格 / カテゴリ / 国 / 言語 / 除外KW / 営業時間 / AI Cost Limit ...）
+  settings     Json     @default("{}")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  memberships       Membership[]
+  companyProfile    CompanyProfile?
+  platformAccounts  PlatformAccount[]
+  platformLimits    PlatformLimit[]
+  jobs              Job[]
+  jobAnalyses       JobAnalysis[]
+  clients           Client[]
+  contacts          Contact[]
+  opportunities     Opportunity[]
+  proposals         Proposal[]
+  proposalVersions  ProposalVersion[]
+  conversations     Conversation[]
+  messages          Message[]
+  quotes            Quote[]
+  deals             Deal[]
+  activities        Activity[]
+  tasks             Task[]
+  automationRules   AutomationRule[]
+  automationRuns    AutomationRun[]
+  aiRuns            AiRun[]
+  promptTemplates   PromptTemplate[]
+  languageSetting   LanguageSetting?
+  auditLogs         AuditLog[]
+  performanceMemory PerformanceMemory[]
+
+  @@map("organizations")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  locale       String   @default("ja")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  memberships Membership[]
+  auditLogs   AuditLog[]
+  tasks       Task[]     @relation("TaskAssignee")
+  approvedDeals Deal[]   @relation("DealApprover")
+
+  @@map("users")
+}
+
+model Membership {
+  id             String       @id @default(cuid())
+  userId         String
+  organizationId String
+  role           Role         @default(SALES)
+  createdAt      DateTime     @default(now())
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@index([organizationId])
+  @@map("memberships")
+}
+
+// PHASE 3: 営業会社プロフィール
+model CompanyProfile {
+  id             String   @id @default(cuid())
+  organizationId String   @unique
+  companyName    String
+  tagline        String?
+  services       String   @default("")
+  strengths      String[] @default([])
+  weaknesses     String[] @default([])
+  capabilities   String[] @default([])
+  priceRange     String?
+  minimumOrderPrice Decimal @default(0) @db.Decimal(12, 2)
+  currency       String   @default("USD")
+  hourlyRate     Decimal? @db.Decimal(12, 2)
+  achievements   Json     @default("[]") // [{title, description, metric, year}]
+  portfolio      Json     @default("[]") // [{title, url, description, category}]
+  caseStudies    Json     @default("[]") // [{title, problem, solution, result}]
+  differentiators String[] @default([])
+  languages      String[] @default([])
+  availableHours String?
+  typicalLeadTime String?
+  staffCount     Int?
+  techStack      String[] @default([])
+  pastProjects   Json     @default("[]")
+  faq            Json     @default("[]") // [{q, a}]
+  forbiddenConditions String[] @default([])
+  excludeKeywords String[] @default([])
+  priorityKeywords String[] @default([])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("company_profiles")
+}
+
+// ─────────────────────────── Platforms ───────────────────────────
+
+model Platform {
+  id                     String                 @id @default(cuid())
+  key                    String                 @unique
+  displayName            String
+  website                String?
+  officialApi            Boolean                @default(false)
+  automatedSendingPolicy AutomatedSendingPolicy @default(UNKNOWN)
+  defaultSendMode        SendMode               @default(MANUAL_ONLY)
+  termsUrl               String?
+  complianceNotes        String                 @default("")
+  supportedLanguages     String[]               @default([])
+  createdAt              DateTime               @default(now())
+
+  accounts PlatformAccount[]
+  limits   PlatformLimit[]
+
+  @@map("platforms")
+}
+
+model PlatformAccount {
+  id                   String   @id @default(cuid())
+  organizationId       String
+  platformId           String
+  platformKey          String
+  label                String
+  enabled              Boolean  @default(true)
+  sendMode             SendMode @default(MANUAL_APPROVAL)
+  credentialsEncrypted String?
+  config               Json     @default("{}") // generic-api mapping, categories, keywords
+  lastDiscoveryAt      DateTime?
+  lastReplyPollAt      DateTime?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  platform     Platform     @relation(fields: [platformId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, platformKey])
+  @@index([organizationId])
+  @@map("platform_accounts")
+}
+
+model PlatformLimit {
+  id                         String   @id @default(cuid())
+  organizationId             String
+  platformId                 String
+  platformKey                String
+  dailyLimit                 Int      @default(20)
+  hourlyLimit                Int      @default(5)
+  maxContactsPerClientPerWeek Int     @default(2)
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  platform     Platform     @relation(fields: [platformId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, platformKey])
+  @@map("platform_limits")
+}
+
+// ─────────────────────────── Jobs ───────────────────────────
+
+model Job {
+  id                  String    @id @default(cuid())
+  organizationId      String
+  platformKey         String
+  externalJobId       String
+  jobUrl              String?
+  clientName          String?
+  clientCountry       String?
+  clientLanguage      String?
+  projectTitle        String
+  projectDescription  String
+  category            String?
+  requiredSkills      String[]  @default([])
+  budgetMin           Decimal?  @db.Decimal(14, 2)
+  budgetMax           Decimal?  @db.Decimal(14, 2)
+  currency            String    @default("USD")
+  budgetUsd           Decimal?  @db.Decimal(14, 2)
+  deadline            DateTime?
+  proposalDeadline    DateTime?
+  numberOfCompetitors Int?
+  clientRating        Decimal?  @db.Decimal(3, 2)
+  clientHistory       String?
+  paymentVerified     Boolean   @default(false)
+  postedAt            DateTime?
+  rawText             String    @default("")
+  sourceMetadata      Json      @default("{}")
+  status              JobStatus @default(NEW)
+  excludedReason      String?
+  discoveredAt        DateTime  @default(now())
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  analysis     JobAnalysis?
+  opportunity  Opportunity?
+  proposal     Proposal?
+
+  @@unique([organizationId, platformKey, externalJobId])
+  @@index([organizationId, status])
+  @@index([organizationId, platformKey])
+  @@index([organizationId, postedAt])
+  @@map("jobs")
+}
+
+// PHASE 2: AI 解析
+model JobAnalysis {
+  id                   String   @id @default(cuid())
+  organizationId       String
+  jobId                String   @unique
+  summary              String
+  clientGoal           String
+  requiredDeliverables String[] @default([])
+  requiredSkills       String[] @default([])
+  preferredSkills      String[] @default([])
+  estimatedDifficulty  String
+  estimatedHours       Int
+  estimatedMarketPrice Decimal  @db.Decimal(14, 2)
+  urgencyScore         Int
+  clientQualityScore   Int
+  competitionScore     Int
+  winProbability       Int
+  riskFlags            String[] @default([])
+  recommendedAction    String
+  fitScore             Int
+  profitScore          Int
+  riskScore            Int
+  opportunityScore     Int
+  detectedLanguage     String   @default("en")
+  raw                  Json     @default("{}")
+  aiRunId              String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job          Job          @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, opportunityScore])
+  @@map("job_analyses")
+}
+
+// ─────────────────────────── CRM ───────────────────────────
+
+model Client {
+  id              String   @id @default(cuid())
+  organizationId  String
+  name            String
+  platformKey     String?
+  externalClientId String?
+  country         String?
+  language        String?
+  rating          Decimal? @db.Decimal(3, 2)
+  history         String?
+  paymentVerified Boolean  @default(false)
+  website         String?
+  industry        String?
+  notes           String?
+  totalWonValueUsd Decimal @default(0) @db.Decimal(14, 2)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  organization  Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  contacts      Contact[]
+  opportunities Opportunity[]
+  deals         Deal[]
+
+  @@index([organizationId])
+  @@index([organizationId, platformKey, externalClientId])
+  @@map("clients")
+}
+
+model Contact {
+  id             String   @id @default(cuid())
+  organizationId String
+  clientId       String
+  name           String
+  email          String?
+  role           String?
+  language       String?
+  timezone       String?
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client       Client       @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, clientId])
+  @@map("contacts")
+}
+
+model Opportunity {
+  id                String     @id @default(cuid())
+  organizationId    String
+  jobId             String     @unique
+  clientId          String?
+  title             String
+  status            LeadStatus @default(DISCOVERED)
+  estimatedValueUsd Decimal?   @db.Decimal(14, 2)
+  currency          String     @default("USD")
+  ownerUserId       String?
+  lostReason        String?
+  stageChangedAt    DateTime   @default(now())
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job          Job           @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  client       Client?       @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  proposal     Proposal?
+  conversation Conversation?
+  quotes       Quote[]
+  deal         Deal?
+  activities   Activity[]
+  tasks        Task[]
+
+  @@index([organizationId, status])
+  @@map("opportunities")
+}
+
+// ─────────────────────────── Proposals ───────────────────────────
+
+model Proposal {
+  id                 String         @id @default(cuid())
+  organizationId     String
+  jobId              String         @unique
+  opportunityId      String         @unique
+  platformKey        String
+  status             ProposalStatus @default(DRAFT)
+  sendMode           SendMode       @default(MANUAL_APPROVAL)
+  length             ProposalLength @default(STANDARD)
+  tone               ProposalTone   @default(CONSULTATIVE)
+  variantLabel       String         @default("A")
+  detectedLanguage   String         @default("en")
+  sourceLanguage     String         @default("ja")
+  proposalOriginal   String
+  proposalTranslated String
+  structured         Json           @default("{}") // 10構造
+  proposedPriceUsd   Decimal?       @db.Decimal(14, 2)
+  proposedPrice      Decimal?       @db.Decimal(14, 2)
+  currency           String         @default("USD")
+  proposedDeliveryDays Int?
+  complianceResult   Json           @default("{}")
+  approvedByUserId   String?
+  approvedAt         DateTime?
+  scheduledAt        DateTime?
+  sentAt             DateTime?
+  failedReason       String?
+  externalProposalId String?
+  aiRunId            String?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  organization Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job          Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  opportunity  Opportunity       @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  versions     ProposalVersion[]
+
+  @@index([organizationId, status])
+  @@index([organizationId, platformKey, sentAt])
+  @@map("proposals")
+}
+
+model ProposalVersion {
+  id                 String   @id @default(cuid())
+  organizationId     String
+  proposalId         String
+  version            Int
+  proposalOriginal   String
+  proposalTranslated String
+  structured         Json     @default("{}")
+  length             ProposalLength
+  tone               ProposalTone
+  changeReason       String?
+  authorType         AuthorType @default(AI)
+  createdAt          DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  proposal     Proposal     @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+
+  @@unique([proposalId, version])
+  @@map("proposal_versions")
+}
+
+// ─────────────────────────── Conversations ───────────────────────────
+
+model Conversation {
+  id              String   @id @default(cuid())
+  organizationId  String
+  opportunityId   String   @unique
+  platformKey     String
+  externalThreadId String?
+  clientLanguage  String   @default("en")
+  summary         String?
+  lastMessageAt   DateTime?
+  lastInboundAt   DateTime?
+  pricingState    Json     @default("{}") // { currentOfferUsd, discountAppliedPct, scopeAdjustments[] }
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  opportunity  Opportunity  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  messages     Message[]
+
+  @@index([organizationId, lastMessageAt])
+  @@map("conversations")
+}
+
+model Message {
+  id               String           @id @default(cuid())
+  organizationId   String
+  conversationId   String
+  direction        MessageDirection
+  authorType       AuthorType
+  authorUserId     String?
+  externalMessageId String?
+  language         String?
+  body             String
+  bodyTranslated   String?
+  replyCategory    ReplyCategory?
+  analysis         Json?            // sentiment, intent, purchase_probability, urgency, next_best_action
+  approvalStatus   ApprovalStatus   @default(NOT_REQUIRED)
+  approvedByUserId String?
+  sentAt           DateTime?
+  aiRunId          String?
+  createdAt        DateTime         @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@index([organizationId, approvalStatus])
+  @@map("messages")
+}
+
+// ─────────────────────────── Quotes / Deals ───────────────────────────
+
+model Quote {
+  id                    String      @id @default(cuid())
+  organizationId        String
+  opportunityId         String
+  version               Int         @default(1)
+  status                QuoteStatus @default(DRAFT)
+  currency              String      @default("USD")
+  totalAmount           Decimal     @db.Decimal(14, 2)
+  totalAmountUsd        Decimal     @db.Decimal(14, 2)
+  discountPct           Decimal     @default(0) @db.Decimal(5, 2)
+  lineItems             Json        @default("[]")
+  deliveryDays          Int?
+  paymentTerms          String?
+  revisionRounds        Int?
+  notes                 String?
+  requiresHumanApproval Boolean     @default(true)
+  approvedByUserId      String?
+  approvedAt            DateTime?
+  sentAt                DateTime?
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  opportunity  Opportunity  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, opportunityId])
+  @@map("quotes")
+}
+
+model Deal {
+  id               String     @id @default(cuid())
+  organizationId   String
+  opportunityId    String     @unique
+  clientId         String?
+  status           DealStatus @default(SUMMARY_DRAFT)
+  title            String
+  currency         String     @default("USD")
+  amount           Decimal    @db.Decimal(14, 2)
+  amountUsd        Decimal    @db.Decimal(14, 2)
+  summary          Json       @default("{}") // Deal Summary（価格/納期/業務内容/成果物/修正回数/支払条件/IP/保守/契約方法）
+  checklist        Json       @default("[]") // [{key,label,confirmed,value}]
+  approvedByUserId String?
+  approvedAt       DateTime?
+  wonAt            DateTime?
+  lostAt           DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  opportunity  Opportunity  @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  client       Client?      @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  approvedBy   User?        @relation("DealApprover", fields: [approvedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, status])
+  @@map("deals")
+}
+
+model Activity {
+  id             String   @id @default(cuid())
+  organizationId String
+  opportunityId  String?
+  type           String   // PROPOSAL_SENT, REPLY_RECEIVED, STAGE_CHANGED, NOTE, TASK, QUOTE_SENT, DEAL_WON ...
+  title          String
+  detail         String?
+  actorType      ActorType @default(SYSTEM)
+  actorId        String?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  opportunity  Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, createdAt])
+  @@index([opportunityId, createdAt])
+  @@map("activities")
+}
+
+model Task {
+  id             String     @id @default(cuid())
+  organizationId String
+  opportunityId  String?
+  assigneeUserId String?
+  title          String
+  description    String?
+  status         TaskStatus @default(OPEN)
+  dueAt          DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  opportunity  Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  assignee     User?        @relation("TaskAssignee", fields: [assigneeUserId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, status])
+  @@map("tasks")
+}
+
+// ─────────────────────────── Automation ───────────────────────────
+
+model AutomationRule {
+  id             String            @id @default(cuid())
+  organizationId String
+  name           String
+  description    String?
+  enabled        Boolean           @default(true)
+  priority       Int               @default(100)
+  trigger        AutomationTrigger
+  conditions     Json              @default("[]")
+  actions        Json              @default("[]")
+  stopOnMatch    Boolean           @default(false)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  organization Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  runs         AutomationRun[]
+
+  @@index([organizationId, trigger, enabled])
+  @@map("automation_rules")
+}
+
+model AutomationRun {
+  id             String   @id @default(cuid())
+  organizationId String
+  ruleId         String
+  trigger        AutomationTrigger
+  entityType     String
+  entityId       String
+  matched        Boolean
+  actionsExecuted Json    @default("[]")
+  error          String?
+  createdAt      DateTime @default(now())
+
+  organization Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  rule         AutomationRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, createdAt])
+  @@map("automation_runs")
+}
+
+// ─────────────────────────── AI ───────────────────────────
+
+model AiRun {
+  id             String   @id @default(cuid())
+  organizationId String
+  agent          String
+  purpose        String
+  provider       String
+  model          String
+  inputTokens    Int
+  outputTokens   Int
+  costUsd        Decimal  @db.Decimal(12, 6)
+  latencyMs      Int
+  entityType     String?
+  entityId       String?
+  success        Boolean  @default(true)
+  error          String?
+  inputDigest    String?
+  outputPreview  String?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, createdAt])
+  @@index([organizationId, agent])
+  @@map("ai_runs")
+}
+
+model PromptTemplate {
+  id             String   @id @default(cuid())
+  organizationId String
+  agent          String
+  name           String
+  system         String
+  user           String
+  enabled        Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, agent])
+  @@map("prompt_templates")
+}
+
+model LanguageSetting {
+  id                 String   @id @default(cuid())
+  organizationId     String   @unique
+  defaultLanguage    String   @default("ja")
+  supportedLanguages String[] @default(["ja", "en", "zh", "ko", "es", "fr", "de", "pt", "it"])
+  translateProposals Boolean  @default(true)
+  translateReplies   Boolean  @default(true)
+  uiLocale           String   @default("ja")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("language_settings")
+}
+
+// 提案特徴量 × 結果（Performance Memory / A/B）
+model PerformanceMemory {
+  id             String   @id @default(cuid())
+  organizationId String
+  proposalId     String   @unique
+  platformKey    String
+  category       String?
+  country        String?
+  language       String
+  tone           ProposalTone
+  length         ProposalLength
+  openingStyle   String
+  ctaType        String
+  pricePosition  String   // BELOW_MARKET / AT_MARKET / ABOVE_MARKET
+  hasPortfolio   Boolean
+  variantLabel   String
+  sentAt         DateTime?
+  replied        Boolean  @default(false)
+  repliedAt      DateTime?
+  won            Boolean  @default(false)
+  wonAt          DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, platformKey])
+  @@map("performance_memory")
+}
+
+// ─────────────────────────── Audit ───────────────────────────
+
+model AuditLog {
+  id             String    @id @default(cuid())
+  organizationId String
+  actorType      ActorType
+  actorId        String?
+  userId         String?
+  agent          String?
+  action         String
+  entityType     String
+  entityId       String?
+  before         Json?
+  after          Json?
+  reason         String?
+  ip             String?
+  createdAt      DateTime  @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, createdAt])
+  @@index([organizationId, entityType, entityId])
+  @@map("audit_logs")
+}
